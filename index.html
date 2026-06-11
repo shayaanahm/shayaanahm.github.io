@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Shayaan Ahmed | AI & Technology Portfolio</title>
+    <title>Shayaan Ahmed | Portfolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,26 +13,43 @@
             line-height: 1.6;
         }
 
-        h1 {
-            color: #4CAF50;
-            font-size: 48px;
+        h1 { color: #4CAF50; font-size: 48px; }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
         }
 
-        h2 {
-            margin-top: 40px;
-            color: #4CAF50;
-        }
-
-        .card {
+        .tab-button {
             background: #222;
-            padding: 20px;
-            margin: 18px 0;
+            color: white;
+            border: 1px solid #4CAF50;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .tab-button.active {
+            background: #4CAF50;
+            color: #111;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            background: #222;
+            padding: 25px;
             border-radius: 12px;
         }
 
-        a {
-            color: #4CAF50;
+        .tab-content.active {
+            display: block;
         }
+
+        a { color: #4CAF50; }
     </style>
 </head>
 <body>
@@ -40,89 +57,115 @@
 <h1>Shayaan Ahmed</h1>
 
 <p>
-AI-focused early-career technologist with hands-on experience building Python/Flask web applications,
-automation workflows, API integrations, and AI receptionist concepts.
+AI-focused early-career technologist interested in software engineering,
+automation, web development, and practical AI systems.
 </p>
 
-<h2>About Me</h2>
-<p>
-I am interested in artificial intelligence, automation, software engineering, and building practical technology
-for service businesses. I have experience with full-stack web development, workflow automation, technical
-documentation, user testing, and AI tools.
-</p>
+<div class="tabs">
+    <button class="tab-button active" onclick="showTab('about')">About</button>
+    <button class="tab-button" onclick="showTab('projects')">Projects</button>
+    <button class="tab-button" onclick="showTab('skills')">Skills</button>
+    <button class="tab-button" onclick="showTab('certs')">Certifications</button>
+    <button class="tab-button" onclick="showTab('experience')">Experience</button>
+    <button class="tab-button" onclick="showTab('education')">Education</button>
+    <button class="tab-button" onclick="showTab('contact')">Contact</button>
+</div>
 
-<h2>Projects</h2>
+<div id="about" class="tab-content active">
+    <h2>About Me</h2>
+    <p>
+        I am interested in artificial intelligence, automation, software engineering,
+        and building practical technology for service businesses. I have experience
+        with Python, Flask, workflow automation, APIs, web development, and AI tools.
+    </p>
+</div>
 
-<div class="card">
+<div id="projects" class="tab-content">
+    <h2>Projects</h2>
+
     <h3>BrawlBase - Full-Stack Martial Arts Search Platform</h3>
     <p><strong>Tech:</strong> Python, Flask, SQLAlchemy, HTML/CSS</p>
     <p>
-        Designed and built a web platform connecting martial artists with training partners, gyms, coaches,
-        and sports professionals. Features included registration, login, password hashing, sessions, user profiles,
-        filtered search, service directories, messaging, relational data models, validation, and testing.
+        Built a web platform connecting martial artists with training partners,
+        gyms, coaches, and sports professionals. Features included registration,
+        login, password hashing, sessions, user profiles, filtered search,
+        service directories, messaging, and relational data models.
     </p>
-</div>
 
-<div class="card">
     <h3>AI Automation and API Workflow Projects</h3>
     <p><strong>Tech:</strong> n8n, Zapier, APIs, Webhooks, ElevenLabs, AI tools</p>
     <p>
-        Created workflow concepts to capture data, process information, route tasks, send summaries,
-        trigger notifications, and support booking-style automations. Designed AI receptionist concepts
-        for service-business use cases.
+        Created automation workflow concepts for data capture, notifications,
+        booking flows, summaries, and AI receptionist-style use cases.
     </p>
 </div>
 
-<h2>Technical Skills</h2>
-<div class="card">
+<div id="skills" class="tab-content">
+    <h2>Technical Skills</h2>
     <p><strong>Programming & Web:</strong> Python, Flask, HTML/CSS, SQL, SQLAlchemy, Git/GitHub, VS Code</p>
     <p><strong>Automation & AI:</strong> n8n, Zapier, API integrations, webhooks, ElevenLabs, LLMs, prompt engineering</p>
     <p><strong>Tools:</strong> Excel, databases, authentication, documentation, user testing, Adobe Photoshop, Illustrator</p>
 </div>
 
-<h2>Certifications</h2>
-<ul>
-    <li>Claude 101 - Completed, 100% assessment score</li>
-    <li>AI Fluency - Completed, 100% assessment score</li>
-    <li>Lloyds Banking Group Future Ready Cyber & Cryptography Event</li>
-</ul>
+<div id="certs" class="tab-content">
+    <h2>Certifications</h2>
+    <ul>
+        <li>Claude 101 - Completed, 100% assessment score</li>
+        <li>AI Fluency - Completed, 100% assessment score</li>
+        <li>Lloyds Banking Group Future Ready Cyber & Cryptography Event</li>
+    </ul>
+</div>
 
-<h2>Experience</h2>
+<div id="experience" class="tab-content">
+    <h2>Experience</h2>
 
-<div class="card">
     <h3>Fire Safety Servicer - Be Safe Tech Ltd</h3>
     <p>2021 - Present</p>
     <p>
-        Assisted with fire risk assessments and maintenance of fire safety systems across client properties.
-        Worked with technical equipment, followed safety procedures, and communicated professionally with clients.
+        Assisted with fire risk assessments and maintenance of fire safety systems
+        across client properties.
     </p>
-</div>
 
-<div class="card">
     <h3>R&D / Technical Assistant - Haes Tech Ltd</h3>
     <p>Jul 2025 - Aug 2025</p>
     <p>
-        Constructed and packaged fire alarm panels, used soldering tools, and supported technical equipment development.
+        Constructed and packaged fire alarm panels, used soldering tools,
+        and supported technical equipment development.
     </p>
-</div>
 
-<div class="card">
     <h3>Inventory Assistant - Greenwork Ltd</h3>
     <p>Aug 2024 - Sep 2024</p>
     <p>
-        Logged inventory data using Excel and helped organise stock accurately in a fast-paced team environment.
+        Logged inventory data using Excel and helped organise stock accurately.
     </p>
 </div>
 
-<h2>Education</h2>
-<p>
-<strong>Slough & Eton CofE Business & Enterprise College</strong><br>
-A Levels: Maths, Computer Science and Psychology | Predicted ACB
-</p>
+<div id="education" class="tab-content">
+    <h2>Education</h2>
+    <p>
+        <strong>Slough & Eton CofE Business & Enterprise College</strong><br>
+        A Levels: Maths, Computer Science and Psychology | Predicted ACB
+    </p>
+</div>
 
-<h2>Contact</h2>
-<p>Email: <a href="mailto:shayaanahmed070708@gmail.com">shayaanahmed070708@gmail.com</a></p>
-<p>LinkedIn: <a href="https://linkedin.com/in/shayaan-ahmed-151abb390">linkedin.com/in/shayaan-ahmed-151abb390</a></p>
+<div id="contact" class="tab-content">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:shayaanahmed070708@gmail.com">shayaanahmed070708@gmail.com</a></p>
+    <p>LinkedIn: <a href="https://linkedin.com/in/shayaan-ahmed-151abb390">linkedin.com/in/shayaan-ahmed-151abb390</a></p>
+</div>
+
+<script>
+    function showTab(tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('.tab-button');
+
+        contents.forEach(content => content.classList.remove('active'));
+        buttons.forEach(button => button.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+    }
+</script>
 
 </body>
 </html>
