@@ -4,252 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shayaan Ahmed | Portfolio</title>
-
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #111;
-            color: white;
-            line-height: 1.6;
-        }
-
-        /* Top navigation bar */
-        nav {
-            position: sticky;
-            top: 0;
-            background: #0b0b0b;
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-            z-index: 1000;
-        }
-
-        nav h2 {
-            margin: 0;
-            color: #4CAF50;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 25px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            color: #4CAF50;
-        }
-
-        section {
-            max-width: 1000px;
-            margin: auto;
-            padding: 80px 40px;
-            border-bottom: 1px solid #222;
-        }
-
-        h1 {
-            color: #4CAF50;
-            font-size: 56px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #4CAF50;
-            font-size: 34px;
-        }
-
-        .card {
-            background: #222;
-            padding: 22px;
-            margin: 20px 0;
-            border-radius: 12px;
-        }
-
-        .button {
-            display: inline-block;
-            background: #4CAF50;
-            color: #111;
-            padding: 12px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        a {
-            color: #4CAF50;
-        }
-
-        ul {
-            padding-left: 25px;
-        }
-
-        @media (max-width: 700px) {
-            nav {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            nav a {
-                display: inline-block;
-                margin: 10px 15px 0 0;
-            }
-
-            h1 {
-                font-size: 42px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <nav>
-        <h2>Shayaan Ahmed</h2>
-        <div>
-            <a href="#home">Home</a>
-            <a href="#cv">CV</a>
-            <a href="#projects">Projects</a>
-            <a href="#hobbies">Hobbies</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
+<nav class="navbar">
+    <a class="logo" href="index.html">Shayaan Ahmed</a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="cv.html">CV</a>
+        <a href="projects.html">Projects</a>
+        <a href="hobbies.html">Hobbies</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
 
-    <section id="home">
-        <h1>Shayaan Ahmed</h1>
+<main class="container hero">
+    <div>
+        <h1>AI-Focused Technologist</h1>
         <p>
-            AI-focused early-career technologist interested in software engineering,
-            automation, web development, and practical AI systems.
+            I am an early-career technologist interested in artificial intelligence,
+            automation, software engineering, and building practical systems that solve
+            real-world problems.
         </p>
 
-        <p>
-            I build practical technology projects using Python, Flask, automation tools,
-            APIs, and AI systems.
-        </p>
-    </section>
-
-    <section id="cv">
-        <h2>CV</h2>
-
-        <div class="card">
-            <h3>Profile</h3>
-            <p>
-                AI-focused early-career technologist with hands-on experience building
-                Python/Flask web applications, automation workflows, API integrations,
-                and AI receptionist concepts.
-            </p>
+        <div class="hero-buttons">
+            <a class="button" href="projects.html">View Projects</a>
+            <a class="button secondary" href="cv.html">View CV</a>
         </div>
+    </div>
+</main>
 
-        <div class="card">
-            <h3>Education</h3>
-            <p>
-                <strong>Slough & Eton CofE Business & Enterprise College</strong><br>
-                A Levels: Maths, Computer Science and Psychology | Predicted ACB
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Experience</h3>
-
-            <h4>Fire Safety Servicer - Be Safe Tech Ltd</h4>
-            <p>2021 - Present</p>
-            <p>
-                Assisted with fire risk assessments and maintenance of fire safety systems
-                across client properties.
-            </p>
-
-            <h4>R&D / Technical Assistant - Haes Tech Ltd</h4>
-            <p>Jul 2025 - Aug 2025</p>
-            <p>
-                Constructed and packaged fire alarm panels, used soldering tools,
-                and supported technical equipment development.
-            </p>
-
-            <h4>Inventory Assistant - Greenwork Ltd</h4>
-            <p>Aug 2024 - Sep 2024</p>
-            <p>
-                Logged inventory data using Excel and helped organise stock accurately.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Skills</h3>
-            <ul>
-                <li>Python, Flask, HTML/CSS, SQL, SQLAlchemy</li>
-                <li>Git, GitHub, VS Code</li>
-                <li>n8n, Zapier, APIs, webhooks</li>
-                <li>AI tools, LLMs, prompt engineering, ElevenLabs</li>
-                <li>Excel, documentation, user testing</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>Certifications</h3>
-            <ul>
-                <li>Claude 101 - Completed, 100% assessment score</li>
-                <li>AI Fluency - Completed, 100% assessment score</li>
-                <li>Lloyds Banking Group Future Ready Cyber & Cryptography Event</li>
-            </ul>
-        </div>
-
-        <!-- You can add a CV download later once your PDF is uploaded to GitHub -->
-        <p>
-            To add a downloadable CV, upload your PDF to this GitHub repository and link it here.
-        </p>
-    </section>
-
-    <section id="projects">
-        <h2>Projects</h2>
-
-        <div class="card">
-            <h3>BrawlBase - Full-Stack Martial Arts Search Platform</h3>
-            <p><strong>Tech:</strong> Python, Flask, SQLAlchemy, HTML/CSS</p>
-            <p>
-                Built a web platform connecting martial artists with training partners,
-                gyms, coaches, and sports professionals. Features included registration,
-                login, password hashing, sessions, user profiles, filtered search,
-                service directories, messaging, and relational data models.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>AI Automation and API Workflow Projects</h3>
-            <p><strong>Tech:</strong> n8n, Zapier, APIs, Webhooks, ElevenLabs, AI tools</p>
-            <p>
-                Created automation workflow concepts for data capture, notifications,
-                booking flows, summaries, and AI receptionist-style business use cases.
-            </p>
-        </div>
-    </section>
-
-    <section id="hobbies">
-        <h2>Hobbies & Interests</h2>
-
-        <div class="card">
-            <p>
-                My interests include artificial intelligence, entrepreneurship,
-                software development, automation, martial arts, fitness, and building
-                practical tools that solve real-world problems.
-            </p>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>Contact</h2>
-
-        <div class="card">
-            <p>Email: <a href="mailto:shayaanahmed070708@gmail.com">shayaanahmed070708@gmail.com</a></p>
-            <p>LinkedIn: <a href="https://linkedin.com/in/shayaan-ahmed-151abb390" target="_blank">linkedin.com/in/shayaan-ahmed-151abb390</a></p>
-            <p>GitHub: <a href="https://github.com/shayaanahm" target="_blank">github.com/shayaanahm</a></p>
-        </div>
-    </section>
+<footer class="footer">
+    <p>© 2025 Shayaan Ahmed</p>
+</footer>
 
 </body>
 </html>
