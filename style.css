@@ -16,7 +16,7 @@ body {
 /* Navigation */
 .navbar {
     width: 100%;
-    padding: 28px 8%;
+    padding: 24px 8%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,6 +27,7 @@ body {
     z-index: 999;
 }
 
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
@@ -39,13 +40,25 @@ body {
 
     color: #171717;
     text-decoration: none;
-    .logo img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
+
+    flex-shrink: 0;
 }
 
+.logo img {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    max-width: 26px;
+    max-height: 26px;
+    object-fit: contain;
+    display: block;
+}
+
+.logo span {
+    white-space: nowrap;
+}
+
+/* Navigation links */
 .nav-links a {
     color: #171717;
     text-decoration: none;
@@ -213,31 +226,7 @@ a {
     border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* Mobile */
-@media (max-width: 760px) {
-    .navbar {
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .nav-links {
-        text-align: center;
-    }
-
-    .nav-links a {
-        margin: 8px 12px;
-        display: inline-block;
-    }
-
-    .container {
-        width: 88%;
-        padding: 60px 0;
-    }
-
-    .card {
-        padding: 25px;
-    }
-}
+/* Contact grid */
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -271,15 +260,7 @@ a {
     word-break: break-word;
 }
 
-@media (max-width: 760px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-grid .wide-card {
-        grid-column: 1;
-    }
-}
+/* CV grid */
 .cv-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -327,7 +308,53 @@ a {
     margin-bottom: 8px;
 }
 
+/* Mobile */
 @media (max-width: 760px) {
+    .navbar {
+        flex-direction: column;
+        gap: 16px;
+        padding: 22px 6%;
+    }
+
+    .logo {
+        font-size: 21px;
+        letter-spacing: 2.5px;
+    }
+
+    .logo img {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        max-width: 22px;
+        max-height: 22px;
+    }
+
+    .nav-links {
+        text-align: center;
+    }
+
+    .nav-links a {
+        margin: 8px 12px;
+        display: inline-block;
+    }
+
+    .container {
+        width: 88%;
+        padding: 60px 0;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid .wide-card {
+        grid-column: 1;
+    }
+
     .cv-grid {
         grid-template-columns: 1fr;
     }
