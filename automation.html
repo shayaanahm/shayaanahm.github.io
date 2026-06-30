@@ -41,7 +41,7 @@
             </video>
             <div style="padding: 24px;">
                 <h3>Premier Properties</h3>
-                <p>AI automation workflow built for a local estate agent.</p>
+                <p>An end-to-end AI automation built for a local estate agent. When a new enquiry comes in, the system automatically qualifies the lead, sends a personalised response, and logs the contact — removing the need for manual follow-up and ensuring no enquiry goes unanswered.</p>
             </div>
         </div>
         <div class="card" style="margin-bottom: 0; padding: 0; overflow: hidden;">
@@ -50,7 +50,7 @@
             </video>
             <div style="padding: 24px;">
                 <h3>Spark Pro Electrical</h3>
-                <p>AI automation workflow built for a licensed electrical contractor.</p>
+                <p>A job intake and response automation built for a licensed electrical contractor. New job requests trigger an instant AI-generated reply, with job details automatically captured and routed to the right place — saving hours of admin per week.</p>
             </div>
         </div>
     </div>
@@ -59,20 +59,28 @@
     <h2 class="page-title" style="font-size: clamp(36px, 5vw, 60px); margin-top: 60px; margin-bottom: 16px;">Workflow Examples</h2>
     <p class="section-intro" style="margin-bottom: 40px;">A look at some of the n8n automation workflows I've built.</p>
 
-    <div class="cv-grid" style="margin-top: 0;">
+    <div class="cv-grid" style="margin-top: 0; margin-bottom: 26px;">
         <div class="card" style="margin-bottom: 0; padding: 0; overflow: hidden;">
             <img src="google-review-automation.png" alt="Google Review Automation workflow" style="width: 100%; display: block;">
             <div style="padding: 24px;">
                 <h3>Google Review Automation</h3>
-                <p>Automatically sends review request emails to customers after a set delay, with success and error logging.</p>
+                <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
             </div>
         </div>
         <div class="card" style="margin-bottom: 0; padding: 0; overflow: hidden;">
             <img src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" style="width: 100%; display: block;">
             <div style="padding: 24px;">
                 <h3>UK B2B Lead Generator</h3>
-                <p>Weekly automated pipeline that searches Google Places, enriches lead data, and inserts results directly into Supabase.</p>
+                <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
             </div>
+        </div>
+    </div>
+
+    <div class="card" style="padding: 0; overflow: hidden;">
+        <img src="email-triage-demo.png" alt="Email Triage Automation workflow" style="width: 100%; display: block;">
+        <div style="padding: 24px;">
+            <h3>AI Email Triage</h3>
+            <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
         </div>
     </div>
 
