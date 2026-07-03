@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Selected technical projects by Shayaan Ahmed — web development, automation and practical software systems.">
     <title>Projects | Shayaan Ahmed</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,9 +11,9 @@
 
 <nav class="navbar">
     <a class="logo" href="index.html">
-    <img src="JJBA.png" alt="Logo">
-    <span>Shayaan Ahmed</span>
-</a>
+        <img src="JJBA.png" alt="Logo">
+        <span>Shayaan Ahmed</span>
+    </a>
     <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="cv.html">CV</a>
@@ -25,13 +25,14 @@
 </nav>
 
 <main class="container">
+    <p class="small-label" style="text-align:center;">Selected Work</p>
     <h1 class="page-title">Projects</h1>
     <p class="section-intro">
         Selected technical projects focused on web development, automation, AI workflows,
         and practical software systems.
     </p>
 
-    <div class="card">
+    <div class="card reveal">
         <h3>BrawlBase — Full-Stack Martial Arts Search Platform</h3>
         <p><strong>Tech:</strong> Python, Flask, SQLAlchemy, HTML/CSS</p>
         <p>
@@ -40,16 +41,30 @@
             login, password hashing, sessions, user profiles, filtered search,
             service directories, messaging, and relational data models.
         </p>
-        <div style="margin-top: 22px;">
+        <div style="margin-top: 26px;">
             <a class="button" href="brawlbase-project.zip" download>Download Source Code</a>
             <a class="button" href="brawlbase-nea.pdf" target="_blank">View Full Development Report</a>
         </div>
     </div>
+
+    <div class="cta-band reveal">
+        <p class="small-label">Looking for automation work?</p>
+        <h2>See My <em>AI Automation</em> Portfolio</h2>
+        <p>Workflow builds, AI chatbots and automation systems — with live demos and workflow breakdowns.</p>
+        <a class="button button--solid" href="automation.html">View AI Automation</a>
+    </div>
 </main>
 
 <footer class="footer">
-    <p>© 2026 Shayaan Ahmed</p>
+    <div class="footer-links">
+        <a href="cv.html">CV</a>
+        <a href="projects.html">Projects</a>
+        <a href="automation.html">AI Automation</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2026 Shayaan Ahmed</p>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
