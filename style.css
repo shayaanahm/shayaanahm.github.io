@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
 
+/* ============================================================
+   Design tokens — 2026-07 "brand evolution" redesign.
+   Cream / terracotta / Playfair kept; editorial layout system.
+   ============================================================ */
 :root {
     --bg: #f6f1e8;
     --bg-card: #fffaf1;
@@ -7,8 +11,10 @@
     --ink-soft: #4a4640;
     --ink-muted: #6f665a;
     --line: rgba(23, 23, 23, 0.1);
-    --line-strong: rgba(23, 23, 23, 0.18);
+    --line-strong: rgba(23, 23, 23, 0.2);
     --accent: #b0532a;
+    --accent-soft: rgba(176, 83, 42, 0.08);
+    --accent-bright: #d97e55;
     --shadow: 0 18px 45px rgba(0, 0, 0, 0.05);
     --shadow-hover: 0 28px 60px rgba(0, 0, 0, 0.1);
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -44,9 +50,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(246, 241, 232, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    /* solid-ish bg instead of backdrop-filter: blur is a per-scroll-frame
+       repaint and the main source of scroll jank on integrated GPUs */
+    background: rgba(246, 241, 232, 0.96);
     border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;
@@ -58,7 +64,7 @@ body {
     align-items: center;
     gap: 12px;
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
+    font-size: 21px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--ink);
@@ -86,7 +92,7 @@ body {
 .nav-links a {
     color: var(--ink);
     text-decoration: none;
-    margin-left: 32px;
+    margin-left: 28px;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -100,7 +106,7 @@ body {
     content: "";
     width: 0;
     height: 1px;
-    background: var(--ink);
+    background: var(--accent);
     position: absolute;
     left: 0;
     bottom: 0;
@@ -121,46 +127,53 @@ body {
     width: 86%;
     max-width: 1180px;
     margin: auto;
-    padding: 90px 0;
+    padding: 96px 0;
 }
 
-/* ---------- Hero ---------- */
-.hero {
-    min-height: 82vh;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    position: relative;
-}
-
-.hero-inner {
-    width: 100%;
-}
-
+/* ---------- Small label (editorial kicker with dash) ---------- */
 .small-label {
     font-size: 12px;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     color: var(--ink-muted);
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
-.hero .small-label {
-    display: inline-block;
-    padding: 10px 22px;
-    border: 1px solid var(--line-strong);
-    border-radius: 100px;
+.small-label::before {
+    content: "";
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+}
+
+/* ---------- Hero (asymmetric editorial) ---------- */
+.hero {
+    min-height: 84vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 64px;
+    align-items: end;
+    width: 100%;
 }
 
 .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(56px, 9vw, 118px);
-    line-height: 1.02;
+    font-size: clamp(60px, 10vw, 132px);
+    line-height: 0.98;
     font-weight: 500;
-    max-width: 1000px;
-    margin: 0 auto 32px;
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
+    margin-bottom: 40px;
 }
 
 .hero h1 em {
@@ -169,21 +182,46 @@ body {
 }
 
 .hero p {
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 560px;
     font-size: 19px;
     color: var(--ink-soft);
 }
 
 .hero-buttons {
-    margin-top: 46px;
+    margin-top: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-meta {
+    border-left: 1px solid var(--line-strong);
+    padding-left: 32px;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.hero-meta .meta-item .k {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.hero-meta .meta-item .v {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 19px;
 }
 
 .hero-scroll {
     position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 32px;
+    left: 0;
     font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -198,21 +236,25 @@ body {
 }
 
 @keyframes bob {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, 8px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
 }
 
 /* Staggered hero entrance */
-.hero-inner > * {
+.hero-copy > *,
+.hero-meta > * {
     opacity: 0;
     transform: translateY(26px);
     animation: rise 0.9s var(--ease) forwards;
 }
 
-.hero-inner > *:nth-child(1) { animation-delay: 0.05s; }
-.hero-inner > *:nth-child(2) { animation-delay: 0.18s; }
-.hero-inner > *:nth-child(3) { animation-delay: 0.32s; }
-.hero-inner > *:nth-child(4) { animation-delay: 0.46s; }
+.hero-copy > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-copy > *:nth-child(2) { animation-delay: 0.18s; }
+.hero-copy > *:nth-child(3) { animation-delay: 0.32s; }
+.hero-copy > *:nth-child(4) { animation-delay: 0.46s; }
+.hero-meta > *:nth-child(1) { animation-delay: 0.5s; }
+.hero-meta > *:nth-child(2) { animation-delay: 0.6s; }
+.hero-meta > *:nth-child(3) { animation-delay: 0.7s; }
 
 @keyframes rise {
     to { opacity: 1; transform: translateY(0); }
@@ -221,7 +263,7 @@ body {
 /* ---------- Buttons ---------- */
 .button {
     display: inline-block;
-    padding: 15px 32px;
+    padding: 16px 32px;
     border: 1px solid var(--ink);
     color: var(--ink);
     text-decoration: none;
@@ -229,7 +271,6 @@ body {
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin: 8px;
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -255,48 +296,76 @@ body {
     transform: scaleY(1);
 }
 
-.button--solid {
-    background: var(--ink);
-    color: var(--bg);
-}
-
-.button--solid::before {
-    background: var(--accent);
-    transform: scaleY(0);
-}
-
-.button--solid:hover {
-    color: #fff;
+/* Accent variant — still outlined; used for the single primary CTA of a page */
+.button--accent {
     border-color: var(--accent);
+    color: var(--accent);
 }
 
-/* ---------- Page headings ---------- */
+.button--accent::before {
+    background: var(--accent);
+}
+
+.button--accent:hover {
+    color: #fff;
+}
+
+/* ---------- Page header (editorial, left-aligned) ---------- */
 .page-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(48px, 7vw, 88px);
+    font-size: clamp(52px, 8vw, 104px);
     font-weight: 500;
-    line-height: 1.05;
-    text-align: center;
-    margin-bottom: 25px;
+    line-height: 1.0;
     letter-spacing: -0.5px;
+    margin-bottom: 24px;
+}
+
+.page-title em {
+    font-style: italic;
+    color: var(--accent);
 }
 
 .section-intro {
-    max-width: 720px;
-    margin: 0 auto 60px;
-    text-align: center;
+    max-width: 680px;
+    margin-bottom: 64px;
     font-size: 18px;
     color: var(--ink-soft);
 }
 
+.page-header {
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: 72px;
+}
+
+.page-header .section-intro {
+    margin-bottom: 0;
+}
+
+.page-header .page-actions {
+    margin-top: 40px;
+}
+
+/* ---------- Section headings (editorial row) ---------- */
+.section-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 32px;
+    margin: 96px 0 56px;
+}
+
+.section-row:first-child,
+.section-row.tight {
+    margin-top: 0;
+}
+
 .section-heading {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(34px, 5vw, 56px);
+    font-size: clamp(38px, 5.5vw, 64px);
     font-weight: 500;
-    line-height: 1.1;
-    text-align: center;
-    margin: 90px 0 14px;
-    letter-spacing: -0.3px;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
 }
 
 .section-heading::before {
@@ -312,27 +381,124 @@ body {
 }
 
 .section-sub {
-    max-width: 640px;
-    margin: 0 auto 46px;
-    text-align: center;
-    font-size: 17px;
+    max-width: 380px;
+    font-size: 16px;
     color: var(--ink-soft);
+    padding-bottom: 8px;
+}
+
+/* ---------- Index rows (editorial list) ---------- */
+.index-list {
+    border-top: 1px solid var(--line-strong);
+}
+
+.index-row {
+    display: grid;
+    grid-template-columns: 96px 1fr 1.2fr 48px;
+    gap: 40px;
+    align-items: center;
+    padding: 48px 0;
+    border-bottom: 1px solid var(--line-strong);
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+    transition: background 0.4s;
+}
+
+/* slide the CONTENT with a transform (GPU) — never animate padding (reflow) */
+.index-row > * {
+    transition: transform 0.4s var(--ease);
+    will-change: transform;
+}
+
+.index-row:hover {
+    background: var(--accent-soft);
+}
+
+.index-row:hover > * {
+    transform: translateX(24px);
+}
+
+.index-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--accent);
+}
+
+.index-row h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.3px;
+}
+
+.index-body p {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+}
+
+.index-arrow {
+    font-size: 22px;
+    color: var(--ink-muted);
+    justify-self: end;
+    transition: transform 0.4s var(--ease), color 0.4s;
+}
+
+.index-row:hover .index-arrow {
+    transform: translateX(24px) translate(4px, -4px);
+    color: var(--accent);
 }
 
 /* ---------- Cards ---------- */
 .card {
     background: var(--bg-card);
     border: 1px solid var(--line);
-    padding: 38px;
-    margin-bottom: 26px;
+    padding: 40px;
+    margin-bottom: 24px;
     box-shadow: var(--shadow);
-    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), border-color 0.45s var(--ease);
+    position: relative;
+    transition: transform 0.45s var(--ease), border-color 0.45s var(--ease);
+    will-change: transform;
+}
+
+/* hover shadow is a pre-rendered layer whose OPACITY animates —
+   animating box-shadow itself repaints every frame and stutters */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: var(--shadow-hover);
+    opacity: 0;
+    transition: opacity 0.45s var(--ease);
+    pointer-events: none;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease);
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
     border-color: var(--line-strong);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover::after {
+    transform: scaleX(1);
 }
 
 .card h3 {
@@ -347,8 +513,8 @@ body {
     font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    margin-top: 22px;
-    margin-bottom: 5px;
+    margin-top: 24px;
+    margin-bottom: 4px;
 }
 
 .card p {
@@ -358,16 +524,21 @@ body {
 .card-number {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 17px;
+    font-size: 18px;
     color: var(--accent);
     display: block;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 /* Media cards (videos / screenshots) */
 .media-card {
     padding: 0;
     overflow: hidden;
+}
+
+.media-card::before,
+.media-card::after {
+    display: none;
 }
 
 .media-card video,
@@ -386,14 +557,14 @@ body {
 }
 
 .media-card .media-body {
-    padding: 28px;
+    padding: 32px;
 }
 
 /* ---------- Tags ---------- */
 .tag {
     display: inline-block;
     border: 1px solid var(--line-strong);
-    padding: 7px 14px;
+    padding: 6px 14px;
     margin: 6px 6px 0 0;
     font-size: 11px;
     font-weight: 500;
@@ -431,7 +602,7 @@ a {
 .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 26px;
+    gap: 24px;
 }
 
 .grid-2 .card {
@@ -447,8 +618,8 @@ a {
 .cv-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 26px;
-    margin-top: 45px;
+    gap: 24px;
+    margin-top: 48px;
 }
 
 .contact-grid .card,
@@ -462,7 +633,7 @@ a {
 }
 
 .contact-grid .card {
-    min-height: 210px;
+    min-height: 216px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -496,13 +667,13 @@ a {
     font-size: 13px;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     color: var(--ink-muted);
 }
 
 .experience-item {
-    margin-bottom: 30px;
-    padding-left: 22px;
+    margin-bottom: 32px;
+    padding-left: 24px;
     border-left: 2px solid var(--line);
     transition: border-color 0.4s;
 }
@@ -523,21 +694,26 @@ a {
     margin-bottom: 8px;
 }
 
-/* ---------- CTA band ---------- */
+/* ---------- CTA band (editorial, hairline-framed — consistent with the page) ---------- */
 .cta-band {
     text-align: center;
-    margin-top: 100px;
-    padding: 70px 40px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    margin-top: 112px;
+    padding: 88px 40px;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+}
+
+.cta-band .small-label {
+    justify-content: center;
+    margin-bottom: 24px;
 }
 
 .cta-band h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 5vw, 64px);
+    font-size: clamp(40px, 6vw, 76px);
     font-weight: 500;
-    line-height: 1.1;
-    margin-bottom: 22px;
+    line-height: 1.05;
+    margin-bottom: 24px;
 }
 
 .cta-band h2 em {
@@ -546,16 +722,29 @@ a {
 }
 
 .cta-band p {
-    max-width: 540px;
-    margin: 0 auto 38px;
+    max-width: 520px;
+    margin: 0 auto 44px;
     font-size: 18px;
     color: var(--ink-soft);
+}
+
+.cta-band .button {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.cta-band .button::before {
+    background: var(--accent);
+}
+
+.cta-band .button:hover {
+    color: #fff;
 }
 
 /* ---------- Footer ---------- */
 .footer {
     text-align: center;
-    padding: 42px 8%;
+    padding: 44px 8%;
     font-size: 12px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -564,7 +753,7 @@ a {
 }
 
 .footer-links {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .footer-links a {
@@ -595,7 +784,7 @@ a {
 .reveal:nth-child(4) { transition-delay: 0.24s; }
 
 @media (prefers-reduced-motion: reduce) {
-    .reveal, .hero-inner > * {
+    .reveal, .hero-copy > *, .hero-meta > * {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
@@ -612,7 +801,7 @@ a {
     }
 
     .logo {
-        font-size: 20px;
+        font-size: 19px;
         letter-spacing: 2.5px;
     }
 
@@ -627,19 +816,67 @@ a {
 
     .container {
         width: 88%;
-        padding: 60px 0;
+        padding: 64px 0;
     }
 
     .hero {
-        min-height: 70vh;
+        min-height: 74vh;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-meta {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 24px;
+        border-left: none;
+        border-top: 1px solid var(--line-strong);
+        padding: 24px 0 0;
     }
 
     .hero-scroll {
         display: none;
     }
 
+    .page-header {
+        padding-bottom: 32px;
+        margin-bottom: 48px;
+    }
+
+    .section-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin: 64px 0 40px;
+    }
+
+    .section-sub {
+        padding-bottom: 0;
+    }
+
+    .index-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 36px 0;
+    }
+
+    .index-arrow {
+        display: none;
+    }
+
+    .index-row:hover > * {
+        transform: none;
+    }
+
     .card {
-        padding: 26px;
+        padding: 28px;
+    }
+
+    .media-card .media-body {
+        padding: 24px;
     }
 
     .grid-2,
@@ -655,6 +892,7 @@ a {
     }
 
     .cta-band {
-        padding: 50px 20px;
+        padding: 64px 24px;
+        margin-top: 80px;
     }
 }
