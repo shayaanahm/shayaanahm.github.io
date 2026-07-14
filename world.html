@@ -968,11 +968,16 @@ function run(renderer) {
     space.style.height = (FLIGHT_VH * 100) + 'vh';
 
     // scroll is sampled once per rendered frame (in frame()) instead of via a
-    // scroll listener — input and render can never be a frame apart
-    let target = 0, smooth = 0;
+    // scroll listener — input and render can never be a frame apart.
+    // scrollMax is cached: reading scrollHeight per frame forces a reflow
+    // right after the previous frame's style writes.
+    let target = 0, smooth = 0, scrollMax = 0;
+    function measureScroll() {
+        scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+    }
+    measureScroll();
     function readScroll() {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        target = max > 0 ? window.scrollY / max : 0;
+        target = scrollMax > 0 ? window.scrollY / scrollMax : 0;
     }
 
     /* ---------- overlay wiring ---------- */
@@ -986,8 +991,7 @@ function run(renderer) {
     const stops = [0, ...lingerAt, 1];
     const stopNames = ['Overview', 'AI Automation', 'Projects', 'CV', 'Contact', 'Finale'];
     function flyTo(s) {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo({ top: s * max, behavior: 'smooth' });
+        window.scrollTo({ top: s * scrollMax, behavior: 'smooth' });
     }
     const dots = stops.map((s, i) => {
         const b = document.createElement('button');
@@ -1012,7 +1016,7 @@ function run(renderer) {
         b.tabIndex = -1;
         b.addEventListener('click', () => flyTo(mk.stop));
         markersWrap.appendChild(b);
-        return { ...mk, el: b };
+        return { ...mk, el: b, lastO: -1, lastLive: false, lastActive: false };
     });
     /* wayfinding pins: a marker shows while its island is on screen and at a
        readable distance — hidden once you've arrived (the copy takes over) or
@@ -1034,15 +1038,27 @@ function run(renderer) {
                 * clamp01((dist - 12) / 6)             // hide once you've arrived
                 * clamp01((70 - dist) / 15);           // hide while deep in the fog
             if (proj.z > 1) o = 0;
-            mk.el.style.opacity = o;
-            mk.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+            // skip all DOM writes while a pin stays hidden — style writes every
+            // frame are what makes scrubbing janky
+            if (o === 0 && mk.lastO === 0) return;
+            if (Math.abs(o - mk.lastO) > 0.005 || o > 0) {
+                mk.el.style.opacity = o;
+                mk.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+            }
+            mk.lastO = o;
             const live = o > 0.35;
-            mk.el.style.pointerEvents = live ? 'auto' : 'none';
-            mk.el.tabIndex = live ? 0 : -1;
+            if (live !== mk.lastLive) {
+                mk.lastLive = live;
+                mk.el.style.pointerEvents = live ? 'auto' : 'none';
+                mk.el.tabIndex = live ? 0 : -1;
+            }
             const active = live && i === ni;
-            mk.el.classList.toggle('active', active);
-            if (active) mk.el.setAttribute('aria-current', 'true');
-            else mk.el.removeAttribute('aria-current');
+            if (active !== mk.lastActive) {
+                mk.lastActive = active;
+                mk.el.classList.toggle('active', active);
+                if (active) mk.el.setAttribute('aria-current', 'true');
+                else mk.el.removeAttribute('aria-current');
+            }
         });
     }
 
@@ -1128,6 +1144,7 @@ function run(renderer) {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        measureScroll();
     });
 
     readScroll();
