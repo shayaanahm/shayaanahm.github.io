@@ -1,425 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Scroll to fly through a miniature 3D world of Shayaan Ahmed's portfolio — built live in the browser with Three.js.">
-<title>The World | Shayaan Ahmed</title>
-<style>
-/* Scoped to this page — the world experience has its own chrome.
-   Technique adapted from the open-source scroll-world skill (scroll drives a
-   continuous camera flight), rendered live with Three.js instead of
-   pre-generated video, so it costs nothing to run. */
-:root {
-    --bg: #f6f1e8;
-    --ink: #171717;
-    --ink-soft: #4a4640;
-    --ink-muted: #6f665a;
-    --line: rgba(23, 23, 23, 0.12);
-    --line-strong: rgba(23, 23, 23, 0.2);
-    --accent: #b0532a;
-    --ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: auto; }
-body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-}
-
-canvas#gl {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    z-index: 0;
-}
-
-/* scroll driver — its height defines the flight duration */
-.scroll-space { position: relative; z-index: 1; pointer-events: none; }
-
-/* ---------- overlay chrome ---------- */
-.topbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 5%;
-    z-index: 30;
-}
-.topbar .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.topbar .brand img { width: 22px; height: 22px; object-fit: contain; }
-.topbar .back {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    text-decoration: none;
-    border: 1px solid var(--line-strong);
-    padding: 10px 20px;
-    border-radius: 100px;
-    background: rgba(246, 241, 232, 0.8);
-    transition: color 0.3s, border-color 0.3s;
-}
-.topbar .back:hover { color: var(--accent); border-color: var(--accent); }
-
-.progress {
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    width: 100%;
-    z-index: 40;
-    background: transparent;
-}
-.progress span {
-    display: block;
-    height: 100%;
-    width: 100%;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
-/* route rail */
-.rail {
-    position: fixed;
-    right: 4px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    z-index: 30;
-}
-/* buttons are 44px touch targets; the visible 10px dot is the ::before */
-.rail button {
-    width: 44px; height: 44px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
-    display: grid;
-    place-items: center;
-}
-.rail button::before {
-    content: "";
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--ink-muted);
-    background: transparent;
-    transition: background 0.3s, border-color 0.3s, transform 0.3s;
-}
-.rail button.on::before {
-    background: var(--accent);
-    border-color: var(--accent);
-    transform: scale(1.3);
-}
-.rail button:focus-visible {
-    outline: 2px dashed var(--accent);
-    outline-offset: -8px;
-    border-radius: 50%;
-}
-
-/* in-world island markers — DOM dots projected onto each island per frame */
-.markers {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    pointer-events: none;
-}
-.marker {
-    position: absolute;
-    left: 0; top: 0;
-    width: 44px; height: 44px;
-    margin: -22px 0 0 -22px;
-    border: none;
-    background: transparent;
-    padding: 0;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-    will-change: transform, opacity;
-}
-.marker::before {
-    content: "";
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--ink-muted);
-    background: rgba(246, 241, 232, 0.75);
-    transition: width 0.2s var(--ease), height 0.2s var(--ease),
-        background 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-.marker.active::before {
-    width: 16px; height: 16px;
-    border-color: var(--accent);
-    background: var(--accent);
-    box-shadow: 0 0 10px rgba(176, 83, 42, 0.45);
-    animation: markerPulse 1.6s var(--ease) infinite;
-}
-@keyframes markerPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-}
-.marker:focus-visible {
-    outline: 2px dashed var(--accent);
-    outline-offset: -8px;
-    border-radius: 50%;
-    opacity: 1;
-}
-
-/* pinned copy */
-.copy {
-    position: fixed;
-    left: 5%;
-    bottom: 9vh;
-    max-width: 460px;
-    z-index: 20;
-    opacity: 0;
-    transform: translateY(24px);
-    pointer-events: none;
-    will-change: opacity, transform;
-}
-.copy.center {
-    left: 50%;
-    bottom: auto;
-    top: 50%;
-    transform: translate(-50%, -46%);
-    text-align: center;
-    max-width: 720px;
-}
-.copy .eyebrow {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 14px;
-}
-.copy h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(34px, 5vw, 58px);
-    font-weight: 500;
-    line-height: 1.05;
-    margin-bottom: 14px;
-    text-shadow: 0 1px 0 var(--bg);
-}
-.copy.center h2 { font-size: clamp(44px, 7.5vw, 92px); }
-.copy h2 em { font-style: italic; color: var(--accent); }
-.copy p {
-    color: var(--ink-soft);
-    font-size: 16px;
-    margin-bottom: 22px;
-    text-shadow: 0 1px 0 var(--bg);
-}
-.copy .go {
-    display: inline-block;
-    pointer-events: auto;
-    padding: 13px 28px;
-    border: 1px solid var(--ink);
-    color: var(--ink);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: rgba(246, 241, 232, 0.8);
-    transition: background 0.3s, color 0.3s, border-color 0.3s;
-}
-.copy .go:hover { background: var(--ink); color: var(--bg); }
-.copy .go.accent { border-color: var(--accent); color: var(--accent); }
-.copy .go.accent:hover { background: var(--accent); color: #fff; }
-
-.hint {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    z-index: 20;
-    animation: bob 2.4s ease-in-out infinite;
-    transition: opacity 0.5s;
-}
-@keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
-
-/* ---------- static fallback (reduced motion / no WebGL) ---------- */
-.fallback { display: none; }
-body.static canvas#gl, body.static .scroll-space, body.static .rail,
-body.static .hint, body.static .progress, body.static .copy,
-body.static .markers { display: none; }
-body.static .fallback {
-    display: block;
-    width: 86%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 140px 0 96px;
-}
-.fallback h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(44px, 8vw, 84px);
-    font-weight: 500;
-    line-height: 1.02;
-    margin-bottom: 16px;
-}
-.fallback h1 em { font-style: italic; color: var(--accent); }
-.fallback > p { color: var(--ink-soft); margin-bottom: 56px; max-width: 620px; }
-.fallback a.row {
-    display: block;
-    padding: 32px 0;
-    border-top: 1px solid var(--line-strong);
-    text-decoration: none;
-    color: var(--ink);
-}
-.fallback a.row:last-of-type { border-bottom: 1px solid var(--line-strong); }
-.fallback a.row .eyebrow {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent); font-weight: 600;
-}
-.fallback a.row h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px; font-weight: 500; margin: 4px 0 6px;
-}
-.fallback a.row p { color: var(--ink-soft); font-size: 15px; }
-
-@media (max-width: 760px) {
-    .copy { left: 6%; right: 6%; max-width: none; bottom: 10vh; }
-    .rail { right: 0; }
-    .markers { display: none; }
-    .topbar { padding: 16px 5%; }
-}
-</style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap">
-<!-- Cloudflare Web Analytics -->
-<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49c367f5f02a4841b81947715812f661"}'></script>
-<!-- End Cloudflare Web Analytics -->
-</head>
-<body>
-
-<canvas id="gl"></canvas>
-<div class="scroll-space" id="space"></div>
-
-<div class="progress"><span id="bar"></span></div>
-
-<div class="topbar">
-    <a class="brand" href="index.html"><img src="JJBA.png" alt=""><span>Shayaan Ahmed</span></a>
-    <a class="back" href="index.html">Back to site</a>
-</div>
-
-<nav class="rail" id="rail" aria-label="Flight stops"></nav>
-<div class="markers" id="markers"></div>
-
-<!-- pinned copy blocks; shown/hidden by scroll progress -->
-<div class="copy center" data-band="0.00,0.075">
-    <p class="eyebrow">A portfolio, as a world</p>
-    <h2>Fly through<br><em>my work</em></h2>
-    <p>One continuous camera flight through a miniature world built live in your browser — no video, just code.</p>
-</div>
-
-<div class="copy" data-band="0.10,0.30">
-    <p class="eyebrow">Freelance Services</p>
-    <h2>AI <em>Automation</em></h2>
-    <p>Intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup — with live demos and workflow breakdowns.</p>
-    <a class="go" href="automation.html">View AI Automation</a>
-</div>
-
-<div class="copy" data-band="0.34,0.52">
-    <p class="eyebrow">Selected Work</p>
-    <h2><em>Projects</em></h2>
-    <p>BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy, with downloadable source code and a full development report.</p>
-    <a class="go" href="projects.html">View Projects</a>
-</div>
-
-<div class="copy" data-band="0.56,0.74">
-    <p class="eyebrow">Curriculum Vitae</p>
-    <h2>The <em>CV</em></h2>
-    <p>Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses.</p>
-    <a class="go" href="cv.html">View CV</a>
-</div>
-
-<div class="copy" data-band="0.78,0.93">
-    <p class="eyebrow">Say Hello</p>
-    <h2>Let's <em>Connect</em></h2>
-    <p>Open to opportunities, projects, collaborations and technical work.</p>
-    <a class="go accent" href="contact.html">Contact Me</a>
-</div>
-
-<div class="copy center" data-band="0.95,1.0">
-    <p class="eyebrow">End of the flight</p>
-    <h2>The whole <em>world</em></h2>
-    <p>Built with Three.js and one scroll listener.</p>
-    <a class="go accent" href="contact.html">Get in Touch</a>
-</div>
-
-<p class="hint" id="hint">Scroll to fly</p>
-
-<!-- static fallback for reduced-motion / no-WebGL -->
-<div class="fallback">
-    <h1>The <em>World</em></h1>
-    <p>The interactive flythrough needs motion and WebGL, so here is the plain version — the same four stops as links.</p>
-    <a class="row" href="automation.html">
-        <span class="eyebrow">Freelance Services</span>
-        <h3>AI Automation</h3>
-        <p>Intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup.</p>
-    </a>
-    <a class="row" href="projects.html">
-        <span class="eyebrow">Selected Work</span>
-        <h3>Projects</h3>
-        <p>BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy.</p>
-    </a>
-    <a class="row" href="cv.html">
-        <span class="eyebrow">Curriculum Vitae</span>
-        <h3>CV</h3>
-        <p>Education, work experience, key skills and certifications.</p>
-    </a>
-    <a class="row" href="contact.html">
-        <span class="eyebrow">Say Hello</span>
-        <h3>Contact</h3>
-        <p>Open to opportunities, projects, collaborations and technical work.</p>
-    </a>
-</div>
-
-<script type="module">
+/* ===== #world — pinned 3D flythrough =====
+ * Loaded from the repo root: <script type="module" src="world-section.js"></script>
+ *
+ * Scene, camera curves and adaptive-quality logic are lifted from the old
+ * standalone world.html. What changed: the flight no longer owns the page
+ * scroll. A pin engine calls back with this section's own progress (0→1) and we
+ * map that onto the camera path. Renders only while the stage is near the
+ * viewport — the page has plenty of other content to keep smooth.
+ */
 import * as THREE from './vendor/three.module.min.js';
 
-const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const canvas = document.getElementById('gl');
+const section = document.querySelector('#world');
+const track = document.querySelector('#world-track');
 
-function goStatic() { document.body.classList.add('static'); }
+if (section && track) {
+    const stage = section.querySelector('.world-stage');
+    const canvas = section.querySelector('.world-gl');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (reduce) { goStatic(); }
-else {
-    let renderer;
-    try {
-        renderer = new THREE.WebGLRenderer({
-            canvas,
-            antialias: true,
-            powerPreference: 'high-performance',
-        });
-    } catch (e) { renderer = null; }
-    if (!renderer) { goStatic(); }
-    else { run(renderer); }
+    const goStatic = () => section.classList.add('world-static');
+
+    if (reduce) {
+        goStatic();
+    } else {
+        let renderer = null;
+        try {
+            renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+                powerPreference: 'high-performance',
+            });
+        } catch (e) { renderer = null; }
+        // a renderer can construct and still have no usable context
+        if (!renderer || !renderer.getContext()) goStatic();
+        else run(renderer, stage, track, section);
+    }
 }
 
-function run(renderer) {
+function run(renderer, stage, track, section) {
     /* ---------- palette (brand) ---------- */
     const CREAM  = 0xf6f1e8;
     const PAPER  = 0xfffaf1;
@@ -433,10 +50,15 @@ function run(renderer) {
     const WOOD   = 0x9a7b57;
     const WHITE  = 0xffffff;
 
+    /* ---------- sizing: the stage, not the window ---------- */
+    let W = stage.clientWidth || window.innerWidth;
+    let H = stage.clientHeight || window.innerHeight;
+
     // DPR 1.5 cap: retina sharpness costs 4x the pixels; 1.5 is indistinguishable
     // at this art style and keeps weak GPUs at 60fps
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    let dprCap = 1.5;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, dprCap));
+    renderer.setSize(W, H, false);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFShadowMap; // cheaper than PCFSoft
 
@@ -459,7 +81,7 @@ function run(renderer) {
     }
     scene.fog = new THREE.Fog(CREAM, 34, 120);
 
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 220);
+    const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 220);
 
     /* ---------- light ---------- */
     scene.add(new THREE.HemisphereLight(0xfff6e8, 0xd8cbb4, 1.1));
@@ -907,7 +529,7 @@ function run(renderer) {
 
     /* dust motes */
     const dustGeo = new THREE.BufferGeometry();
-    const dustN = window.innerWidth < 760 ? 200 : 400;
+    const dustN = W < 760 ? 200 : 400;
     const dustArr = new Float32Array(dustN * 3);
     for (let i = 0; i < dustN; i++) {
         dustArr[i * 3] = -20 + Math.random() * 60;
@@ -954,120 +576,39 @@ function run(renderer) {
         new THREE.Vector3(8, 3, -35),      // finale: the whole world
     ], false, 'centripetal', 0.4);
 
-    /* linger: slow the camera exactly where the copy peaks (skill's `linger` knob) */
-    const lingerAt = [0.185, 0.42, 0.645, 0.855];
+    /* linger: slow the camera exactly where the copy peaks.
+       Retimed for the 400vh track — the old page gave the flight 8 viewport
+       heights, so a 0.028 hold was ~22vh of scroll. At 4vh total the same
+       fraction would stall the camera dead, so both the hold depth and its
+       window are tightened to keep the flight brisk but still "arrive". */
+    const lingerAt = [0.185, 0.42, 0.645, 0.855];  // centres of the four copy bands
+    const LINGER_W = 0.07;    // half-width of each hold, in section progress
+    const LINGER_D = 0.018;   // how much path progress the hold gives back
     function remap(p) {
         let out = p;
         for (const c of lingerAt) {
-            const d = (p - c) / 0.085;
-            if (Math.abs(d) < 1) out -= 0.028 * Math.sin(d * Math.PI);
+            const d = (p - c) / LINGER_W;
+            if (Math.abs(d) < 1) out -= LINGER_D * Math.sin(d * Math.PI);
         }
         return Math.min(1, Math.max(0, out));
     }
 
-    /* ---------- scroll scrub ---------- */
-    const space = document.getElementById('space');
-    const FLIGHT_VH = 8;   // total scroll length in viewport-heights (shorter = brisker flight)
-    space.style.height = (FLIGHT_VH * 100) + 'vh';
-
-    // scroll is sampled once per rendered frame (in frame()) instead of via a
-    // scroll listener — input and render can never be a frame apart.
-    // scrollMax is cached: reading scrollHeight per frame forces a reflow
-    // right after the previous frame's style writes.
-    let target = 0, smooth = 0, scrollMax = 0;
-    function measureScroll() {
-        scrollMax = document.documentElement.scrollHeight - window.innerHeight;
-    }
-    measureScroll();
-    function readScroll() {
-        target = scrollMax > 0 ? window.scrollY / scrollMax : 0;
-    }
-
-    /* ---------- overlay wiring ---------- */
-    const copies = Array.from(document.querySelectorAll('.copy')).map((el) => {
+    /* ---------- overlay wiring (bands are this section's own 0–1) ---------- */
+    const copies = Array.from(section.querySelectorAll('.world-copy')).map((el) => {
         const [a, b] = el.dataset.band.split(',').map(Number);
-        return { el, a, b, gos: Array.from(el.querySelectorAll('.go')), center: el.classList.contains('center'), lastO: -1 };
+        return {
+            el, a, b,
+            gos: Array.from(el.querySelectorAll('.world-go')),
+            center: el.classList.contains('world-copy--center'),
+            lastO: -1,
+        };
     });
-    const bar = document.getElementById('bar');
-    const hint = document.getElementById('hint');
-    const rail = document.getElementById('rail');
-    const stops = [0, ...lingerAt, 1];
-    const stopNames = ['Overview', 'AI Automation', 'Projects', 'CV', 'Contact', 'Finale'];
-    function flyTo(s) {
-        window.scrollTo({ top: s * scrollMax, behavior: 'smooth' });
-    }
-    const dots = stops.map((s, i) => {
-        const b = document.createElement('button');
-        b.setAttribute('aria-label', 'Fly to ' + stopNames[i]);
-        b.addEventListener('click', () => flyTo(s));
-        rail.appendChild(b);
-        return b;
-    });
-
-    /* in-world markers: one dot per island, projected to screen space each
-       frame so the UI is anchored to the 3D content it names */
-    const markersWrap = document.getElementById('markers');
-    const markers = [
-        { name: 'AI Automation', stop: lingerAt[0], pos: new THREE.Vector3(0, 4.8, 0) },
-        { name: 'Projects', stop: lingerAt[1], pos: new THREE.Vector3(26, 6, -22) },
-        { name: 'CV', stop: lingerAt[2], pos: new THREE.Vector3(-8, 9, -46) },
-        { name: 'Contact', stop: lingerAt[3], pos: new THREE.Vector3(16, 12.3, -70) },
-    ].map((mk) => {
-        const b = document.createElement('button');
-        b.className = 'marker';
-        b.setAttribute('aria-label', 'Fly to ' + mk.name);
-        b.tabIndex = -1;
-        b.addEventListener('click', () => flyTo(mk.stop));
-        markersWrap.appendChild(b);
-        return { ...mk, el: b, lastO: -1, lastLive: false, lastActive: false };
-    });
-    /* wayfinding pins: a marker shows while its island is on screen and at a
-       readable distance — hidden once you've arrived (the copy takes over) or
-       when the island is still lost in the fog. The pin for the nearest stop
-       pulses, marking where the flight is headed. */
-    const proj = new THREE.Vector3();
-    const clamp01 = (v) => Math.max(0, Math.min(1, v));
-    function updateMarkers(p) {
-        const w = window.innerWidth, h = window.innerHeight;
-        // the pin that pulses is the next stop ahead of the current position
-        let ni = markers.findIndex((mk) => mk.stop > p + 0.02);
-        markers.forEach((mk, i) => {
-            proj.copy(mk.pos).project(camera);
-            const x = (proj.x * 0.5 + 0.5) * w;
-            const y = (-proj.y * 0.5 + 0.5) * h;
-            const edge = Math.max(Math.abs(proj.x), Math.abs(proj.y));
-            const dist = camera.position.distanceTo(mk.pos);
-            let o = clamp01((0.92 - edge) / 0.12)      // fade out at the frame edges
-                * clamp01((dist - 12) / 6)             // hide once you've arrived
-                * clamp01((70 - dist) / 15);           // hide while deep in the fog
-            if (proj.z > 1) o = 0;
-            // skip all DOM writes while a pin stays hidden — style writes every
-            // frame are what makes scrubbing janky
-            if (o === 0 && mk.lastO === 0) return;
-            if (Math.abs(o - mk.lastO) > 0.005 || o > 0) {
-                mk.el.style.opacity = o;
-                mk.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
-            }
-            mk.lastO = o;
-            const live = o > 0.35;
-            if (live !== mk.lastLive) {
-                mk.lastLive = live;
-                mk.el.style.pointerEvents = live ? 'auto' : 'none';
-                mk.el.tabIndex = live ? 0 : -1;
-            }
-            const active = live && i === ni;
-            if (active !== mk.lastActive) {
-                mk.lastActive = active;
-                mk.el.classList.toggle('active', active);
-                if (active) mk.el.setAttribute('aria-current', 'true');
-                else mk.el.removeAttribute('aria-current');
-            }
-        });
-    }
+    const hint = section.querySelector('.world-hint');
+    let lastHint = -1;
 
     function updateOverlay(p) {
-        bar.style.transform = `scaleX(${p})`;
-        hint.style.opacity = p < 0.02 ? 1 : 0;
+        const ho = p < 0.03 ? 1 : 0;
+        if (ho !== lastHint) { hint.style.opacity = ho; lastHint = ho; }
         copies.forEach((c) => {
             const { el, a, b, gos, center } = c;
             const f = 0.22 * (b - a);
@@ -1085,16 +626,9 @@ function run(renderer) {
                 ? `translate(-50%, calc(-46% + ${dy}px))`
                 : `translateY(${dy}px)`;
             // gate clicks on the links, not the container: the copy's box must
-            // never swallow clicks meant for the world (or the island pins)
+            // never swallow clicks meant for the world
             const on = o > 0.5 ? 'auto' : 'none';
             gos.forEach((g) => { g.style.pointerEvents = on; });
-        });
-        let ni = 0;
-        stops.forEach((s, i) => { if (Math.abs(p - s) < Math.abs(p - stops[ni])) ni = i; });
-        dots.forEach((d, i) => {
-            d.classList.toggle('on', i === ni);
-            if (i === ni) d.setAttribute('aria-current', 'true');
-            else d.removeAttribute('aria-current');
         });
     }
 
@@ -1112,47 +646,82 @@ function run(renderer) {
                 scene.traverse((o) => { o.castShadow = false; o.receiveShadow = false; });
             } else if (fps < 45 && qualityLevel === 1) {
                 qualityLevel = 0;                 // 2nd cut: render at 1x pixels
+                dprCap = 1;
                 renderer.setPixelRatio(1);
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize(W, H, false);
             }
         }
     }
 
-    /* ---------- frame loop ---------- */
+    /* ---------- resize: track the stage box, not the window ---------- */
+    let resizePending = false;
+    function resize() {
+        W = stage.clientWidth || window.innerWidth;
+        H = stage.clientHeight || window.innerHeight;
+        camera.aspect = W / H;
+        camera.updateProjectionMatrix();
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, dprCap));
+        renderer.setSize(W, H, false);
+        resizePending = false;
+    }
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(() => {
+            if (resizePending) return;
+            resizePending = true;
+            requestAnimationFrame(resize);
+        }).observe(stage);
+    } else {
+        window.addEventListener('resize', resize);
+    }
+    resize();
+
+    /* ---------- draw, driven by the pin callback ---------- */
     const clock = new THREE.Clock();
     const camPos = new THREE.Vector3(), lookPos = new THREE.Vector3();
-    function frame() {
+    let firstDrawn = false;
+
+    // cheap near-viewport test: skip all GPU + animation work while the section
+    // is well offscreen. The page has a lot of other content to keep smooth.
+    function nearViewport() {
+        const r = track.getBoundingClientRect();
+        const vh = window.innerHeight;
+        return r.bottom > -vh * 0.5 && r.top < vh * 1.5;
+    }
+
+    function draw(p) {
+        if (document.hidden) return;
+        if (!nearViewport()) {
+            clock.getDelta();  // drop the idle gap so animations don't jump on return
+            return;
+        }
         const dt = Math.min(clock.getDelta(), 0.05);
         const t = clock.elapsedTime;
-        readScroll();
         shedLoad(dt);
-        smooth += (target - smooth) * (1 - Math.exp(-5.5 * dt));
-        const p = remap(smooth);
 
-        camPath.getPointAt(p, camPos);
-        lookPath.getPointAt(p, lookPos);
+        const cp = remap(p);
+        camPath.getPointAt(cp, camPos);
+        lookPath.getPointAt(cp, lookPos);
         camera.position.copy(camPos);
         camera.position.y += Math.sin(t * 0.9) * 0.05; // gentle idle float
         camera.lookAt(lookPos);
 
         for (const fn of animated) fn(t, dt);
 
-        updateOverlay(smooth);
+        updateOverlay(p);
         renderer.render(scene, camera);
-        updateMarkers(smooth); // after render: projection needs the fresh matrixWorldInverse
-        requestAnimationFrame(frame);
+        firstDrawn = true;
     }
 
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        measureScroll();
-    });
+    /* ---------- pin registration ---------- */
+    const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+    const onPin = (p) => draw(clamp01(p || 0));
 
-    readScroll();
-    frame();
+    function register() { window.registerPin(track, onPin); }
+    if (typeof window.registerPin === 'function') register();
+    else window.addEventListener('pins:ready', register, { once: true });
+
+    // paint one frame immediately so the section is never a blank canvas while
+    // the engine warms up / before the track is scrolled into range
+    if (nearViewport()) draw(0);
+    else requestAnimationFrame(() => { if (!firstDrawn && nearViewport()) draw(0); });
 }
-</script>
-</body>
-</html>

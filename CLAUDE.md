@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Shayaan Ahmed's personal portfolio site ("**the portfolio**"), served by GitHub Pages at **shayaanahm.github.io** straight from `main` — every push to `main` deploys automatically (allow 1–2 minutes for the Pages rebuild). No build step, no framework, no dependencies: plain HTML + one shared `style.css` + one shared `script.js`.
+Shayaan Ahmed's personal portfolio site ("**the portfolio**"), served by GitHub Pages at **shayaanahm.github.io** straight from `main` — every push to `main` deploys automatically (allow 1–2 minutes for the Pages rebuild). No build step, no framework, no dependencies: plain HTML + CSS + JS.
+
+**It is a single-page site** (since the 2026-07-16 redesign): `index.html` is one long scroll-driven narrative — "how I'd automate a business" — and `contact.html` is the **only** other page. `automation.html`, `projects.html`, `cv.html`, `hobbies.html` and `world.html` were folded into `index.html` and deleted; their content lives on as sections. Recover the originals from git history, the `backup-before-scrollworld-redesign` tag, or `old-site/`.
 
 ## Running locally
 
@@ -23,20 +25,29 @@ Git identity is already configured globally (`Shayaan Ahmed <proshayaan@gmail.co
 
 ## Structure & conventions
 
-- **Pages**: `index.html` (editorial hero + "What I Do" index rows), `automation.html` (AI automation freelance portfolio — the most important page), `cv.html`, `projects.html`, `hobbies.html` (currently a WIP placeholder), `contact.html`, and `world.html` (standalone 3D scroll experience — see below).
-- **Every regular page duplicates** the same navbar and footer markup — when adding a nav link or footer change, update **all six regular pages** (`world.html` has its own minimal chrome instead).
-- `style.css` is the single stylesheet for the six regular pages. Design tokens live in `:root` CSS variables (cream background `--bg`, near-black `--ink`, terracotta `--accent`). Fonts: Playfair Display (headings, via Google Fonts `@import`) + Inter (body).
+- **Pages**: `index.html` (the whole site) and `contact.html`. Both share the same navbar/footer markup — a nav change means editing **both**.
+- **The nav is in-page anchors** (`#work`, `#process`, `#projects`, `#about`) plus a real link to `contact.html`. contact.html's nav/footer point back at `index.html#...`.
+- **Section order in `index.html`**: hero → `#hook` → `#world` (pinned 3D) → `#process` (pinned) → `#services` → `#work` → `#workflows` → `#projects` → `#about` → `#beyond` → `#contact` (closing CTA).
+- `style.css` is the shared stylesheet for both pages. Design tokens live in `:root` CSS variables (cream background `--bg`, near-black `--ink`, terracotta `--accent`). Fonts: Playfair Display (headings, via Google Fonts `@import`) + Inter (body).
 - **2026-07 "brand evolution" redesign** (editorial layout, same palette): pages open with a `.page-header` block (`.small-label` kicker with terracotta dash + `.page-title` with an italic `<em>` accent word + `.section-intro`, all left-aligned); section headings sit in a `.section-row` (heading left, `.section-sub` right; add class `tight` for the first one after a page header); the homepage "What I Do" uses `.index-list`/`.index-row` editorial rows instead of cards; `.cta-band` is a dark ink panel; the homepage hero is `.hero-grid` (copy in `.hero-copy` + `.hero-meta` side rail).
 - `script.js` provides two behaviours: scroll-reveal (add class `reveal` to any element; it gets `.visible` when scrolled into view, with a 2.5s safety net so nothing stays hidden) and automatic `.active` highlighting of the current page's nav link. It's a plain scroll handler by design — do **not** switch it to IntersectionObserver (that was tried and reverted).
 - Reusable patterns: `.card` (hover-lift panel with terracotta top-line sweep), `.media-card` (image/video card, media on top + `.media-body` text), `.grid-2` / `.cv-grid` / `.contact-grid` (2-col grids, `.wide-card` spans both), `.section-heading` with `data-label="..."` (renders a small terracotta kicker above the heading), `.cta-band`, `.tag`, `.button`.
 - Media assets (workflow screenshots `.png`, demo videos `.mp4`, `brawlbase-project.zip`, `brawlbase-nea.pdf`) are committed directly to the repo root and referenced with relative paths.
 
-## world.html — the 3D scroll flythrough
+## The scroll engine — `scroll.js`, `home.css`, `world-section.js`
 
-- Standalone page: scroll scrubs a continuous Three.js camera flight through four low-poly "islands" (Automation desk → BrawlBase ring → CV book tower → Contact lighthouse), each with pinned copy linking to its real page. Technique adapted from the open-source **scroll-world** skill (github.com/oso95/scroll-world) but rendered live in code — **no Higgsfield/video assets, zero running cost**.
-- Self-contained: its CSS/JS live inline in the page; Three.js is vendored at `vendor/three.module.min.js` (pinned r170 — don't swap to a CDN).
-- Has a static fallback (`body.static` + `.fallback` list) for `prefers-reduced-motion` and failed WebGL — keep it working when editing.
-- Copy bands are `data-band="start,end"` attributes (scroll progress 0–1); camera stops are the `lingerAt` array in the module script — keep them aligned if scenes change.
+`index.html` loads `style.css` → `home.css`, then `scroll.js` → `script.js` → `world-section.js` (module). **Load order matters**: `home.css` overrides `style.css`, and `script.js` still owns reveals.
+
+- **`scroll.js`** is the engine. It provides three things and nothing else (it does **not** do reveals — `script.js` still owns `.reveal` → `.visible`):
+  - **Pins**: a tall track `<div data-pin>` wrapping a `.pin-stage` (`position:sticky; top:0; height:100vh`). Each frame the engine computes the track's scroll progress `p` (0→1), writes it to the stage as the CSS var **`--p`**, and calls callbacks registered via **`window.registerPin(trackEl, fn)`**. Modules that load late should guard on the **`pins:ready`** event. `--p` is damped (frame-rate-independent), so a section can be driven in **pure CSS off `--p`** with no JS — that's how `#process` highlights its steps.
+  - **Parallax**: `data-parallax="0.12"` on any element translates it on Y.
+  - **Progress bar** (`#scroll-progress`) + **scrollspy** (lights the `.nav-links a.active` for the section you're in — the old filename-matching in `script.js` can't work on a one-page nav).
+  - Metrics are measured on resize/load/fonts-ready only, **never per frame** — don't add layout reads to the rAF loop. Note `docTop()` walks the `offsetParent` chain deliberately: `offsetTop` alone is relative to a positioned ancestor and gives wrong pin positions.
+- **`world-section.js`** is the old `world.html` flythrough rebuilt as the pinned `#world` section: scroll scrubs a Three.js camera flight through four low-poly islands (Automation desk → BrawlBase ring → CV book tower → Contact lighthouse). Technique adapted from the open-source **scroll-world** skill (github.com/oso95/scroll-world) but rendered live in code — **no Higgsfield/video assets, zero running cost**. Three.js is vendored at `vendor/three.module.min.js` (pinned r170 — don't swap to a CDN).
+  - Track is `#world-track` at `400vh` (`320vh` under 760px). Copy bands are `data-band="start,end"` in **section-relative** progress; camera stops are the `lingerAt` array — keep the two aligned if scenes change.
+  - Fallback: on `prefers-reduced-motion` or failed WebGL the module adds **`.world-static`** to `#world`, which collapses the track to `height:auto` and swaps in `.world-fallback` static copy. **Keep this working** — without it the section is 400vh of blank page.
+  - It renders inside the pin callback behind a viewport check and skips when `document.hidden` — don't add a second rAF loop.
+- Every pinned section must degrade under `prefers-reduced-motion`: `home.css` collapses tracks and un-sticks stages globally. `#process` also collapses below 760px (four steps can't fit 100vh on a phone).
 
 ## Content rules
 
@@ -48,4 +59,5 @@ Git identity is already configured globally (`Shayaan Ahmed <proshayaan@gmail.co
 
 - Git tag `backup-before-polish` = the site before the 2026-07 redesign.
 - Git tag `backup-before-scrollworld-redesign` = before the 2026-07 brand-evolution redesign + world.html.
+- The five folded pages (`automation.html`, `projects.html`, `cv.html`, `hobbies.html`, `world.html`) live in git history before the 2026-07-16 single-page commit, and in `old-site/`.
 - Local copy: `E:\ClaudeCode\website-backup-original`.

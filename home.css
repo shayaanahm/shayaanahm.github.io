@@ -1,0 +1,1192 @@
+/* ============================================================
+   home.css — homepage-only: the pin/parallax engine surface plus
+   the one-page shell (progress bar, section rhythm, closing CTA).
+
+   Loaded AFTER style.css, which still owns every token and every
+   shared component (.container, .card, .media-card, .reveal, ...).
+   Section-specific styling lives further down, per section.
+   ============================================================ */
+
+/* ---------- Anchor offset ----------
+   The navbar is sticky, so an in-page jump would otherwise bury the
+   section heading underneath it. */
+[id] {
+    scroll-margin-top: 88px;
+}
+
+/* ---------- Scroll progress bar ---------- */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    z-index: 1000;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* ---------- Pinned sections ----------
+   [data-pin] is the tall track; .pin-stage is the viewport-height
+   sticky child that stays put while the track scrolls past. The
+   engine writes --p (0-1) onto the stage every frame. */
+[data-pin] {
+    position: relative;
+}
+
+.pin-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --p: 0;
+}
+
+/* ---------- Parallax ---------- */
+[data-parallax] {
+    will-change: transform;
+}
+
+/* ---------- One-page section rhythm ---------- */
+.home-section {
+    padding: 120px 0;
+    position: relative;
+}
+
+.home-section--tight {
+    padding: 72px 0;
+}
+
+/* A hairline between chapters keeps the long scroll legible without
+   boxing every section in. */
+.home-section + .home-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: var(--line);
+}
+
+/* ---------- Hero scroll cue ---------- */
+.hero-scroll {
+    animation: hero-nudge 2.4s var(--ease) infinite;
+}
+
+@keyframes hero-nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+/* ---------- Closing CTA ---------- */
+.closing {
+    padding: 140px 0;
+}
+
+.closing .cta-band {
+    text-align: center;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+    .home-section {
+        padding: 80px 0;
+    }
+
+    .closing {
+        padding: 90px 0;
+    }
+
+    [id] {
+        scroll-margin-top: 72px;
+    }
+}
+
+/* ---------- Reduced motion ----------
+   Pins collapse to ordinary stacked content: the engine stops driving
+   them, so the sticky stage must not trap content at 100vh. */
+@media (prefers-reduced-motion: reduce) {
+    [data-pin] {
+        height: auto !important;
+    }
+
+    .pin-stage {
+        position: static;
+        height: auto;
+        overflow: visible;
+        display: block;
+    }
+
+    #scroll-progress {
+        display: none;
+    }
+
+    .hero-scroll {
+        animation: none;
+    }
+
+    [data-parallax] {
+        transform: none !important;
+    }
+}
+/* ===== #world — pinned 3D flythrough section =====
+   Depends on the global design tokens (--bg, --ink, --accent, --ease, …).
+   Never hardcode hexes here.
+
+   Structure:
+     #world  .world
+       #world-track[data-pin]  .world-track      → 400vh, drives progress
+         .pin-stage .world-stage                 → sticky, 100vh, clips
+       .world-fallback                           → static copy, hidden by default
+
+   world-section.js adds .world-static to #world when reduced-motion is set or
+   WebGL is unavailable: the track collapses and the fallback takes over.
+*/
+
+.world {
+  position: relative;
+  background: var(--bg);
+}
+
+.world-track {
+  position: relative;
+  height: 400vh;            /* pin length — the whole flight */
+}
+
+.world-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.world-gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* ---------- pinned copy ---------- */
+.world-copy {
+  position: absolute;
+  left: 6%;
+  bottom: 9vh;
+  max-width: 460px;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.world-copy--center {
+  left: 50%;
+  bottom: auto;
+  top: 50%;
+  transform: translate(-50%, -46%);
+  text-align: center;
+  max-width: 720px;
+}
+
+.world-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.world-copy h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 500;
+  line-height: 1.05;
+  margin-bottom: 14px;
+  color: var(--ink);
+  text-shadow: 0 1px 0 var(--bg);
+}
+.world-copy--center h2 { font-size: clamp(40px, 7vw, 88px); }
+.world-copy h2 em { font-style: italic; color: var(--accent); }
+
+.world-copy p {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+  text-shadow: 0 1px 0 var(--bg);
+}
+
+/* outlined link, matching the site's button language */
+.world-go {
+  display: inline-block;
+  pointer-events: none;              /* enabled per-frame when the band is live */
+  padding: 13px 28px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--bg-card);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.world-go:hover { background: var(--ink); color: var(--bg); }
+.world-go--accent { border-color: var(--accent); color: var(--accent); }
+.world-go--accent:hover { background: var(--accent); color: var(--bg-card); }
+.world-go:focus-visible { outline: 2px dashed var(--accent); outline-offset: 3px; }
+
+.world-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  pointer-events: none;
+  animation: worldBob 2.4s ease-in-out infinite;
+  transition: opacity 0.5s var(--ease);
+}
+@keyframes worldBob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
+
+/* ---------- static fallback (reduced motion / no WebGL) ---------- */
+.world-fallback { display: none; }
+
+.world.world-static .world-track {
+  height: auto;                       /* collapse — no 400vh of blank page */
+}
+.world.world-static .world-stage {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+.world.world-static .world-gl,
+.world.world-static .world-copy,
+.world.world-static .world-hint { display: none; }
+
+.world.world-static .world-fallback {
+  display: block;
+  width: 88%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 96px 0;
+}
+.world-fallback-head { margin-bottom: 48px; }
+.world-fallback-head h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 7vw, 76px);
+  font-weight: 500;
+  line-height: 1.02;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.world-fallback-head h2 em { font-style: italic; color: var(--accent); }
+.world-fallback-head p {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink-soft);
+  max-width: 620px;
+}
+
+.world-row {
+  display: block;
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--ink);
+  transition: color 0.3s var(--ease);
+}
+.world-row:last-of-type { border-bottom: 1px solid var(--line); }
+.world-row:hover h3 { color: var(--accent); }
+.world-row h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 4px 0 6px;
+  transition: color 0.3s var(--ease);
+}
+.world-row p {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+/* ---------- mobile ---------- */
+@media (max-width: 760px) {
+  .world-track { height: 320vh; }     /* shorter flight on small screens */
+  .world-copy {
+    left: 6%;
+    right: 6%;
+    max-width: none;
+    bottom: 8vh;
+  }
+  .world-copy p { font-size: 15px; }
+  .world-hint { bottom: 18px; }
+  .world.world-static .world-fallback { padding: 72px 0; }
+  .world-fallback-head h3, .world-row h3 { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-hint { animation: none; }
+}
+/* ============================================================
+   narrative.css — scroll-spine sections for the single-page home.
+   Covers: #hook, #process (pinned), #services.
+   Depends on tokens + classes from style.css (:root, .container,
+   .small-label, .section-row, .section-heading, .section-sub,
+   .card, .grid-2, .tag, .tag-row, .reveal). Nothing here
+   redefines those — additions only, all prefixed.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. THE HOOK
+   ------------------------------------------------------------ */
+.hook {
+    position: relative;
+    overflow: hidden; /* keeps the parallax glow from widening the page */
+}
+
+.hook-glow {
+    position: absolute;
+    top: -140px;
+    right: -120px;
+    width: 520px;
+    height: 520px;
+    max-width: 90vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-soft) 0%, rgba(176, 83, 42, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hook-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.hook-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6.6vw, 88px);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.5px;
+    max-width: 14ch;
+    margin-bottom: 56px;
+}
+
+.hook-title em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.hook-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+    max-width: 880px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line-strong);
+}
+
+.hook-lead {
+    font-size: 17px;
+    color: var(--ink-soft);
+}
+
+.hook-turn {
+    margin-top: 64px;
+    max-width: 20ch;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3.4vw, 40px);
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.hook-turn em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.hook-foot {
+    margin-top: 24px;
+    max-width: 520px;
+    font-size: 16px;
+    color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------
+   2. THE PROCESS — pinned track
+   The engine writes --p (0 → 1) onto .pin-stage each frame.
+   Everything below is driven from it in pure CSS:
+     --pos  : playhead, travels 0 → 3 across the four steps
+     --d    : signed distance from this step to the playhead
+     --ad   : |--d|      (max(x, -x) — abs() isn't safe to rely on yet)
+     --act  : 1 at the active step, falling to 0 either side
+   ------------------------------------------------------------ */
+.proc-track {
+    height: 300vh;
+    position: relative;
+}
+
+.proc-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.proc-stage-inner {
+    width: 86%;
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(240px, 340px) 1fr;
+    gap: 72px;
+    align-items: center;
+}
+
+.proc-aside {
+    align-self: center;
+}
+
+.proc-heading {
+    font-size: clamp(32px, 3.6vw, 48px);
+    margin-bottom: 20px;
+}
+
+.proc-sub {
+    max-width: none;
+    padding-bottom: 0;
+}
+
+.proc-rail {
+    margin-top: 40px;
+    width: 2px;
+    height: 120px;
+    background: var(--line-strong);
+    position: relative;
+    overflow: hidden;
+}
+
+.proc-rail-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleY(var(--p, 0));
+    transform-origin: top;
+}
+
+/* --- steps --- */
+.proc-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(18px, 3vh, 34px);
+}
+
+.proc-step {
+    --pos: calc(var(--p, 0) * 3);
+    --d: calc(var(--pos) - var(--i));
+    --ad: max(var(--d), calc(-1 * var(--d)));
+    --act: max(0, calc(1 - var(--ad)));
+
+    position: relative;
+    margin: 0;
+    padding-left: 28px;
+    opacity: calc(0.26 + var(--act) * 0.74);
+    transform: translateX(calc(var(--act) * 6px));
+}
+
+.proc-bar {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(var(--act));
+    transform-origin: top;
+}
+
+.proc-step::before {
+    /* dim resting rule behind the accent bar */
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--line-strong);
+}
+
+.proc-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.proc-step h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 6px;
+}
+
+.proc-step p {
+    font-size: clamp(14px, 1.15vw, 16px);
+    color: var(--ink-soft);
+    max-width: 62ch;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ------------------------------------------------------------
+   3. SERVICES
+   ------------------------------------------------------------ */
+.svc-grid > .reveal:nth-child(1) { transition-delay: 0s; }
+.svc-grid > .reveal:nth-child(2) { transition-delay: 0.07s; }
+.svc-grid > .reveal:nth-child(3) { transition-delay: 0.14s; }
+.svc-grid > .reveal:nth-child(4) { transition-delay: 0.21s; }
+.svc-grid > .reveal:nth-child(5) { transition-delay: 0.28s; }
+
+.svc-grid .card h3 {
+    padding-right: 8px;
+}
+
+/* ------------------------------------------------------------
+   Static fallback for the pinned track.
+   Used on narrow viewports (four steps will not fit legibly in
+   100vh at 375px) and under reduced motion, where the engine
+   disables pinning and never writes --p.
+   ------------------------------------------------------------ */
+@media (max-width: 760px) {
+    .hook-cols {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .hook-title {
+        max-width: none;
+        margin-bottom: 40px;
+    }
+
+    .hook-turn {
+        margin-top: 48px;
+        max-width: none;
+    }
+
+    .hook-glow {
+        width: 320px;
+        height: 320px;
+        top: -80px;
+        right: -80px;
+    }
+
+    .proc-track {
+        height: auto;
+    }
+
+    .proc-stage {
+        position: static;
+        height: auto;
+        overflow: visible;
+        display: block;
+        padding: 64px 0;
+    }
+
+    .proc-stage-inner {
+        width: 88%;
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .proc-steps {
+        gap: 32px;
+    }
+
+    .proc-step {
+        opacity: 1;
+        transform: none;
+    }
+
+    .proc-bar {
+        transform: scaleY(1);
+    }
+
+    .proc-rail {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .proc-track {
+        height: auto;
+    }
+
+    .proc-stage {
+        position: static;
+        height: auto;
+        overflow: visible;
+        display: block;
+        padding: 72px 0;
+    }
+
+    .proc-steps {
+        gap: 36px;
+    }
+
+    .proc-step {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .proc-bar {
+        transform: scaleY(1) !important;
+    }
+
+    .proc-rail-fill {
+        transform: scaleY(1) !important;
+    }
+}
+/* ============================================================
+   work.css — Featured Work (#work), Workflow Examples (#workflows),
+   Projects (#projects) for the single-page scroll portfolio.
+
+   Relies on global tokens + classes from style.css:
+   .container .section-row(.tight) .section-heading[data-label]
+   .section-sub .card .media-card .media-body .grid-2 .wide-card
+   .button .reveal/.reveal.visible
+   Nothing here redefines those — additions only.
+   ============================================================ */
+
+/* ---------- Section rhythm ----------
+   Three .container blocks back-to-back would stack 96px+96px of
+   padding between sections. Tighten the seams so the scroll reads
+   as one continuous journey rather than three stapled pages. */
+.work-section,
+.wf-section,
+.proj-section {
+    position: relative;
+}
+
+.work-section > .container,
+.wf-section > .container,
+.proj-section > .container {
+    padding-top: 72px;
+    padding-bottom: 72px;
+}
+
+/* First of the three carries a little more air above it */
+.work-section > .container {
+    padding-top: 96px;
+}
+
+.proj-section > .container {
+    padding-bottom: 96px;
+}
+
+/* Hairline seam between the proof sections */
+.wf-section::before,
+.proj-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 7%;
+    right: 7%;
+    height: 1px;
+    background: var(--line);
+}
+
+/* Italic accent word in the section headings, matching .page-title em */
+.work-section .section-heading em,
+.wf-section .section-heading em,
+.proj-section .section-heading em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+/* ---------- Reveal stagger ----------
+   .reveal / .reveal.visible base states come from style.css.
+   These only add per-item delays so grid children cascade in.
+   The engine's 2.5s safety net still force-adds .visible, and a
+   delay never prevents the final state — only postpones it. */
+.work-grid > .reveal:nth-child(1),
+.wf-grid > .reveal:nth-child(1) {
+    transition-delay: 0s;
+}
+
+.work-grid > .reveal:nth-child(2),
+.wf-grid > .reveal:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.wf-grid > .reveal:nth-child(3) {
+    transition-delay: 0.06s;
+}
+
+.wf-grid > .reveal:nth-child(4) {
+    transition-delay: 0.06s;
+}
+
+/* ---------- Featured Work ---------- */
+.work-grid {
+    align-items: start;
+}
+
+/* Video wrapper: reserves a stable 16:9 box so the card doesn't
+   jump when metadata loads, and clips the video to the card edge.
+   Deliberately NOT parallaxed — the videos must stay put. */
+.work-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--ink);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+}
+
+.media-card .work-media video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    border-bottom: 0; /* the wrapper owns the rule now */
+    background: var(--ink);
+}
+
+/* Browsers without aspect-ratio: fall back to natural flow */
+@supports not (aspect-ratio: 1) {
+    .work-media {
+        aspect-ratio: auto;
+    }
+
+    .media-card .work-media video {
+        position: static;
+        height: auto;
+    }
+}
+
+/* ---------- Workflow Examples ---------- */
+.wf-grid {
+    align-items: start;
+}
+
+.wf-grid .media-card img {
+    height: auto;          /* never distort the screenshots */
+    max-width: 100%;
+    object-fit: contain;
+    background: var(--bg);
+}
+
+/* The two wide screenshots are long and wide — cap their height so a
+   single workflow diagram can't eat a whole viewport on desktop. */
+.wf-grid .wide-card img {
+    max-height: 520px;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* Highlight the one bolded claim without shouting */
+.wf-grid .media-body strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+/* Decorative parallax mark — purely ornamental, aria-hidden,
+   sits behind content and never affects layout. */
+.wf-glyph {
+    position: absolute;
+    top: 8%;
+    right: -70px;
+    width: 220px;
+    height: 220px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+}
+
+.wf-section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Keep the decorative circle from ever widening the page */
+.wf-section {
+    overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+    .wf-section {
+        overflow-x: hidden;
+    }
+}
+
+/* ---------- Projects ---------- */
+.proj-card {
+    margin-bottom: 0;
+}
+
+.proj-tech {
+    color: var(--ink-muted);
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    margin-bottom: 16px;
+}
+
+.proj-tech strong {
+    color: var(--ink-soft);
+    font-weight: 600;
+}
+
+.proj-actions {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 760px) {
+    .work-section > .container,
+    .wf-section > .container,
+    .proj-section > .container {
+        padding-top: 56px;
+        padding-bottom: 56px;
+    }
+
+    .work-section > .container {
+        padding-top: 72px;
+    }
+
+    /* style.css already collapses .grid-2 at mobile; this makes sure
+       a .wide-card doesn't keep asking for a second column. */
+    .work-grid,
+    .wf-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wf-grid .wide-card {
+        grid-column: auto;
+    }
+
+    .wf-grid .wide-card img {
+        max-height: none;
+    }
+
+    .wf-glyph {
+        display: none;
+    }
+
+    .proj-actions .button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .work-section .reveal,
+    .wf-section .reveal,
+    .proj-section .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        transition-delay: 0s !important;
+        animation: none !important;
+    }
+
+    .wf-glyph {
+        transform: none !important;
+    }
+
+    .wf-grid .media-card img {
+        transition: none !important;
+    }
+
+    .wf-grid .media-card:hover img {
+        transform: none !important;
+    }
+}
+/* ============================================================
+   About / CV + Beyond the code
+   Scoped additions only — tokens, .card, .tag, .button,
+   .section-row, .cv-grid, .reveal etc. all come from style.css.
+   ============================================================ */
+
+/* ---------- About shell ---------- */
+.about-section .container,
+.beyond-section .container {
+    padding: 96px 0;
+}
+
+.about-statement {
+    max-width: 820px;
+}
+
+.about-block {
+    margin: 80px 0;
+}
+
+.about-block .small-label {
+    margin-bottom: 40px;
+}
+
+.about-grid {
+    margin-top: 0;
+}
+
+.about-actions {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line-strong);
+}
+
+/* ---------- Vertical timeline ---------- */
+.tl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+/* the rail */
+.tl::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 7px;
+    width: 1px;
+    background: var(--line-strong);
+}
+
+.tl-item {
+    position: relative;
+    margin: 0 0 48px;
+    padding-left: 40px;
+}
+
+.tl-item:last-child {
+    margin-bottom: 0;
+}
+
+.tl-dot {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--bg);
+    transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+}
+
+.tl-dot::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+
+/* dot fills in as the entry reveals */
+.tl-item.visible .tl-dot {
+    border-color: var(--accent);
+}
+
+.tl-item.visible .tl-dot::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tl-date {
+    font-size: 12px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+}
+
+.tl-role {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2.4vw, 26px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    margin-bottom: 12px;
+}
+
+.tl-item ul {
+    margin-left: 20px;
+    max-width: 720px;
+}
+
+.tl-item ul li {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+}
+
+/* Stagger — overrides the global .reveal:nth-child delays for this list */
+.tl-item.reveal:nth-child(1) { transition-delay: 0s; }
+.tl-item.reveal:nth-child(2) { transition-delay: 0.09s; }
+.tl-item.reveal:nth-child(3) { transition-delay: 0.18s; }
+.tl-item.reveal:nth-child(4) { transition-delay: 0.27s; }
+.tl-item.reveal:nth-child(5) { transition-delay: 0.36s; }
+
+/* ---------- Beyond the code ---------- */
+.beyond-section {
+    border-top: 1px solid var(--line-strong);
+}
+
+.beyond-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.beyond-lede {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(22px, 2.8vw, 30px);
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 24px;
+}
+
+.beyond-note p {
+    color: var(--ink-soft);
+    max-width: 520px;
+}
+
+.beyond-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line-strong);
+}
+
+.beyond-list li {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: 0;
+}
+
+.beyond-k {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+}
+
+.beyond-v {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 2px;
+}
+
+.beyond-list p {
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--ink-soft);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 760px) {
+    .about-section .container,
+    .beyond-section .container {
+        padding: 64px 0;
+    }
+
+    .about-block {
+        margin: 56px 0;
+    }
+
+    .tl-item {
+        padding-left: 30px;
+        margin-bottom: 40px;
+    }
+
+    .tl-item ul {
+        margin-left: 18px;
+    }
+
+    .beyond-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .tl-item.reveal,
+    .beyond-note.reveal,
+    .beyond-list.reveal,
+    .about-actions.reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+        transition-delay: 0s !important;
+    }
+
+    .tl-dot,
+    .tl-dot::after {
+        transition: none !important;
+    }
+
+    /* dots must not depend on scroll state when motion is off */
+    .tl-dot {
+        border-color: var(--accent);
+    }
+
+    .tl-dot::after {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* neutralise engine parallax */
+    .beyond-list[data-parallax] {
+        transform: none !important;
+    }
+}

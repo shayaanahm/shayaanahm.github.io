@@ -6,29 +6,31 @@
     <meta name="description" content="Shayaan Ahmed — AI-focused technologist specialising in automation, chatbots and software engineering.">
     <title>Shayaan Ahmed | Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
     <!-- Cloudflare Web Analytics -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49c367f5f02a4841b81947715812f661"}'></script>
     <!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
+<div id="scroll-progress"></div>
+
 <nav class="navbar">
-    <a class="logo" href="index.html">
+    <a class="logo" href="#top">
         <img src="JJBA.png" alt="Logo">
         <span>Shayaan Ahmed</span>
     </a>
     <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="world.html">World</a>
-        <a href="cv.html">CV</a>
-        <a href="projects.html">Projects</a>
-        <a href="automation.html">AI Automation</a>
-        <a href="hobbies.html">Hobbies</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
         <a href="contact.html">Contact</a>
     </div>
 </nav>
 
-<main>
+<main id="top">
+
     <div class="container hero">
         <div class="hero-grid">
             <div class="hero-copy">
@@ -39,9 +41,9 @@
                     workflow engineering and software development.
                 </p>
                 <div class="hero-buttons">
-                    <a class="button button--accent" href="automation.html">AI Automation</a>
-                    <a class="button" href="projects.html">View Projects</a>
-                    <a class="button" href="cv.html">View CV</a>
+                    <a class="button button--accent" href="#process">See How I Work</a>
+                    <a class="button" href="#work">Featured Work</a>
+                    <a class="button" href="#about">About Me</a>
                 </div>
             </div>
             <aside class="hero-meta">
@@ -50,77 +52,566 @@
                 <div class="meta-item"><span class="k">Toolkit</span><span class="v">Python &amp; n8n</span></div>
             </aside>
         </div>
-        <a class="hero-scroll" href="#explore">Scroll &darr;</a>
+        <a class="hero-scroll" href="#hook">Scroll &darr;</a>
     </div>
-
-    <div class="container" id="explore" style="padding-top: 24px;">
-        <div class="section-row tight reveal">
-            <h2 class="section-heading" data-label="Explore">What I Do</h2>
-            <p class="section-sub">Three places to start exploring my work.</p>
+<!-- ============================================================
+     1. THE HOOK — opens the story
+     ============================================================ -->
+<section id="hook" class="hook">
+    <div class="hook-glow" data-parallax="0.14" aria-hidden="true"></div>
+    <div class="container hook-inner">
+        <p class="small-label reveal">The Premise</p>
+        <h2 class="hook-title reveal">Every business runs on <em>repetitive work</em>.</h2>
+        <div class="hook-cols">
+            <p class="hook-lead reveal">An enquiry arrives and waits for someone to notice it. A reply gets typed for the hundredth time. Records get copied out of one tool and into another that never learned to talk to it.</p>
+            <p class="hook-lead reveal">None of it is difficult. That's the problem — it's easy, it's endless, and it quietly eats the hours meant for the actual work.</p>
         </div>
+        <p class="hook-turn reveal">So the question I start with is a simple one: <em>which of this should a person still be doing?</em></p>
+        <p class="hook-foot reveal">What follows is how I answer it — the process, and the systems it builds.</p>
+    </div>
+</section>
 
-        <div class="index-list">
-            <a class="index-row reveal" href="automation.html">
-                <span class="index-num">01</span>
-                <h3>AI Automation</h3>
-                <div class="index-body">
-                    <p>Freelance automation services — intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup, with live demos and workflow breakdowns to explore.</p>
-                    <div class="tag-row">
-                        <span class="tag">n8n</span>
-                        <span class="tag">Claude</span>
-                        <span class="tag">Supabase</span>
-                        <span class="tag">Make</span>
-                        <span class="tag">Zapier</span>
+<!-- ============================================================
+     2. THE PROCESS — pinned, scroll-choreographed step highlight
+     Track: 300vh. Stage reads --p (0→1) written by the engine.
+     ============================================================ -->
+<!-- ===== The World — pinned 3D scroll flythrough =====
+     Track is 400vh; the stage inside it is sticky/100vh.
+     world-section.js mounts a Three.js canvas into .world-stage and maps the
+     pin progress (0→1) onto a condensed camera flight past four islands.
+     If reduced-motion is on or WebGL fails, the module adds .world-static to
+     the section: the track collapses to auto height and .world-fallback shows.
+-->
+<section id="world" class="world" aria-label="The world — a flythrough of my work">
+
+  <div id="world-track" class="world-track" data-pin>
+    <div class="pin-stage world-stage">
+
+      <canvas class="world-gl" aria-hidden="true"></canvas>
+
+      <!-- pinned copy; shown/hidden by this section's own 0–1 progress -->
+      <div class="world-copy world-copy--center" data-band="0.00,0.07">
+        <p class="world-eyebrow">A portfolio, as a world</p>
+        <h2>Fly through<br><em>my work</em></h2>
+        <p>One continuous camera flight through a miniature world built live in your browser — no video, just code.</p>
+      </div>
+
+      <div class="world-copy" data-band="0.10,0.30">
+        <p class="world-eyebrow">Freelance Services</p>
+        <h2>AI <em>Automation</em></h2>
+        <p>Intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup — with live demos and workflow breakdowns.</p>
+        <a class="world-go" href="#work">See the automation work</a>
+      </div>
+
+      <div class="world-copy" data-band="0.34,0.52">
+        <p class="world-eyebrow">Selected Work</p>
+        <h2><em>Projects</em></h2>
+        <p>BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy, with downloadable source code and a full development report.</p>
+        <a class="world-go" href="#projects">See the projects</a>
+      </div>
+
+      <div class="world-copy" data-band="0.56,0.74">
+        <p class="world-eyebrow">Curriculum Vitae</p>
+        <h2>The <em>CV</em></h2>
+        <p>Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses.</p>
+        <a class="world-go" href="#about">Read the CV</a>
+      </div>
+
+      <div class="world-copy" data-band="0.78,0.93">
+        <p class="world-eyebrow">Say Hello</p>
+        <h2>Let's <em>Connect</em></h2>
+        <p>Open to opportunities, projects, collaborations and technical work.</p>
+        <a class="world-go world-go--accent" href="#contact">Get in touch</a>
+      </div>
+
+      <div class="world-copy world-copy--center" data-band="0.95,1.00">
+        <p class="world-eyebrow">End of the flight</p>
+        <h2>The whole <em>world</em></h2>
+        <p>Built with Three.js and one scroll listener.</p>
+      </div>
+
+      <p class="world-hint">Scroll to fly</p>
+
+    </div>
+  </div>
+
+  <!-- static version: reduced motion / no WebGL -->
+  <div class="world-fallback">
+    <div class="world-fallback-head reveal">
+      <p class="world-eyebrow">A portfolio, as a world</p>
+      <h2>The <em>World</em></h2>
+      <p>The interactive flythrough needs motion and WebGL, so here is the plain version — the same four stops.</p>
+    </div>
+    <a class="world-row reveal" href="#work">
+      <span class="world-eyebrow">Freelance Services</span>
+      <h3>AI Automation</h3>
+      <p>Intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup.</p>
+    </a>
+    <a class="world-row reveal" href="#projects">
+      <span class="world-eyebrow">Selected Work</span>
+      <h3>Projects</h3>
+      <p>BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy.</p>
+    </a>
+    <a class="world-row reveal" href="#about">
+      <span class="world-eyebrow">Curriculum Vitae</span>
+      <h3>CV</h3>
+      <p>Education, work experience, key skills and certifications.</p>
+    </a>
+    <a class="world-row reveal" href="#contact">
+      <span class="world-eyebrow">Say Hello</span>
+      <h3>Contact</h3>
+      <p>Open to opportunities, projects, collaborations and technical work.</p>
+    </a>
+  </div>
+
+</section>
+<section id="process" class="proc">
+    <div class="proc-track" data-pin id="process-track">
+        <div class="pin-stage proc-stage">
+            <div class="proc-stage-inner">
+
+                <aside class="proc-aside">
+                    <h2 class="section-heading proc-heading" data-label="Process">How It Works</h2>
+                    <p class="section-sub proc-sub">A clear, structured process from first conversation to finished system.</p>
+                    <div class="proc-rail" aria-hidden="true">
+                        <span class="proc-rail-fill"></span>
                     </div>
-                </div>
-                <span class="index-arrow">&#8599;</span>
-            </a>
-            <a class="index-row reveal" href="projects.html">
-                <span class="index-num">02</span>
-                <h3>Projects</h3>
-                <div class="index-body">
-                    <p>Selected technical projects including BrawlBase, a full-stack martial arts search platform built with Python, Flask and SQLAlchemy — with downloadable source code and a full development report.</p>
-                </div>
-                <span class="index-arrow">&#8599;</span>
-            </a>
-            <a class="index-row reveal" href="cv.html">
-                <span class="index-num">03</span>
-                <h3>CV</h3>
-                <div class="index-body">
-                    <p>Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses. Available to view online or download.</p>
-                </div>
-                <span class="index-arrow">&#8599;</span>
-            </a>
-            <a class="index-row reveal" href="world.html">
-                <span class="index-num">04</span>
-                <h3>The World</h3>
-                <div class="index-body">
-                    <p>An interactive 3D flythrough of this portfolio — scroll to fly a camera through a miniature world built in code. A live demo of the kind of experience I can build.</p>
-                </div>
-                <span class="index-arrow">&#8599;</span>
-            </a>
-        </div>
+                </aside>
 
-        <div class="cta-band reveal">
-            <p class="small-label">Get in touch</p>
-            <h2>Let's <em>Connect</em></h2>
-            <p>Open to opportunities, projects, collaborations and technical work.</p>
-            <a class="button" href="contact.html">Contact Me</a>
+                <ol class="proc-steps">
+                    <li class="proc-step" style="--i: 0">
+                        <span class="proc-bar" aria-hidden="true"></span>
+                        <span class="proc-num">01</span>
+                        <h3>Discovery</h3>
+                        <p>We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.</p>
+                    </li>
+                    <li class="proc-step" style="--i: 1">
+                        <span class="proc-bar" aria-hidden="true"></span>
+                        <span class="proc-num">02</span>
+                        <h3>Design</h3>
+                        <p>I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.</p>
+                    </li>
+                    <li class="proc-step" style="--i: 2">
+                        <span class="proc-bar" aria-hidden="true"></span>
+                        <span class="proc-num">03</span>
+                        <h3>Build</h3>
+                        <p>I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.</p>
+                    </li>
+                    <li class="proc-step" style="--i: 3">
+                        <span class="proc-bar" aria-hidden="true"></span>
+                        <span class="proc-num">04</span>
+                        <h3>Handover</h3>
+                        <p>I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.</p>
+                    </li>
+                </ol>
+
+            </div>
         </div>
     </div>
+</section>
+
+<!-- ============================================================
+     3. SERVICES
+     ============================================================ -->
+<section id="services" class="svc">
+    <div class="container svc-inner">
+        <div class="section-row tight reveal">
+            <h2 class="section-heading" data-label="What I Do">Services</h2>
+            <p class="section-sub">From one-off integrations to fully managed automation systems.</p>
+        </div>
+
+        <div class="grid-2 svc-grid">
+            <div class="card reveal">
+                <h3>Workflow Automation</h3>
+                <p>Eliminate repetitive tasks by connecting your tools and automating multi-step processes. Whether it's syncing data between platforms, triggering actions based on events, or scheduling recurring jobs — I design and build workflows that run without you.</p>
+                <div class="tag-row">
+                    <span class="tag">n8n</span>
+                    <span class="tag">Make</span>
+                    <span class="tag">Zapier</span>
+                    <span class="tag">API Integrations</span>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>AI Chatbots</h3>
+                <p>Custom AI chatbots trained on your data and integrated into your website, app, or internal tools. From customer support bots to knowledge base assistants, I build chatbots that actually understand context and give useful answers.</p>
+                <div class="tag-row">
+                    <span class="tag">Claude</span>
+                    <span class="tag">OpenAI</span>
+                    <span class="tag">RAG</span>
+                    <span class="tag">Custom Knowledge Bases</span>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>n8n &amp; Make Integrations</h3>
+                <p>Specialist in building and deploying complex automation flows on n8n and Make (formerly Integromat). I can self-host n8n for you, migrate existing workflows, or build from scratch — connecting CRMs, databases, communication tools, and more.</p>
+                <div class="tag-row">
+                    <span class="tag">n8n</span>
+                    <span class="tag">Make</span>
+                    <span class="tag">Self-Hosting</span>
+                    <span class="tag">CRM Integrations</span>
+                </div>
+            </div>
+
+            <div class="card reveal">
+                <h3>AI-Powered Data Pipelines</h3>
+                <p>Automate the collection, processing, and routing of data using AI. Scrape, transform, classify, and summarise information — then push it wherever it needs to go, on a schedule or in real time.</p>
+                <div class="tag-row">
+                    <span class="tag">Web Scraping</span>
+                    <span class="tag">Data Transformation</span>
+                    <span class="tag">Scheduled Pipelines</span>
+                    <span class="tag">AI Classification</span>
+                </div>
+            </div>
+
+            <div class="card wide-card reveal">
+                <h3>CRM Integration &amp; Database Setup</h3>
+                <p>I connect your automations to the right data layer — whether that's setting up a Supabase database from scratch, integrating with an existing CRM, or building custom pipelines that keep your records accurate and up to date automatically. No more copy-pasting between tools or manually updating spreadsheets.</p>
+                <div class="tag-row">
+                    <span class="tag">Supabase</span>
+                    <span class="tag">Airtable</span>
+                    <span class="tag">HubSpot</span>
+                    <span class="tag">Google Sheets</span>
+                    <span class="tag">CRM Integrations</span>
+                    <span class="tag">Database Design</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============ Featured Work ============ -->
+<section id="work" class="work-section">
+    <div class="container">
+        <div class="section-row tight reveal">
+            <h2 class="section-heading" data-label="Portfolio">Featured <em>Work</em></h2>
+            <p class="section-sub">Example automations built for businesses across different industries.</p>
+        </div>
+
+        <div class="grid-2 work-grid">
+            <div class="card media-card reveal">
+                <div class="work-media">
+                    <video controls preload="metadata" playsinline>
+                        <source src="premier-properties.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="media-body">
+                    <h3>Premier Properties</h3>
+                    <p>An end-to-end AI automation built for a local estate agent. When a new enquiry comes in, the system automatically qualifies the lead, sends a personalised response, and logs the contact — removing the need for manual follow-up and ensuring no enquiry goes unanswered.</p>
+                </div>
+            </div>
+            <div class="card media-card reveal">
+                <div class="work-media">
+                    <video controls preload="metadata" playsinline>
+                        <source src="spark-pro-electrical.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="media-body">
+                    <h3>Spark Pro Electrical</h3>
+                    <p>A job intake and response automation built for a licensed electrical contractor. New job requests trigger an instant AI-generated reply, with job details automatically captured and routed to the right place — saving hours of admin per week.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Workflow Examples ============ -->
+<section id="workflows" class="wf-section">
+    <span class="wf-glyph" data-parallax="0.14" aria-hidden="true"></span>
+    <div class="container">
+        <div class="section-row reveal">
+            <h2 class="section-heading" data-label="Under the Hood">Workflow <em>Examples</em></h2>
+            <p class="section-sub">A look at some of the n8n automation workflows I've built.</p>
+        </div>
+
+        <div class="grid-2 wf-grid">
+            <div class="card media-card reveal">
+                <img src="google-review-automation.png" alt="Google Review Automation workflow" loading="lazy" decoding="async" width="1872" height="890">
+                <div class="media-body">
+                    <h3>Google Review Automation</h3>
+                    <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
+                </div>
+            </div>
+            <div class="card media-card reveal">
+                <img src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" loading="lazy" decoding="async" width="1867" height="886">
+                <div class="media-body">
+                    <h3>UK B2B Lead Generator</h3>
+                    <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
+                </div>
+            </div>
+            <div class="card media-card wide-card reveal">
+                <img src="email-triage-demo.png" alt="Email Triage Automation workflow" loading="lazy" decoding="async" width="1867" height="923">
+                <div class="media-body">
+                    <h3>AI Email Triage</h3>
+                    <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
+                </div>
+            </div>
+            <div class="card media-card wide-card reveal">
+                <img src="job-application-automation.png" alt="Job Application Automation workflow" loading="lazy" decoding="async" width="1870" height="889">
+                <div class="media-body">
+                    <h3>Job Application Automation</h3>
+                    <p>A fully automated job hunting pipeline built in n8n. It searches Google Places and Adzuna simultaneously, merges and deduplicates results, loops through each business, scrapes their website to find a contact email, and uses Claude AI to generate a personalised cover note and CV before creating a Gmail draft — ready to send with one click. Users have seen <strong>100+ potential job application leads</strong> generated in a single run, turning a process that would take days of manual effort into something that runs in minutes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Projects ============ -->
+<section id="projects" class="proj-section">
+    <div class="container">
+        <div class="section-row reveal">
+            <h2 class="section-heading" data-label="Selected Work">Selected <em>Projects</em></h2>
+            <p class="section-sub">Selected technical projects focused on web development, automation, AI workflows, and practical software systems.</p>
+        </div>
+
+        <div class="card proj-card reveal">
+            <h3>BrawlBase — Full-Stack Martial Arts Search Platform</h3>
+            <p class="proj-tech"><strong>Tech:</strong> Python, Flask, SQLAlchemy, HTML/CSS</p>
+            <p>
+                Built a web platform connecting martial artists with training partners,
+                gyms, coaches, and sports professionals. Features included registration,
+                login, password hashing, sessions, user profiles, filtered search,
+                service directories, messaging, and relational data models.
+            </p>
+            <div class="proj-actions">
+                <a class="button" href="brawlbase-project.zip" download>Download Source Code</a>
+                <a class="button" href="brawlbase-nea.pdf" target="_blank" rel="noopener">View Full Development Report</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============================================================
+     ABOUT / CV — mirrors the owner's real CV. Don't paraphrase or
+     add claims; see CLAUDE.md content rules.
+     ============================================================ -->
+<section class="about-section" id="about">
+    <div class="container">
+
+        <div class="section-row tight reveal">
+            <h2 class="section-heading" data-label="Curriculum Vitae">Who's <em>behind</em> it</h2>
+            <p class="section-sub">
+                Driven early-career technologist with hands-on experience in AI automation, workflow engineering, and software development.
+            </p>
+        </div>
+
+        <!-- Personal Statement -->
+        <div class="card about-statement reveal">
+            <h3>Personal Statement</h3>
+            <p>Driven and personable individual with strong leadership qualities and a passion for teamwork. Effective communicator who stays calm under pressure and multitasks confidently, built through part-time work, volunteering and competitive sport. Committed to delivering results efficiently and supporting those around me.</p>
+        </div>
+
+        <!-- Work Experience — scroll-revealed vertical timeline -->
+        <div class="about-block">
+            <p class="small-label reveal">Work Experience</p>
+
+            <ol class="tl">
+                <li class="tl-item reveal">
+                    <span class="tl-dot" aria-hidden="true"></span>
+                    <p class="tl-date">2021 – Present</p>
+                    <h4 class="tl-role">Fire Safety Servicer — Be Safe Tech Ltd, Hayes</h4>
+                    <ul>
+                        <li>Contribute to fire risk assessments and help maintain the integrity of fire systems across multiple properties.</li>
+                        <li>Gained valuable experience liaising with clients and using specialist tools for their intended purposes.</li>
+                    </ul>
+                </li>
+
+                <li class="tl-item reveal">
+                    <span class="tl-dot" aria-hidden="true"></span>
+                    <p class="tl-date">Jul – Aug 2025</p>
+                    <h4 class="tl-role">Fire Alarm Technician (Work Placement) — Haes Tech Ltd, Hayes</h4>
+                    <ul>
+                        <li>Learned to construct, package and test fire alarm panels and equipment, including soldering.</li>
+                        <li>Worked within the Research &amp; Development team, supporting product build and testing.</li>
+                    </ul>
+                </li>
+
+                <li class="tl-item reveal">
+                    <span class="tl-dot" aria-hidden="true"></span>
+                    <p class="tl-date">Aug – Sep 2024</p>
+                    <h4 class="tl-role">Warehouse Assistant — Greenwork Ltd, Hayes</h4>
+                    <ul>
+                        <li>Contributed to inventory control, logging stock accurately using Excel.</li>
+                        <li>Gained experience sorting goods and working effectively within a team, even under fatigue.</li>
+                    </ul>
+                </li>
+
+                <li class="tl-item reveal">
+                    <span class="tl-dot" aria-hidden="true"></span>
+                    <p class="tl-date">2022 – 2024 (×2)</p>
+                    <h4 class="tl-role">Event Organiser — "Iftaar Night" Charity Event, Slough &amp; Eton Sixth Form</h4>
+                    <ul>
+                        <li>Fully organised and ran the event end-to-end across two years, coordinating ticket distribution, catering and venue set-up.</li>
+                        <li>Managed a team of volunteers on the night, delegating tasks and keeping the event running to schedule.</li>
+                        <li>Developed strong planning, budgeting and time-management skills while delivering an event for the whole sixth form community.</li>
+                    </ul>
+                </li>
+
+                <li class="tl-item reveal">
+                    <span class="tl-dot" aria-hidden="true"></span>
+                    <h4 class="tl-role">Junior Volunteer — Lynch Hill Enterprise Academy, Wexham</h4>
+                    <ul>
+                        <li>Volunteered at school open and visiting evenings, guiding visitors around site.</li>
+                        <li>Developed strong communication skills and took initiative when showing people around.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="cv-grid about-grid">
+
+            <!-- Education -->
+            <div class="card wide-card reveal">
+                <h3>Education</h3>
+
+                <div class="experience-item">
+                    <h4>Slough &amp; Eton Church of England Business and Enterprise College</h4>
+                    <p class="experience-date">2024 – Present</p>
+                    <p>A-Levels: Maths, Psychology, Computer Science &nbsp;|&nbsp; Predicted: ABC</p>
+                </div>
+
+                <div class="experience-item">
+                    <h4>Lynch Hill Enterprise Academy</h4>
+                    <p class="experience-date">GCSEs</p>
+                    <ul>
+                        <li>Physics (6)</li>
+                        <li>English Language (6)</li>
+                        <li>English Literature (5)</li>
+                        <li>Business (5)</li>
+                        <li>Chemistry (5)</li>
+                        <li>Computer Science (5)</li>
+                        <li>Maths (5)</li>
+                        <li>Biology (5)</li>
+                        <li>Design Technology (5)</li>
+                        <li>Religious Education (4)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Skills -->
+            <div class="card wide-card reveal">
+                <h3>Key Skills</h3>
+                <div class="skill-category">
+                    <h4>AI &amp; Automation</h4>
+                    <span class="tag">AI Tools (ChatGPT, Claude)</span>
+                    <span class="tag">Automation (n8n, Zapier, Make)</span>
+                    <span class="tag">Supabase &amp; Databases</span>
+                    <span class="tag">Prompt Engineering</span>
+                    <span class="tag">API Integrations</span>
+                    <span class="tag">Webhook Logic</span>
+                </div>
+                <div class="skill-category">
+                    <h4>Technical</h4>
+                    <span class="tag">Python</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">HTML/CSS</span>
+                    <span class="tag">SQL</span>
+                    <span class="tag">Git/GitHub</span>
+                    <span class="tag">AutoCAD</span>
+                </div>
+                <div class="skill-category">
+                    <h4>Software &amp; Tools</h4>
+                    <span class="tag">Microsoft Office</span>
+                    <span class="tag">Adobe Photoshop &amp; Illustrator</span>
+                    <span class="tag">Inventory Control</span>
+                    <span class="tag">Fire Risk Assessment</span>
+                    <span class="tag">Soldering &amp; Packaging</span>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="card wide-card reveal">
+                <h3>Certifications &amp; Courses</h3>
+                <ul>
+                    <li>Anthropic: Claude 101 — 100% assessment score</li>
+                    <li>Anthropic: Claude Code 101</li>
+                    <li>Anthropic: AI Fluency: Framework &amp; Foundations</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <p class="about-actions reveal">
+            <a class="button" href="shayaan-ahmed-cv.docx" download>Download CV</a>
+        </p>
+
+    </div>
+</section>
+
+<!-- ============================================================
+     BEYOND THE CODE — from the CV's "Interests & Hobbies".
+     Invent nothing.
+     ============================================================ -->
+<section class="beyond-section" id="beyond">
+    <div class="container">
+
+        <div class="section-row reveal">
+            <h2 class="section-heading" data-label="Beyond the Code">Off the <em>clock</em></h2>
+            <p class="section-sub">The habits behind the work.</p>
+        </div>
+
+        <div class="beyond-grid">
+            <div class="beyond-note reveal">
+                <p class="beyond-lede">
+                    Most of what I bring to the work was built somewhere other than a keyboard.
+                </p>
+                <p>
+                    Mixed martial arts since 2021 — wrestling, kickboxing, jiu-jitsu, boxing — for discipline,
+                    resilience and self-control. Regular gym training since 2024, plus an interest in philosophy
+                    and theology: consistency and critical thinking, practised.
+                </p>
+            </div>
+
+            <ul class="beyond-list reveal" data-parallax="0.05">
+                <li>
+                    <span class="beyond-k">Mixed Martial Arts</span>
+                    <span class="beyond-v">2021 – present</span>
+                    <p>Wrestling, kickboxing, jiu-jitsu, boxing — discipline, resilience and self-control.</p>
+                </li>
+                <li>
+                    <span class="beyond-k">Gym</span>
+                    <span class="beyond-v">2024 – present</span>
+                    <p>Regular training — consistency.</p>
+                </li>
+                <li>
+                    <span class="beyond-k">Philosophy &amp; Theology</span>
+                    <span class="beyond-v">Interest</span>
+                    <p>Critical thinking.</p>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+    <section class="closing" id="contact">
+        <div class="container">
+            <div class="cta-band reveal">
+                <p class="small-label">Get in touch</p>
+                <h2>Let's <em>Connect</em></h2>
+                <p>Open to opportunities, projects, collaborations and technical work.</p>
+                <a class="button" href="contact.html">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
 </main>
 
 <footer class="footer">
     <div class="footer-links">
-        <a href="world.html">World</a>
-        <a href="cv.html">CV</a>
-        <a href="projects.html">Projects</a>
-        <a href="automation.html">AI Automation</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
         <a href="contact.html">Contact</a>
     </div>
     <p>&copy; 2026 Shayaan Ahmed</p>
 </footer>
 
+<script src="scroll.js"></script>
 <script src="script.js"></script>
+<script type="module" src="world-section.js"></script>
 </body>
 </html>
