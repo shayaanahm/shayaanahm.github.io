@@ -92,96 +92,14 @@
      2. THE PROCESS — pinned, scroll-choreographed step highlight
      Track: 300vh. Stage reads --p (0→1) written by the engine.
      ============================================================ -->
-<!-- ===== The World — pinned 3D scroll flythrough =====
-     Track is 400vh; the stage inside it is sticky/100vh.
-     world-section.js mounts a Three.js canvas into .world-stage and maps the
-     pin progress (0→1) onto a condensed camera flight past four islands.
-     If reduced-motion is on or WebGL fails, the module adds .world-static to
-     the section: the track collapses to auto height and .world-fallback shows.
+<!-- ===== The World — scroll-scrubbed camera flight (Higgsfield) =====
+     world-scrub.js mounts the scrub engine into #world: a sticky 100vh view
+     + a tall track. Scroll scrubs pre-rendered clips (world/*.mp4) through
+     four clay-diorama islands; the .webp stills are posters and the
+     reduced-motion / clip-load-failure fallback. Config lives below the
+     scripts at the end of <body>.
 -->
-<section id="world" class="world" aria-label="The world — a flythrough of my work">
-
-  <div id="world-track" class="world-track" data-pin>
-    <div class="pin-stage world-stage">
-
-      <canvas class="world-gl" aria-hidden="true"></canvas>
-
-      <!-- pinned copy; shown/hidden by this section's own 0–1 progress -->
-      <div class="world-copy world-copy--center" data-band="0.00,0.07">
-        <p class="world-eyebrow">A portfolio, as a world</p>
-        <h2>Fly through<br><em>my work</em></h2>
-        <p>One continuous camera flight through a miniature world built live in your browser — no video, just code.</p>
-      </div>
-
-      <div class="world-copy" data-band="0.10,0.30">
-        <p class="world-eyebrow">Freelance Services</p>
-        <h2>AI <em>Automation</em></h2>
-        <p>Intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup — with live demos and workflow breakdowns.</p>
-        <a class="world-go" href="#work">See the automation work</a>
-      </div>
-
-      <div class="world-copy" data-band="0.34,0.52">
-        <p class="world-eyebrow">Selected Work</p>
-        <h2><em>Projects</em></h2>
-        <p>BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy, with downloadable source code and a full development report.</p>
-        <a class="world-go" href="#projects">See the projects</a>
-      </div>
-
-      <div class="world-copy" data-band="0.56,0.74">
-        <p class="world-eyebrow">Curriculum Vitae</p>
-        <h2>The <em>CV</em></h2>
-        <p>Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses.</p>
-        <a class="world-go" href="#about">Read the CV</a>
-      </div>
-
-      <div class="world-copy" data-band="0.78,0.93">
-        <p class="world-eyebrow">Say Hello</p>
-        <h2>Let's <em>Connect</em></h2>
-        <p>Open to opportunities, projects, collaborations and technical work.</p>
-        <a class="world-go world-go--accent" href="#contact">Get in touch</a>
-      </div>
-
-      <div class="world-copy world-copy--center" data-band="0.95,1.00">
-        <p class="world-eyebrow">End of the flight</p>
-        <h2>The whole <em>world</em></h2>
-        <p>Built with Three.js and one scroll listener.</p>
-      </div>
-
-      <p class="world-hint">Scroll to fly</p>
-
-    </div>
-  </div>
-
-  <!-- static version: reduced motion / no WebGL -->
-  <div class="world-fallback">
-    <div class="world-fallback-head reveal">
-      <p class="world-eyebrow">A portfolio, as a world</p>
-      <h2>The <em>World</em></h2>
-      <p>The interactive flythrough needs motion and WebGL, so here is the plain version — the same four stops.</p>
-    </div>
-    <a class="world-row reveal" href="#work">
-      <span class="world-eyebrow">Freelance Services</span>
-      <h3>AI Automation</h3>
-      <p>Intelligent workflows, AI chatbots, n8n &amp; Make integrations, data pipelines and CRM setup.</p>
-    </a>
-    <a class="world-row reveal" href="#projects">
-      <span class="world-eyebrow">Selected Work</span>
-      <h3>Projects</h3>
-      <p>BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy.</p>
-    </a>
-    <a class="world-row reveal" href="#about">
-      <span class="world-eyebrow">Curriculum Vitae</span>
-      <h3>CV</h3>
-      <p>Education, work experience, key skills and certifications.</p>
-    </a>
-    <a class="world-row reveal" href="#contact">
-      <span class="world-eyebrow">Say Hello</span>
-      <h3>Contact</h3>
-      <p>Open to opportunities, projects, collaborations and technical work.</p>
-    </a>
-  </div>
-
-</section>
+<section id="world" aria-label="The world — a flythrough of my work"></section>
 <section id="process" class="proc">
     <div class="proc-track" data-pin id="process-track">
         <div class="pin-stage proc-stage">
@@ -537,6 +455,55 @@
 
 <script src="scroll.js"></script>
 <script src="script.js"></script>
-<script type="module" src="world-section.js"></script>
+<script src="world-scrub.js"></script>
+<script>
+// Mount the scroll-scrubbed world. Copy is carried over verbatim from the
+// previous world section — no new claims. Clips are 720p seedance-mini
+// renders; -m variants are the phone encodes; .webp stills are posters +
+// the reduced-motion fallback.
+mountScrollWorld(document.getElementById('world'), {
+    hint: 'scroll to fly',
+    diveScroll: 1.5,
+    connScroll: 0.9,
+    sections: [
+        {
+            id: 'sw-automation', label: 'Automation',
+            still: 'world/automation.webp',
+            clip: 'world/automation.mp4', clipMobile: 'world/automation-m.mp4',
+            accent: '#b0532a', scroll: 1.8, linger: 0.4,
+            eyebrow: 'Freelance Services', title: 'AI Automation',
+            body: 'Intelligent workflows, AI chatbots, n8n & Make integrations, data pipelines and CRM setup — with live demos and workflow breakdowns.',
+            tags: ['n8n', 'Claude', 'Supabase']
+        },
+        {
+            id: 'sw-projects', label: 'Projects',
+            still: 'world/ring.webp',
+            clip: 'world/ring.mp4', clipMobile: 'world/ring-m.mp4',
+            accent: '#b0532a', linger: 0.35,
+            eyebrow: 'Selected Work', title: 'Projects',
+            body: 'BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy, with downloadable source code and a full development report.'
+        },
+        {
+            id: 'sw-cv', label: 'CV',
+            still: 'world/books.webp',
+            clip: 'world/books.mp4', clipMobile: 'world/books-m.mp4',
+            accent: '#b0532a', linger: 0.35,
+            eyebrow: 'Curriculum Vitae', title: 'The CV',
+            body: "Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses."
+        },
+        {
+            id: 'sw-contact', label: 'Contact',
+            still: 'world/lighthouse.webp',
+            clip: 'world/lighthouse.mp4', clipMobile: 'world/lighthouse-m.mp4',
+            accent: '#b0532a', scroll: 1.8, linger: 0.45,
+            eyebrow: 'Say Hello', title: "Let's Connect",
+            body: 'Open to opportunities, projects, collaborations and technical work.',
+            cta: { primary: { label: 'Get in touch', href: 'contact.html' }, secondary: { label: 'View the work', href: '#work' } }
+        }
+    ],
+    connectors: ['world/conn1.mp4', 'world/conn2.mp4', 'world/conn3.mp4'],
+    connectorsMobile: ['world/conn1-m.mp4', 'world/conn2-m.mp4', 'world/conn3-m.mp4']
+});
+</script>
 </body>
 </html>
