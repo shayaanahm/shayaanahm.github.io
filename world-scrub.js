@@ -206,12 +206,16 @@ function mountScrollWorld(container, config) {
   }
 
   function raf() {
-    const eps = isMobile() ? 0.02 : 0.008;
+    const eps = isMobile() ? 0.02 : 0.016;
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
       if (!s.hasClip || !s.ready || !s.video) continue;
+      // Off-screen clips don't decode AT ALL — they track the target
+      // silently and take one catch-up seek when they fade in. Without
+      // this, every clip in the chain decodes simultaneously during a
+      // scroll and the whole page stutters.
+      if (!s.visible) { s.cur = s.target; continue; }
       if (s.video.seeking) continue;
-      if (!s.visible && Math.abs(s.cur - s.target) < 0.002) continue;
       s.cur += (s.target - s.cur) * (reduce ? 1 : 0.18);
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
@@ -324,10 +328,10 @@ function injectCSS() {
   .sw-route__dot.is-active i{background:var(--sw-accent);transform:scale(1.4);box-shadow:0 0 0 5px color-mix(in srgb,var(--sw-accent) 22%,transparent);}
   .sw-route__label{position:absolute;right:24px;top:50%;transform:translateY(-50%) translateX(6px);white-space:nowrap;font-size:.78rem;font-weight:600;color:var(--sw-ink);background:color-mix(in srgb,var(--sw-bg) 88%,transparent);backdrop-filter:blur(6px);padding:5px 11px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;border:1px solid color-mix(in srgb,var(--sw-accent) 30%,transparent);}
   .sw-route__dot:hover .sw-route__label,.sw-route__dot.is-active .sw-route__label{opacity:1;transform:translateY(-50%) translateX(0);}
-  .sw-hint{position:absolute;left:50%;bottom:26px;z-index:30;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sw-ink-soft);transition:opacity .3s;}
-  .sw-hint i{width:22px;height:34px;border-radius:12px;border:2px solid color-mix(in srgb,var(--sw-ink) 28%,transparent);position:relative;}
-  .sw-hint i::after{content:"";position:absolute;left:50%;top:7px;width:4px;height:7px;border-radius:2px;background:var(--sw-accent);transform:translateX(-50%);animation:sw-wheel 1.7s ease-in-out infinite;}
-  @keyframes sw-wheel{0%{opacity:0;top:6px}40%{opacity:1}100%{opacity:0;top:17px}}
+  .sw-hint{position:absolute;left:50%;bottom:30px;z-index:30;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-size:1rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--sw-ink);text-shadow:0 1px 10px rgba(0,0,0,.4);transition:opacity .3s;}
+  .sw-hint i{width:30px;height:48px;border-radius:16px;border:2.5px solid color-mix(in srgb,var(--sw-ink) 65%,transparent);position:relative;background:rgba(10,20,15,.35);}
+  .sw-hint i::after{content:"";position:absolute;left:50%;top:9px;width:6px;height:11px;border-radius:3px;background:var(--sw-accent);transform:translateX(-50%);animation:sw-wheel 1.7s ease-in-out infinite;}
+  @keyframes sw-wheel{0%{opacity:0;top:8px}40%{opacity:1}100%{opacity:0;top:28px}}
   .sw-track{position:relative;z-index:0;width:100%;pointer-events:none;}
   @media (max-width:860px){
     .sw-copylayer::before{width:100%;height:60%;top:auto;bottom:0;background:linear-gradient(0deg,var(--sw-bg) 8%,color-mix(in srgb,var(--sw-bg) 70%,transparent) 46%,transparent 100%);}

@@ -1040,14 +1040,10 @@ html {
     scroll-snap-type: y proximity;
 }
 
-.hero,
+/* Only the showpieces snap — the world, the featured videos, and the
+   closing CTA. Snapping every section made the page feel grabby. */
 #world,
-#services,
 #work,
-#workflows,
-#projects,
-#about,
-#beyond,
 #contact {
     scroll-snap-align: start;
 }
@@ -1100,7 +1096,11 @@ html {
     transition-delay: 0.12s;
 }
 
-.work-section .media-card.reveal.visible {
+/* Both cards settle flat. The nth-child(2) rule above ties the plain
+   .visible rule on specificity and wins on order, so the second card
+   needs its own explicit settle or it stays stuck mid-tilt. */
+.work-section .media-card.reveal.visible,
+.work-section .grid-2 > .media-card:nth-child(2).reveal.visible {
     transform: translateY(0) rotate(0deg) scale(1);
 }
 
@@ -1122,4 +1122,24 @@ html {
     .work-section .grid-2 > .media-card:nth-child(2).reveal {
         transform: none !important;
     }
+}
+
+/* ---------- Bigger, unmissable scroll cues (round 6) ---------- */
+.hero-scroll {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 26px;
+    border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: 999px;
+    background: var(--bg-card);
+}
+
+.hero-scroll:hover {
+    color: var(--bg-card);
+    background: var(--accent);
 }
