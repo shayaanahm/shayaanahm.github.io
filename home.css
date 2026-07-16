@@ -138,7 +138,7 @@
 }
 /* ============================================================
    narrative.css — scroll-spine sections for the single-page home.
-   Covers: #hook, #process (pinned), #services.
+   Covers: #hook and #services.
    Depends on tokens + classes from style.css (:root, .container,
    .small-label, .section-row, .section-heading, .section-sub,
    .card, .grid-2, .tag, .tag-row, .reveal). Nothing here
@@ -222,140 +222,6 @@
 }
 
 /* ------------------------------------------------------------
-   2. THE PROCESS — pinned track
-   The engine writes --p (0 → 1) onto .pin-stage each frame.
-   Everything below is driven from it in pure CSS:
-     --pos  : playhead, travels 0 → 3 across the four steps
-     --d    : signed distance from this step to the playhead
-     --ad   : |--d|      (max(x, -x) — abs() isn't safe to rely on yet)
-     --act  : 1 at the active step, falling to 0 either side
-   ------------------------------------------------------------ */
-.proc-track {
-    height: 300vh;
-    position: relative;
-}
-
-.proc-stage {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-}
-
-.proc-stage-inner {
-    width: 86%;
-    max-width: 1180px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(240px, 340px) 1fr;
-    gap: 72px;
-    align-items: center;
-}
-
-.proc-aside {
-    align-self: center;
-}
-
-.proc-heading {
-    font-size: clamp(32px, 3.6vw, 48px);
-    margin-bottom: 20px;
-}
-
-.proc-sub {
-    max-width: none;
-    padding-bottom: 0;
-}
-
-.proc-rail {
-    margin-top: 40px;
-    width: 2px;
-    height: 120px;
-    background: var(--line-strong);
-    position: relative;
-    overflow: hidden;
-}
-
-.proc-rail-fill {
-    position: absolute;
-    inset: 0;
-    background: var(--accent);
-    transform: scaleY(var(--p, 0));
-    transform-origin: top;
-}
-
-/* --- steps --- */
-.proc-steps {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(18px, 3vh, 34px);
-}
-
-.proc-step {
-    --pos: calc(var(--p, 0) * 3);
-    --d: calc(var(--pos) - var(--i));
-    --ad: max(var(--d), calc(-1 * var(--d)));
-    --act: max(0, calc(1 - var(--ad)));
-
-    position: relative;
-    margin: 0;
-    padding-left: 28px;
-    opacity: calc(0.26 + var(--act) * 0.74);
-    transform: translateX(calc(var(--act) * 6px));
-}
-
-.proc-bar {
-    position: absolute;
-    left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 2px;
-    background: var(--accent);
-    transform: scaleY(var(--act));
-    transform-origin: top;
-}
-
-.proc-step::before {
-    /* dim resting rule behind the accent bar */
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 2px;
-    background: var(--line-strong);
-}
-
-.proc-num {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 2px;
-}
-
-.proc-step h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 500;
-    line-height: 1.15;
-    margin-bottom: 6px;
-}
-
-.proc-step p {
-    font-size: clamp(14px, 1.15vw, 16px);
-    color: var(--ink-soft);
-    max-width: 62ch;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* ------------------------------------------------------------
    3. SERVICES
    ------------------------------------------------------------ */
 .svc-grid > .reveal:nth-child(1) { transition-delay: 0s; }
@@ -397,72 +263,8 @@
         right: -80px;
     }
 
-    .proc-track {
-        height: auto;
-    }
-
-    .proc-stage {
-        position: static;
-        height: auto;
-        overflow: visible;
-        display: block;
-        padding: 64px 0;
-    }
-
-    .proc-stage-inner {
-        width: 88%;
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .proc-steps {
-        gap: 32px;
-    }
-
-    .proc-step {
-        opacity: 1;
-        transform: none;
-    }
-
-    .proc-bar {
-        transform: scaleY(1);
-    }
-
-    .proc-rail {
-        display: none;
-    }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .proc-track {
-        height: auto;
-    }
-
-    .proc-stage {
-        position: static;
-        height: auto;
-        overflow: visible;
-        display: block;
-        padding: 72px 0;
-    }
-
-    .proc-steps {
-        gap: 36px;
-    }
-
-    .proc-step {
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    .proc-bar {
-        transform: scaleY(1) !important;
-    }
-
-    .proc-rail-fill {
-        transform: scaleY(1) !important;
-    }
-}
 /* ============================================================
    work.css — Featured Work (#work), Workflow Examples (#workflows),
    Projects (#projects) for the single-page scroll portfolio.
@@ -1071,8 +873,8 @@
     font-size: clamp(120px, 22vw, 300px);
     font-weight: 700;
     line-height: 1;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--line-strong);
+    color: rgba(36, 82, 59, 0.07);
+    -webkit-text-stroke: 1.5px rgba(36, 82, 59, 0.34);
     pointer-events: none;
     user-select: none;
 }
@@ -1155,11 +957,6 @@
     color: var(--ink);
 }
 
-/* The dark process panel meets the world's cream exit — a soft top
-   fade stops it feeling like a hard slab boundary. */
-.proc.panel-dark {
-    position: relative;
-}
 
 .panel-dark .marquee {
     background: transparent;
@@ -1189,4 +986,46 @@
    proof sections and the dark closing. */
 .beyond-section {
     background: linear-gradient(180deg, transparent, var(--accent-soft) 30%, var(--accent-soft) 70%, transparent);
+}
+
+/* ---------- Owner photos (about + beyond) ----------
+   Markup is added once the image files exist in the repo root:
+   me-outdoors.jpg (#about) and me-cat.jpg (#beyond). */
+.about-media {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    align-items: start;
+}
+
+.about-photo,
+.beyond-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow);
+}
+
+.beyond-media {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 36px;
+    align-items: center;
+}
+
+@media (max-width: 700px) {
+    .about-media,
+    .beyond-media {
+        grid-template-columns: 1fr;
+    }
+
+    .beyond-media {
+        grid-template-columns: 1fr;
+    }
+
+    .beyond-media > img {
+        order: -1;
+        max-width: 340px;
+    }
 }

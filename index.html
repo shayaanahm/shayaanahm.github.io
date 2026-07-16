@@ -22,7 +22,7 @@
     </a>
     <div class="nav-links">
         <a href="#work">Work</a>
-        <a href="#process">Process</a>
+        <a href="#world">Process</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
         <a href="cv.html">CV</a>
@@ -42,7 +42,7 @@
                     workflow engineering and software development.
                 </p>
                 <div class="hero-buttons">
-                    <a class="button button--accent" href="#process">See How I Work</a>
+                    <a class="button button--accent" href="#world">See How I Work</a>
                     <a class="button" href="#work">Featured Work</a>
                     <a class="button" href="#about">About Me</a>
                 </div>
@@ -73,7 +73,7 @@
 </section>
 
 <!-- Scroll-scrubbed marquee band — real service names only -->
-<div class="marquee" aria-hidden="true">
+<div class="marquee panel-dark" aria-hidden="true">
     <div class="marquee-track" data-marquee="0.35">
         <span>Workflow Automation</span><span class="marquee-dot">&bull;</span>
         <span>AI Chatbots</span><span class="marquee-dot">&bull;</span>
@@ -88,62 +88,14 @@
     </div>
 </div>
 
-<!-- ============================================================
-     2. THE PROCESS — pinned, scroll-choreographed step highlight
-     Track: 300vh. Stage reads --p (0→1) written by the engine.
-     ============================================================ -->
 <!-- ===== The World — scroll-scrubbed camera flight (Higgsfield) =====
      world-scrub.js mounts the scrub engine into #world: a sticky 100vh view
      + a tall track. Scroll scrubs pre-rendered clips (world/*.mp4) through
-     four clay-diorama islands; the .webp stills are posters and the
-     reduced-motion / clip-load-failure fallback. Config lives below the
-     scripts at the end of <body>.
+     the automation process (Discovery → Design → Build → Handover) in one
+     continuous photoreal walk; .webp posters double as the fallback.
+     Config lives below the scripts at the end of <body>.
 -->
 <section id="world" aria-label="The world — a flythrough of my work"></section>
-<section id="process" class="proc panel-dark">
-    <div class="proc-track" data-pin id="process-track">
-        <div class="pin-stage proc-stage">
-            <div class="proc-stage-inner">
-
-                <aside class="proc-aside">
-                    <h2 class="section-heading proc-heading" data-label="Process">How It Works</h2>
-                    <p class="section-sub proc-sub">A clear, structured process from first conversation to finished system.</p>
-                    <div class="proc-rail" aria-hidden="true">
-                        <span class="proc-rail-fill"></span>
-                    </div>
-                </aside>
-
-                <ol class="proc-steps">
-                    <li class="proc-step" style="--i: 0">
-                        <span class="proc-bar" aria-hidden="true"></span>
-                        <span class="proc-num">01</span>
-                        <h3>Discovery</h3>
-                        <p>We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.</p>
-                    </li>
-                    <li class="proc-step" style="--i: 1">
-                        <span class="proc-bar" aria-hidden="true"></span>
-                        <span class="proc-num">02</span>
-                        <h3>Design</h3>
-                        <p>I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.</p>
-                    </li>
-                    <li class="proc-step" style="--i: 2">
-                        <span class="proc-bar" aria-hidden="true"></span>
-                        <span class="proc-num">03</span>
-                        <h3>Build</h3>
-                        <p>I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.</p>
-                    </li>
-                    <li class="proc-step" style="--i: 3">
-                        <span class="proc-bar" aria-hidden="true"></span>
-                        <span class="proc-num">04</span>
-                        <h3>Handover</h3>
-                        <p>I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.</p>
-                    </li>
-                </ol>
-
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- ============================================================
      3. SERVICES
@@ -446,7 +398,7 @@
 <footer class="footer">
     <div class="footer-links">
         <a href="#work">Work</a>
-        <a href="#process">Process</a>
+        <a href="#world">Process</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
         <a href="cv.html">CV</a>
@@ -459,52 +411,50 @@
 <script src="script.js"></script>
 <script src="world-scrub.js"></script>
 <script>
-// Mount the scroll-scrubbed world. Copy is carried over verbatim from the
-// previous world section — no new claims. Clips are 720p seedance-mini
-// renders; -m variants are the phone encodes; .webp stills are posters +
-// the reduced-motion fallback.
+// Mount the scroll-scrubbed world: the automation process as one continuous
+// photoreal walk (arch. A — no connectors, each leg chains from the previous
+// leg's real last frame). Step copy is verbatim from the old "How It Works";
+// the last stop introduces the owner. Posters are each leg's first frame.
 mountScrollWorld(document.getElementById('world'), {
-    hint: 'scroll to fly',
-    diveScroll: 1.5,
-    connScroll: 1.15,
+    hint: 'scroll to walk through',
+    diveScroll: 1.7,
+    crossfade: 0.1,
     sections: [
         {
-            id: 'sw-automation', label: 'Automation',
-            still: 'world/automation.webp',
-            clip: 'world/automation.mp4', clipMobile: 'world/automation-m.mp4',
-            accent: '#24523b', scroll: 1.8, linger: 0.4,
-            eyebrow: 'Freelance Services', title: 'AI Automation',
-            body: 'Intelligent workflows, AI chatbots, n8n & Make integrations, data pipelines and CRM setup — with live demos and workflow breakdowns.',
-            tags: ['n8n', 'Claude', 'Supabase']
+            id: 'sw-discovery', label: 'Discovery',
+            still: 'world/discovery.webp',
+            clip: 'world/discovery.mp4', clipMobile: 'world/discovery-m.mp4',
+            accent: '#3f7d5c', scroll: 1.9, linger: 0.4,
+            eyebrow: 'Step 01 — Discovery', title: 'First, we talk.',
+            body: 'We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.'
         },
         {
-            id: 'sw-projects', label: 'Projects',
-            still: 'world/ring.webp',
-            clip: 'world/ring.mp4', clipMobile: 'world/ring-m.mp4',
-            accent: '#24523b', linger: 0.35,
-            eyebrow: 'Selected Work', title: 'Projects',
-            body: 'BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy, with downloadable source code and a full development report.'
+            id: 'sw-design', label: 'Design',
+            still: 'world/design.webp',
+            clip: 'world/design.mp4', clipMobile: 'world/design-m.mp4',
+            accent: '#3f7d5c', linger: 0.35,
+            eyebrow: 'Step 02 — Design', title: 'Then I map the system.',
+            body: 'I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.'
         },
         {
-            id: 'sw-cv', label: 'CV',
-            still: 'world/books.webp',
-            clip: 'world/books.mp4', clipMobile: 'world/books-m.mp4',
-            accent: '#24523b', linger: 0.35,
-            eyebrow: 'Curriculum Vitae', title: 'The CV',
-            body: "Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses."
+            id: 'sw-build', label: 'Build',
+            still: 'world/build.webp',
+            clip: 'world/build.mp4', clipMobile: 'world/build-m.mp4',
+            accent: '#3f7d5c', linger: 0.35,
+            eyebrow: 'Step 03 — Build', title: 'Then I build it.',
+            body: 'I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.'
         },
         {
-            id: 'sw-contact', label: 'Contact',
-            still: 'world/lighthouse.webp',
-            clip: 'world/lighthouse.mp4', clipMobile: 'world/lighthouse-m.mp4',
-            accent: '#24523b', scroll: 1.8, linger: 0.45,
-            eyebrow: 'Say Hello', title: "Let's Connect",
-            body: 'Open to opportunities, projects, collaborations and technical work.',
-            cta: { primary: { label: 'Get in touch', href: 'contact.html' }, secondary: { label: 'View the work', href: '#work' } }
+            id: 'sw-handover', label: 'Handover',
+            still: 'world/handover.webp',
+            clip: 'world/handover.mp4', clipMobile: 'world/handover-m.mp4',
+            accent: '#3f7d5c', scroll: 2.0, linger: 0.45,
+            eyebrow: 'Step 04 — Handover', title: "Yours to keep. I'm Shayaan.",
+            body: 'I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.',
+            cta: { primary: { label: 'Meet me', href: '#about' }, secondary: { label: 'Get in touch', href: 'contact.html' } }
         }
     ],
-    connectors: ['world/conn1.mp4', 'world/conn2.mp4', 'world/conn3.mp4'],
-    connectorsMobile: ['world/conn1-m.mp4', 'world/conn2-m.mp4', 'world/conn3-m.mp4']
+    connectors: []
 });
 </script>
 </body>
