@@ -9,11 +9,11 @@
     /* 2026-07-16 palette: sage ground + near-black ink + deep forest
        green. The world section is dark full-bleed photoreal, so the
        page ground no longer needs to match any clip background. */
-    --bg: #e9eee1;
-    --bg-card: #f5f8ec;
-    --ink: #14181a;
-    --ink-soft: #3e4547;
-    --ink-muted: #68716e;
+    --bg: #d5dec9;
+    --bg-card: #eff3e3;
+    --ink: #131714;
+    --ink-soft: #39423b;
+    --ink-muted: #576156;
     --line: rgba(20, 24, 26, 0.1);
     --line-strong: rgba(20, 24, 26, 0.22);
     --accent: #24523b;
