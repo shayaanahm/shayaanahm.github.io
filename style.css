@@ -6,11 +6,11 @@
    (--panel*); Playfair headings kept.
    ============================================================ */
 :root {
-    /* 2026-07-16 palette refresh: ivory + near-black + deep forest green.
-       The world/ video clips have a baked-in warm cream background —
-       keep --bg close to it or the world section shows a tone jump. */
-    --bg: #f6f3ec;
-    --bg-card: #fdfbf5;
+    /* 2026-07-16 palette: sage ground + near-black ink + deep forest
+       green. The world section is dark full-bleed photoreal, so the
+       page ground no longer needs to match any clip background. */
+    --bg: #e9eee1;
+    --bg-card: #f5f8ec;
     --ink: #14181a;
     --ink-soft: #3e4547;
     --ink-muted: #68716e;
