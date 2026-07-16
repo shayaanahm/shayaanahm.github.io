@@ -308,12 +308,14 @@ function injectCSS() {
   .sw-copy__body{margin-top:18px;font-size:clamp(1rem,1.25vw,1.14rem);line-height:1.55;color:color-mix(in srgb,var(--sw-ink) 78%,var(--sw-ink-soft));max-width:40ch;text-shadow:0 1px 12px color-mix(in srgb,var(--sw-bg) 90%,transparent);}
   .sw-copy__tags{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;}
   .sw-copy__tags li{font-size:.8rem;font-weight:500;color:var(--sw-ink);padding:7px 14px;border-radius:999px;background:color-mix(in srgb,var(--sw-accent) 10%,var(--sw-bg));border:1px solid color-mix(in srgb,var(--sw-accent) 30%,transparent);}
-  .sw-copy__cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;pointer-events:auto;align-items:center;}
-  .sw-btn{text-decoration:none;font-family:var(--sw-font-body);font-weight:600;font-size:.86rem;letter-spacing:.04em;padding:15px 32px;border-radius:999px;transition:transform .25s var(--sw-ease,ease),box-shadow .25s,background .25s,color .25s,border-color .25s;}
-  .sw-btn--primary{color:#fff;background:var(--sw-accent);box-shadow:0 10px 26px color-mix(in srgb,var(--sw-accent) 32%,transparent);}
-  .sw-btn--primary:hover{transform:translateY(-2px);box-shadow:0 14px 32px color-mix(in srgb,var(--sw-accent) 42%,transparent);}
-  .sw-btn--ghost{color:var(--sw-ink);border:1.5px solid color-mix(in srgb,var(--sw-ink) 35%,transparent);background:color-mix(in srgb,var(--sw-bg) 55%,transparent);}
-  .sw-btn--ghost:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--sw-ink) 45%,transparent);}
+  .sw-copy__cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:34px;pointer-events:auto;align-items:center;}
+  /* CTAs sit over bright video, so both need their own solid ground —
+     translucent pills were unreadable against the handover study. */
+  .sw-btn{text-decoration:none;font-family:var(--sw-font-body);font-weight:600;font-size:1rem;line-height:1;letter-spacing:.02em;padding:18px 36px;border-radius:999px;white-space:nowrap;transition:transform .25s ease,box-shadow .25s,background .25s,border-color .25s;}
+  .sw-btn--primary{color:#fff;background:var(--sw-accent);border:1.5px solid transparent;box-shadow:0 12px 30px rgba(0,0,0,.35);}
+  .sw-btn--primary:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--sw-accent) 85%,#fff);}
+  .sw-btn--ghost{color:#fff;background:rgba(10,20,15,.72);border:1.5px solid rgba(242,239,230,.5);backdrop-filter:blur(8px);box-shadow:0 12px 30px rgba(0,0,0,.3);}
+  .sw-btn--ghost:hover{transform:translateY(-2px);border-color:rgba(242,239,230,.85);}
   .sw-route{position:absolute;right:clamp(14px,2.4vw,30px);top:50%;z-index:40;transform:translateY(-50%);display:flex;flex-direction:column;gap:22px;padding:18px 10px;}
   .sw-route::before{content:"";position:absolute;left:50%;top:22px;bottom:22px;width:2px;transform:translateX(-50%);background:var(--sw-accent);opacity:.28;}
   .sw-route__dot{position:relative;border:0;background:transparent;cursor:pointer;width:14px;height:14px;display:grid;place-items:center;pointer-events:auto;}
@@ -346,8 +348,12 @@ function injectCSS() {
   }
   @media (prefers-reduced-motion:reduce){ .sw-hint i::after{animation:none;} .sw-pt{display:none;} }
   `;
+  // NOT wrapped in @layer: the page's universal `* { padding: 0 }` reset is
+  // unlayered, and unlayered author styles beat ALL layered ones — inside a
+  // layer, every padding/margin here would silently lose to the reset.
+  // Injected at the end of <head>, so it wins source-order ties instead.
   const style = document.createElement('style'); style.id = 'sw-css';
-  style.textContent = '@layer sw {\n' + css + '\n}';
+  style.textContent = css;
   document.head.appendChild(style);
 }
 

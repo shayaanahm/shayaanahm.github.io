@@ -1029,3 +1029,97 @@
         max-width: 340px;
     }
 }
+
+/* ============================================================
+   Scroll-snap "click" between chapters (2026-07-16 round 5)
+   proximity, not mandatory: the world's 7000px scrub track has no
+   interior snap points, and a mandatory snap would yank mid-flight.
+   Snapping honours each section's scroll-margin-top (navbar offset).
+   ============================================================ */
+html {
+    scroll-snap-type: y proximity;
+}
+
+.hero,
+#world,
+#services,
+#work,
+#workflows,
+#projects,
+#about,
+#beyond,
+#contact {
+    scroll-snap-align: start;
+}
+
+/* The world should always click flush to the viewport top — the
+   navbar-offset margin would leave a sliver of the page above it. */
+#world {
+    scroll-margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-snap-type: none;
+    }
+}
+
+/* ============================================================
+   Featured work — floating staggered arrangement.
+   The two demo videos overlap diagonally instead of sitting in a
+   tidy grid; they float in with a slight tilt and drift on parallax.
+   ============================================================ */
+.work-section .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+    align-items: start;
+}
+
+.work-section .grid-2 > .media-card:nth-child(1) {
+    grid-column: 1 / 8;
+    grid-row: 1;
+    z-index: 2;
+}
+
+.work-section .grid-2 > .media-card:nth-child(2) {
+    grid-column: 7 / 13;
+    grid-row: 1;
+    margin-top: clamp(120px, 22vw, 300px);
+    z-index: 3;
+}
+
+/* Float-in: rise with a slight tilt that settles */
+.work-section .media-card.reveal {
+    transform: translateY(70px) rotate(-1.6deg) scale(0.96);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+}
+
+.work-section .grid-2 > .media-card:nth-child(2).reveal {
+    transform: translateY(90px) rotate(1.6deg) scale(0.96);
+    transition-delay: 0.12s;
+}
+
+.work-section .media-card.reveal.visible {
+    transform: translateY(0) rotate(0deg) scale(1);
+}
+
+@media (max-width: 860px) {
+    .work-section .grid-2 > .media-card:nth-child(1),
+    .work-section .grid-2 > .media-card:nth-child(2) {
+        grid-column: 1 / 13;
+        grid-row: auto;
+        margin-top: 0;
+    }
+
+    .work-section .grid-2 {
+        gap: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .work-section .media-card.reveal,
+    .work-section .grid-2 > .media-card:nth-child(2).reveal {
+        transform: none !important;
+    }
+}
