@@ -1190,3 +1190,160 @@
         transform: none !important;
     }
 }
+
+/* ---------- Compact about (full CV lives at cv.html) ---------- */
+.about-compact {
+    max-width: 820px;
+}
+
+.about-highlights {
+    margin: 28px 0;
+    border-top: 1px solid var(--line);
+}
+
+.about-highlight {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.about-highlight .k {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 3px;
+}
+
+.about-highlight .v {
+    color: var(--ink-soft);
+}
+
+.about-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .about-highlight {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
+/* ============================================================
+   Motion pass — scroll choreography (2026-07-16 round 2)
+   ============================================================ */
+
+/* ---------- Scroll-scrubbed marquee bands ---------- */
+.marquee {
+    overflow: hidden;
+    padding: 34px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-card);
+    white-space: nowrap;
+}
+
+.marquee-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 38px;
+    will-change: transform;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.6vw, 44px);
+    font-weight: 500;
+    color: var(--ink);
+    /* Long enough that scrubbing never runs off the end */
+    padding-left: 45vw;
+}
+
+.marquee--flip .marquee-track {
+    padding-left: 0;
+    padding-right: 45vw;
+    /* negative factor drags it the other way; start it offset left */
+    margin-left: -60vw;
+}
+
+.marquee-dot {
+    color: var(--accent);
+    font-size: 0.55em;
+}
+
+/* ---------- Ghost chapter numerals ---------- */
+.sec-num {
+    position: absolute;
+    top: 24px;
+    right: 4%;
+    z-index: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(120px, 22vw, 300px);
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--line-strong);
+    pointer-events: none;
+    user-select: none;
+}
+
+.work-section, .wf-section, .proj-section, .about-section, .svc {
+    position: relative;
+    overflow: hidden; /* numerals parallax past section edges */
+}
+
+.work-section > .container, .wf-section > .container,
+.proj-section > .container, .about-section > .container,
+.svc > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Reveal choreography variants ----------
+   Same .reveal → .visible contract; only the hidden-state transform
+   differs, so the 2.5s safety net still resolves everything. */
+
+/* Workflow cards assemble from alternating sides */
+.wf-section .grid-2 > .reveal:nth-child(odd)  { transform: translateX(-44px); }
+.wf-section .grid-2 > .reveal:nth-child(even) { transform: translateX(44px); }
+.wf-section .grid-2 > .reveal.visible         { transform: translateX(0); }
+
+/* Featured-work videos rise with a slight settle-scale */
+.work-section .media-card.reveal { transform: translateY(46px) scale(0.97); }
+.work-section .media-card.reveal.visible { transform: translateY(0) scale(1); }
+
+/* Service cards: deeper stagger so the grid builds visibly */
+.svc .grid-2 > .reveal:nth-child(1) { transition-delay: 0.00s; }
+.svc .grid-2 > .reveal:nth-child(2) { transition-delay: 0.10s; }
+.svc .grid-2 > .reveal:nth-child(3) { transition-delay: 0.20s; }
+.svc .grid-2 > .reveal:nth-child(4) { transition-delay: 0.30s; }
+.svc .grid-2 > .reveal:nth-child(5) { transition-delay: 0.40s; }
+
+/* Section headings: the data-label kicker rises in after the heading */
+.section-row.reveal .section-heading::before {
+    display: block;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.7s var(--ease) 0.2s, transform 0.7s var(--ease) 0.2s;
+}
+.section-row.reveal.visible .section-heading::before {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .marquee { padding: 22px 0; }
+    .sec-num { font-size: 110px; top: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track { transform: none !important; }
+    .marquee--flip .marquee-track { margin-left: 0; }
+    .wf-section .grid-2 > .reveal,
+    .work-section .media-card.reveal {
+        transform: none !important;
+    }
+}

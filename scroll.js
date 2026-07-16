@@ -21,6 +21,7 @@
 
     var pins = [];
     var parallax = [];
+    var marquees = [];
     var spy = [];
     var spyActive = null;
     var bar = null;
@@ -142,6 +143,12 @@
                 var off = (y + vh / 2 - q.centre) * q.factor;
                 q.el.style.transform = 'translate3d(0,' + off.toFixed(2) + 'px,0)';
             }
+            // Marquees scrub on X with scroll (both directions), rather than
+            // running on a clock — that's what ties them to the page.
+            for (var m = 0; m < marquees.length; m++) {
+                var mq = marquees[m];
+                mq.el.style.transform = 'translate3d(' + (-y * mq.factor).toFixed(2) + 'px,0,0)';
+            }
         }
 
         raf = requestAnimationFrame(frame);
@@ -168,11 +175,17 @@
         }
 
         parallax.length = 0;
+        marquees.length = 0;
         if (!reduced) {
             var pxs = document.querySelectorAll('[data-parallax]');
             for (var j = 0; j < pxs.length; j++) {
                 var f = parseFloat(pxs[j].getAttribute('data-parallax'));
                 if (!isNaN(f) && f !== 0) parallax.push({ el: pxs[j], factor: f, centre: 0 });
+            }
+            var mqs = document.querySelectorAll('[data-marquee]');
+            for (var m = 0; m < mqs.length; m++) {
+                var mf = parseFloat(mqs[m].getAttribute('data-marquee')) || 0.5;
+                marquees.push({ el: mqs[m], factor: mf });
             }
         }
     }
