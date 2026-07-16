@@ -161,7 +161,7 @@
     height: 520px;
     max-width: 90vw;
     border-radius: 50%;
-    background: radial-gradient(circle, var(--accent-soft) 0%, rgba(176, 83, 42, 0) 70%);
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
 }
@@ -1133,4 +1133,60 @@
     .work-section .media-card.reveal {
         transform: none !important;
     }
+}
+
+/* ============================================================
+   Dark contrast panels (2026-07-16 palette refresh)
+   Flip the tokens locally — every component inside restyles itself.
+   ============================================================ */
+.panel-dark {
+    --bg: var(--panel);
+    --bg-card: #1b2f24;
+    --ink: var(--panel-ink);
+    --ink-soft: var(--panel-ink-soft);
+    --ink-muted: #93a095;
+    --line: rgba(242, 239, 230, 0.12);
+    --line-strong: rgba(242, 239, 230, 0.26);
+    --accent: var(--accent-bright);
+    --accent-soft: rgba(63, 125, 92, 0.18);
+    --shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 28px 60px rgba(0, 0, 0, 0.4);
+    background: var(--panel);
+    color: var(--ink);
+}
+
+/* The dark process panel meets the world's cream exit — a soft top
+   fade stops it feeling like a hard slab boundary. */
+.proc.panel-dark {
+    position: relative;
+}
+
+.panel-dark .marquee {
+    background: transparent;
+}
+
+.panel-dark ::selection {
+    background: var(--accent-bright);
+    color: #fff;
+}
+
+/* On dark panels the outlined button must read in ivory, not accent —
+   green-on-dark-green is below contrast. */
+.panel-dark .button {
+    border-color: var(--panel-ink);
+    color: var(--panel-ink);
+}
+
+.panel-dark .button::before {
+    background: var(--panel-ink);
+}
+
+.panel-dark .button:hover {
+    color: var(--panel);
+}
+
+/* Soft green-tinted band — one more tonal beat between the light
+   proof sections and the dark closing. */
+.beyond-section {
+    background: linear-gradient(180deg, transparent, var(--accent-soft) 30%, var(--accent-soft) 70%, transparent);
 }

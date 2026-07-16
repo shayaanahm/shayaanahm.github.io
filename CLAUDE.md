@@ -28,10 +28,10 @@ Git identity is already configured globally (`Shayaan Ahmed <proshayaan@gmail.co
 - **Pages**: `index.html` (the whole site) and `contact.html`. Both share the same navbar/footer markup — a nav change means editing **both**.
 - **The nav is in-page anchors** (`#work`, `#process`, `#projects`, `#about`) plus a real link to `contact.html`. contact.html's nav/footer point back at `index.html#...`.
 - **Section order in `index.html`**: hero → `#hook` → `#world` (pinned 3D) → `#process` (pinned) → `#services` → `#work` → `#workflows` → `#projects` → `#about` → `#beyond` → `#contact` (closing CTA).
-- `style.css` is the shared stylesheet for both pages. Design tokens live in `:root` CSS variables (cream background `--bg`, near-black `--ink`, terracotta `--accent`). Fonts: Playfair Display (headings, via Google Fonts `@import`) + Inter (body).
-- **2026-07 "brand evolution" redesign** (editorial layout, same palette): pages open with a `.page-header` block (`.small-label` kicker with terracotta dash + `.page-title` with an italic `<em>` accent word + `.section-intro`, all left-aligned); section headings sit in a `.section-row` (heading left, `.section-sub` right; add class `tight` for the first one after a page header); the homepage "What I Do" uses `.index-list`/`.index-row` editorial rows instead of cards; `.cta-band` is a dark ink panel; the homepage hero is `.hero-grid` (copy in `.hero-copy` + `.hero-meta` side rail).
+- `style.css` is the shared stylesheet for both pages. Design tokens live in `:root` CSS variables (ivory background `--bg`, near-black `--ink`, deep forest green `--accent`, dark-panel tokens `--panel`/`--panel-ink` (flip locally via the `.panel-dark` class in home.css — components restyle themselves)). Fonts: Playfair Display (headings, via Google Fonts `@import`) + Inter (body).
+- **2026-07 "brand evolution" redesign** (editorial layout, same palette): pages open with a `.page-header` block (`.small-label` kicker with accent dash + `.page-title` with an italic `<em>` accent word + `.section-intro`, all left-aligned); section headings sit in a `.section-row` (heading left, `.section-sub` right; add class `tight` for the first one after a page header); the homepage "What I Do" uses `.index-list`/`.index-row` editorial rows instead of cards; `.cta-band` is a dark ink panel; the homepage hero is `.hero-grid` (copy in `.hero-copy` + `.hero-meta` side rail).
 - `script.js` provides two behaviours: scroll-reveal (add class `reveal` to any element; it gets `.visible` when scrolled into view, with a 2.5s safety net so nothing stays hidden) and automatic `.active` highlighting of the current page's nav link. It's a plain scroll handler by design — do **not** switch it to IntersectionObserver (that was tried and reverted).
-- Reusable patterns: `.card` (hover-lift panel with terracotta top-line sweep), `.media-card` (image/video card, media on top + `.media-body` text), `.grid-2` / `.cv-grid` / `.contact-grid` (2-col grids, `.wide-card` spans both), `.section-heading` with `data-label="..."` (renders a small terracotta kicker above the heading), `.cta-band`, `.tag`, `.button`.
+- Reusable patterns: `.card` (hover-lift panel with accent top-line sweep), `.media-card` (image/video card, media on top + `.media-body` text), `.grid-2` / `.cv-grid` / `.contact-grid` (2-col grids, `.wide-card` spans both), `.section-heading` with `data-label="..."` (renders a small accent kicker above the heading), `.cta-band`, `.tag`, `.button`.
 - Media assets (workflow screenshots `.png`, demo videos `.mp4`, `brawlbase-project.zip`, `brawlbase-nea.pdf`) are committed directly to the repo root and referenced with relative paths.
 
 ## The scroll engine — `scroll.js`, `home.css`, `world-scrub.js`
@@ -53,7 +53,7 @@ Git identity is already configured globally (`Shayaan Ahmed <proshayaan@gmail.co
 
 - **Don't invent facts.** CV content mirrors the owner's real CV document; automation page claims (e.g. "100+ job leads") were supplied by the owner. Ask before adding new claims, clients, or numbers.
 - The "Featured Work" section deliberately says *"Example automations built for businesses"* — these are demos, not paid client work; keep the wording discreet.
-- Buttons are outlined only: `.button`, plus the `.button--accent` terracotta-outline variant reserved for the **single primary CTA of a page** (there is no solid variant).
+- Buttons are outlined only: `.button`, plus the `.button--accent` accent-outline variant reserved for the **single primary CTA of a page** (there is no solid variant).
 
 ## Backups
 

@@ -205,6 +205,9 @@
     window.addEventListener('resize', measure, { passive: true });
     window.addEventListener('orientationchange', measure, { passive: true });
     window.addEventListener('load', measure);
+    // The world section sets its own track height after mounting; everything
+    // below it moves when that happens.
+    window.addEventListener('sw:resized', measure);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 
     if (reduceMQ.addEventListener) {

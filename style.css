@@ -1,22 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
 
 /* ============================================================
-   Design tokens — 2026-07 "brand evolution" redesign.
-   Cream / terracotta / Playfair kept; editorial layout system.
+   Design tokens — editorial layout system.
+   2026-07-16: ivory / near-black / deep forest green + dark panels
+   (--panel*); Playfair headings kept.
    ============================================================ */
 :root {
-    --bg: #f6f1e8;
-    --bg-card: #fffaf1;
-    --ink: #171717;
-    --ink-soft: #4a4640;
-    --ink-muted: #6f665a;
-    --line: rgba(23, 23, 23, 0.1);
-    --line-strong: rgba(23, 23, 23, 0.2);
-    --accent: #b0532a;
-    --accent-soft: rgba(176, 83, 42, 0.08);
-    --accent-bright: #d97e55;
-    --shadow: 0 18px 45px rgba(0, 0, 0, 0.05);
-    --shadow-hover: 0 28px 60px rgba(0, 0, 0, 0.1);
+    /* 2026-07-16 palette refresh: ivory + near-black + deep forest green.
+       The world/ video clips have a baked-in warm cream background —
+       keep --bg close to it or the world section shows a tone jump. */
+    --bg: #f6f3ec;
+    --bg-card: #fdfbf5;
+    --ink: #14181a;
+    --ink-soft: #3e4547;
+    --ink-muted: #68716e;
+    --line: rgba(20, 24, 26, 0.1);
+    --line-strong: rgba(20, 24, 26, 0.22);
+    --accent: #24523b;
+    --accent-soft: rgba(36, 82, 59, 0.08);
+    --accent-bright: #3f7d5c;
+    --panel: #12211a;
+    --panel-ink: #f2efe6;
+    --panel-ink-soft: #b9c2b8;
+    --shadow: 0 18px 45px rgba(10, 20, 15, 0.06);
+    --shadow-hover: 0 28px 60px rgba(10, 20, 15, 0.12);
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -52,7 +59,7 @@ body {
     align-items: center;
     /* solid-ish bg instead of backdrop-filter: blur is a per-scroll-frame
        repaint and the main source of scroll jank on integrated GPUs */
-    background: rgba(246, 241, 232, 0.96);
+    background: color-mix(in srgb, var(--bg) 96%, transparent);
     border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;

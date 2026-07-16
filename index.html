@@ -100,7 +100,7 @@
      scripts at the end of <body>.
 -->
 <section id="world" aria-label="The world — a flythrough of my work"></section>
-<section id="process" class="proc">
+<section id="process" class="proc panel-dark">
     <div class="proc-track" data-pin id="process-track">
         <div class="pin-stage proc-stage">
             <div class="proc-stage-inner">
@@ -414,6 +414,7 @@
     </div>
 </section>
 
+    <div class="closing-panel panel-dark">
     <div class="marquee marquee--flip" aria-hidden="true">
         <div class="marquee-track" data-marquee="-0.3">
             <span>Let's build the system</span><span class="marquee-dot">&bull;</span>
@@ -438,6 +439,7 @@
             </div>
         </div>
     </section>
+    </div><!-- /.closing-panel -->
 
 </main>
 
@@ -464,13 +466,13 @@
 mountScrollWorld(document.getElementById('world'), {
     hint: 'scroll to fly',
     diveScroll: 1.5,
-    connScroll: 0.9,
+    connScroll: 1.15,
     sections: [
         {
             id: 'sw-automation', label: 'Automation',
             still: 'world/automation.webp',
             clip: 'world/automation.mp4', clipMobile: 'world/automation-m.mp4',
-            accent: '#b0532a', scroll: 1.8, linger: 0.4,
+            accent: '#24523b', scroll: 1.8, linger: 0.4,
             eyebrow: 'Freelance Services', title: 'AI Automation',
             body: 'Intelligent workflows, AI chatbots, n8n & Make integrations, data pipelines and CRM setup — with live demos and workflow breakdowns.',
             tags: ['n8n', 'Claude', 'Supabase']
@@ -479,7 +481,7 @@ mountScrollWorld(document.getElementById('world'), {
             id: 'sw-projects', label: 'Projects',
             still: 'world/ring.webp',
             clip: 'world/ring.mp4', clipMobile: 'world/ring-m.mp4',
-            accent: '#b0532a', linger: 0.35,
+            accent: '#24523b', linger: 0.35,
             eyebrow: 'Selected Work', title: 'Projects',
             body: 'BrawlBase — a full-stack martial arts search platform built with Python, Flask and SQLAlchemy, with downloadable source code and a full development report.'
         },
@@ -487,7 +489,7 @@ mountScrollWorld(document.getElementById('world'), {
             id: 'sw-cv', label: 'CV',
             still: 'world/books.webp',
             clip: 'world/books.mp4', clipMobile: 'world/books-m.mp4',
-            accent: '#b0532a', linger: 0.35,
+            accent: '#24523b', linger: 0.35,
             eyebrow: 'Curriculum Vitae', title: 'The CV',
             body: "Education, work experience, key skills and certifications — including Anthropic's Claude 101, Claude Code 101 and AI Fluency courses."
         },
@@ -495,7 +497,7 @@ mountScrollWorld(document.getElementById('world'), {
             id: 'sw-contact', label: 'Contact',
             still: 'world/lighthouse.webp',
             clip: 'world/lighthouse.mp4', clipMobile: 'world/lighthouse-m.mp4',
-            accent: '#b0532a', scroll: 1.8, linger: 0.45,
+            accent: '#24523b', scroll: 1.8, linger: 0.45,
             eyebrow: 'Say Hello', title: "Let's Connect",
             body: 'Open to opportunities, projects, collaborations and technical work.',
             cta: { primary: { label: 'Get in touch', href: 'contact.html' }, secondary: { label: 'View the work', href: '#work' } }
