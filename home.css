@@ -993,9 +993,24 @@
    me-outdoors.jpg (#about) and me-cat.jpg (#beyond). */
 .about-media {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 320px 1fr;
     gap: 36px;
-    align-items: start;
+    align-items: stretch;
+    margin-bottom: 8px;
+}
+
+.about-media .about-statement {
+    margin-bottom: 0;
+}
+
+.about-photo {
+    object-fit: cover;
+    height: 100%;
+}
+
+.beyond-photo {
+    margin-top: 28px;
+    max-width: 340px;
 }
 
 .about-photo,
@@ -1040,13 +1055,8 @@ html {
     scroll-snap-type: y proximity;
 }
 
-/* Only the showpieces snap — each process room (its own snap-align is
-   with the .room styles), the featured videos, and the closing CTA.
-   Snapping every section made the page feel grabby. */
-#work,
-#contact {
-    scroll-snap-align: start;
-}
+/* Only the process rooms snap (their snap-align lives with the .room
+   styles) — everywhere else scrolls freely. */
 
 @media (prefers-reduced-motion: reduce) {
     html {
@@ -1062,21 +1072,19 @@ html {
 .work-section .grid-2 {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: 0;
+    gap: 28px;
     align-items: start;
 }
 
+/* Staggered but never overlapping — the earlier diagonal overlap
+   buried the first card's copy under the second card. */
 .work-section .grid-2 > .media-card:nth-child(1) {
-    grid-column: 1 / 8;
-    grid-row: 1;
-    z-index: 2;
+    grid-column: 1 / 7;
 }
 
 .work-section .grid-2 > .media-card:nth-child(2) {
     grid-column: 7 / 13;
-    grid-row: 1;
-    margin-top: clamp(120px, 22vw, 300px);
-    z-index: 3;
+    margin-top: clamp(48px, 7vw, 110px);
 }
 
 /* Float-in: rise with a slight tilt that settles */
