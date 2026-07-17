@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Shayaan Ahmed — AI-focused technologist specialising in automation, chatbots and software engineering.">
     <title>Shayaan Ahmed | Portfolio</title>
+    <link rel="canonical" href="https://shayaanahm.github.io/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Shayaan Ahmed | Portfolio">
+    <meta property="og:description" content="Shayaan Ahmed — AI-focused technologist specialising in automation, chatbots and software engineering.">
+    <meta property="og:url" content="https://shayaanahm.github.io/">
+    <meta property="og:image" content="https://shayaanahm.github.io/me-outdoors.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shayaan Ahmed | Portfolio">
+    <meta name="twitter:description" content="Shayaan Ahmed — AI-focused technologist specialising in automation, chatbots and software engineering.">
+    <meta name="twitter:image" content="https://shayaanahm.github.io/me-outdoors.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
     <!-- Cloudflare Web Analytics -->
@@ -21,8 +34,9 @@
         <span>Shayaan Ahmed</span>
     </a>
     <div class="nav-links">
-        <a href="#work">Work</a>
-        <a href="#automation">AI Automation</a>
+        <a href="#top">Home</a>
+        <a href="automation.html">AI Automation</a>
+        <a href="automation.html#work">Work</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
         <a href="cv.html">CV</a>
@@ -42,8 +56,8 @@
                     workflow engineering and software development.
                 </p>
                 <div class="hero-buttons">
-                    <a class="button button--accent" href="#automation">See How I Work</a>
-                    <a class="button" href="#work">Featured Work</a>
+                    <a class="button button--accent" href="automation.html">See How I Work</a>
+                    <a class="button" href="automation.html#work">Featured Work</a>
                     <a class="button" href="#about">About Me</a>
                 </div>
             </div>
@@ -88,30 +102,13 @@
     </div>
 </div>
 
-<!-- ===== AI Automation — the walkthrough (#automation) =====
-     world-scrub.js mounts the scrub engine here: a sticky 100vh view +
-     a tall track; scroll drives the camera through one continuous
-     photoreal walk of the process (Discovery → Design → Build →
-     Handover; the last stop introduces the owner). Config lives with
-     the scripts at the end of <body>. Copy = the real How It Works.
--->
-<section id="automation" aria-label="AI Automation — how I work, as a walkthrough">
-    <div class="automation-intro panel-dark">
-        <div class="container automation-intro-inner">
-            <div class="section-row tight reveal">
-                <h2 class="section-heading" data-label="AI Automation">The <em>walkthrough</em></h2>
-                <p class="section-sub">How I take a business from manual to automated — scroll to walk the process.</p>
-            </div>
-        </div>
-    </div>
-    <div id="world"></div>
-</section>
+<!-- The AI Automation walkthrough used to sit here. It moved to its own
+     page (automation.html) on 2026-07-17 — the nav/hero link out to it. -->
 
 <!-- ============================================================
      3. SERVICES
      ============================================================ -->
 <section id="services" class="svc">
-    <span class="sec-num" data-parallax="-0.06" aria-hidden="true">01</span>
     <div class="container svc-inner">
         <div class="section-row tight reveal">
             <h2 class="section-heading" data-label="What I Do">Services</h2>
@@ -178,48 +175,8 @@
         </div>
     </div>
 </section>
-<!-- ============ Featured Work ============ -->
-<section id="work" class="work-section">
-    <span class="sec-num" data-parallax="-0.06" aria-hidden="true">02</span>
-    <div class="container">
-        <div class="section-row tight reveal">
-            <h2 class="section-heading" data-label="Portfolio">Featured <em>Work</em></h2>
-            <p class="section-sub">Example automations built for businesses across different industries.</p>
-        </div>
-
-        <div class="grid-2 work-grid">
-            <div class="card media-card reveal">
-                <div class="work-media">
-                    <video controls preload="metadata" playsinline>
-                        <source src="premier-properties.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="media-body">
-                    <h3>Premier Properties</h3>
-                    <p>An end-to-end AI automation built for a local estate agent. When a new enquiry comes in, the system automatically qualifies the lead, sends a personalised response, and logs the contact — removing the need for manual follow-up and ensuring no enquiry goes unanswered.</p>
-                </div>
-            </div>
-            <div class="card media-card reveal">
-                <div class="work-media">
-                    <video controls preload="metadata" playsinline>
-                        <source src="spark-pro-electrical.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="media-body">
-                    <h3>Spark Pro Electrical</h3>
-                    <p>A job intake and response automation built for a licensed electrical contractor. New job requests trigger an instant AI-generated reply, with job details automatically captured and routed to the right place — saving hours of admin per week.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- ============ Workflow Examples ============ -->
 <section id="workflows" class="wf-section">
-    <span class="sec-num" data-parallax="-0.06" aria-hidden="true">03</span>
-    <span class="wf-glyph" data-parallax="0.14" aria-hidden="true"></span>
     <div class="container">
         <div class="section-row reveal">
             <h2 class="section-heading" data-label="Under the Hood">Workflow <em>Examples</em></h2>
@@ -261,7 +218,6 @@
 
 <!-- ============ Projects ============ -->
 <section id="projects" class="proj-section">
-    <span class="sec-num" data-parallax="-0.06" aria-hidden="true">04</span>
     <div class="container">
         <div class="section-row reveal">
             <h2 class="section-heading" data-label="Selected Work">Selected <em>Projects</em></h2>
@@ -282,6 +238,22 @@
                 <a class="button" href="brawlbase-nea.pdf" target="_blank" rel="noopener">View Full Development Report</a>
             </div>
         </div>
+
+        <div class="card proj-card reveal">
+            <h3>Fire Warden — Fire Safety Compliance SaaS</h3>
+            <p class="proj-tech"><strong>Tech:</strong> JavaScript, Supabase, PostgreSQL, Stripe, n8n &nbsp;|&nbsp; <strong>Status:</strong> Work in progress</p>
+            <p>
+                Building a web platform for fire safety engineers that replaces the
+                paperwork side of the job. It generates compliance certificates from a
+                schema-driven document builder, handles invoicing, and sends servicing
+                reminders automatically. Features include multi-tenant accounts with
+                role-based access, subscription billing, per-account branding stamped
+                onto every document, and offline data capture for work on site.
+            </p>
+            <div class="proj-actions">
+                <a class="button" href="https://getfirewarden.com" target="_blank" rel="noopener">Visit Fire Warden</a>
+            </div>
+        </div>
     </div>
 </section>
 <!-- ============================================================
@@ -289,7 +261,6 @@
      Copy mirrors the owner's real CV. Don't add claims.
      ============================================================ -->
 <section class="about-section home-section" id="about">
-    <span class="sec-num" data-parallax="-0.06" aria-hidden="true">05</span>
     <div class="container">
 
         <div class="section-row tight reveal">
@@ -301,7 +272,11 @@
 
         <div class="about-compact">
             <div class="about-media">
-                <img class="about-photo reveal" src="me-outdoors.jpg" alt="Shayaan Ahmed at a viewpoint above Lake Garda" loading="lazy" decoding="async" width="1400" height="1050">
+                <!-- Captions repeat what the alt text already states — no new claims. -->
+                <figure class="photo-frame reveal" tabindex="0">
+                    <img src="me-outdoors.jpg" alt="Shayaan Ahmed at a viewpoint above Lake Garda" loading="lazy" decoding="async" width="1400" height="1050">
+                    <figcaption>Above Lake Garda</figcaption>
+                </figure>
                 <div class="card about-statement reveal">
                     <h3>Personal Statement</h3>
                     <p>Driven and personable individual with strong leadership qualities and a passion for teamwork. Effective communicator who stays calm under pressure and multitasks confidently, built through part-time work, volunteering and competitive sport. Committed to delivering results efficiently and supporting those around me.</p>
@@ -355,7 +330,10 @@
                     resilience and self-control. Regular gym training since 2024, plus an interest in philosophy
                     and theology: consistency and critical thinking, practised.
                 </p>
-                <img class="beyond-photo reveal" src="me-cat.jpg" alt="Shayaan off the clock, with a cat on his lap" loading="lazy" decoding="async" width="900" height="1600">
+                <figure class="photo-frame beyond-frame reveal" tabindex="0">
+                    <img src="me-cat.jpg" alt="Shayaan off the clock, with a cat on his lap" loading="lazy" decoding="async" width="900" height="1600">
+                    <figcaption>Off the clock</figcaption>
+                </figure>
             </div>
 
             <ul class="beyond-list reveal" data-parallax="0.05">
@@ -411,8 +389,9 @@
 
 <footer class="footer">
     <div class="footer-links">
-        <a href="#work">Work</a>
-        <a href="#automation">AI Automation</a>
+        <a href="#top">Home</a>
+        <a href="automation.html">AI Automation</a>
+        <a href="automation.html#work">Work</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
         <a href="cv.html">CV</a>
@@ -423,53 +402,5 @@
 
 <script src="scroll.js"></script>
 <script src="script.js"></script>
-<script src="world-scrub.js"></script>
-<script>
-// The AI Automation walkthrough: one continuous photoreal walk, scroll-
-// scrubbed. Step copy is the real "How It Works"; the last stop
-// introduces the owner. Track lengths trimmed — the earlier pacing was
-// reported as taking too long to get through.
-mountScrollWorld(document.getElementById('world'), {
-    hint: 'scroll to walk through',
-    diveScroll: 1.45,
-    crossfade: 0.1,
-    sections: [
-        {
-            id: 'sw-discovery', label: 'Discovery',
-            still: 'world/discovery.webp',
-            clip: 'world/discovery.mp4', clipMobile: 'world/discovery-m.mp4',
-            accent: '#3f7d5c', scroll: 1.6, linger: 0.35,
-            eyebrow: 'Step 01 — Discovery', title: 'First, we talk.',
-            body: 'We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.'
-        },
-        {
-            id: 'sw-design', label: 'Design',
-            still: 'world/design.webp',
-            clip: 'world/design.mp4', clipMobile: 'world/design-m.mp4',
-            accent: '#3f7d5c', linger: 0.3,
-            eyebrow: 'Step 02 — Design', title: 'Then I map the system.',
-            body: 'I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.'
-        },
-        {
-            id: 'sw-build', label: 'Build',
-            still: 'world/build.webp',
-            clip: 'world/build.mp4', clipMobile: 'world/build-m.mp4',
-            accent: '#3f7d5c', linger: 0.3,
-            eyebrow: 'Step 03 — Build', title: 'Then I build it.',
-            body: 'I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.'
-        },
-        {
-            id: 'sw-handover', label: 'Handover',
-            still: 'world/handover.webp',
-            clip: 'world/handover.mp4', clipMobile: 'world/handover-m.mp4',
-            accent: '#3f7d5c', scroll: 1.7, linger: 0.4,
-            eyebrow: 'Step 04 — Handover', title: "Yours to keep. I'm Shayaan.",
-            body: 'I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.',
-            cta: { primary: { label: 'Meet me', href: '#about' }, secondary: { label: 'Get in touch', href: 'contact.html' } }
-        }
-    ],
-    connectors: []
-});
-</script>
 </body>
 </html>

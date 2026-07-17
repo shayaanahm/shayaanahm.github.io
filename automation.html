@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Automation with Shayaan Ahmed — a scroll-driven walkthrough of the process, from discovery to handover.">
+    <title>AI Automation | Shayaan Ahmed</title>
+    <link rel="canonical" href="https://shayaanahm.github.io/automation.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI Automation | Shayaan Ahmed">
+    <meta property="og:description" content="AI Automation with Shayaan Ahmed — a scroll-driven walkthrough of the process, from discovery to handover.">
+    <meta property="og:url" content="https://shayaanahm.github.io/automation.html">
+    <meta property="og:image" content="https://shayaanahm.github.io/me-outdoors.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Automation | Shayaan Ahmed">
+    <meta name="twitter:description" content="AI Automation with Shayaan Ahmed — a scroll-driven walkthrough of the process, from discovery to handover.">
+    <meta name="twitter:image" content="https://shayaanahm.github.io/me-outdoors.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
+    <!-- Cloudflare Web Analytics -->
+    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49c367f5f02a4841b81947715812f661"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="logo" href="index.html">
+        <img src="JJBA.png" alt="Logo">
+        <span>Shayaan Ahmed</span>
+    </a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="automation.html">AI Automation</a>
+        <a href="#work">Work</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#about">About</a>
+        <a href="cv.html">CV</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+
+<!-- ===== AI Automation — the walkthrough =====
+     Moved off the homepage 2026-07-17: this page exists to hold the
+     walkthrough on its own, the way contact.html holds contact.
+     world-scrub.js mounts the scrub engine into #world: a sticky 100vh
+     view + a tall track; scroll drives the camera through one continuous
+     photoreal walk of the process (Discovery → Design → Build →
+     Handover; the last stop introduces the owner). Config lives with the
+     scripts at the end of <body>. Copy = the real How It Works.
+
+     The header strip is dark so it flows straight into the dark
+     walkthrough below it — one continuous chapter, as it read on the
+     homepage.
+-->
+<main>
+    <!-- #automation stays scoped to the dark chapter (intro strip + world):
+         home.css paints #automation with --panel, so anything inside it sits
+         on dark. The closing band below is deliberately outside it — on dark
+         its accent-outlined buttons would be green-on-dark-green. -->
+    <section id="automation" aria-label="AI Automation — how I work, as a walkthrough">
+        <div class="automation-intro panel-dark">
+            <div class="container automation-intro-inner">
+                <!-- Alvo Productivity brand lockup. Geometry is the real mark
+                     from alvo/brand/logo/alvo-mark.svg (rings r92/r58/r20,
+                     stroke 16) — the last letter of "alvo" IS the target mark.
+                     Deliberately drawn in currentColor so it inherits this
+                     site's accent green: the brand's terracotta #B5562C is NOT
+                     imported, per the owner — brand identity, portfolio palette. -->
+                <div class="page-header alvo-header reveal">
+                    <p class="small-label">AI Automation</p>
+
+                    <h1 class="alvo-lockup">
+                        <span class="alvo-wordmark">
+                            alv<svg class="alvo-mark" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                                <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="16"/>
+                                <circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width="16"/>
+                                <circle cx="100" cy="100" r="20" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <span class="sr-only">Alvo Productivity</span>
+                        <span class="alvo-suffix" aria-hidden="true">Productivity</span>
+                    </h1>
+
+                    <p class="alvo-tagline">AI, aimed right.</p>
+
+                    <p class="section-intro">
+                        Alvo finds exactly where AI will move the needle, builds it into your
+                        actual workflow, and trains your team to run it without us.
+                        Scroll to walk the process.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="world"></div>
+    </section>
+
+    <!-- ============ Featured Work ============
+         Moved off the homepage 2026-07-17: the walkthrough explains the
+         process, so the systems it produces belong directly after it. -->
+    <section id="work" class="work-section">
+        <div class="container">
+            <div class="section-row tight reveal">
+                <h2 class="section-heading" data-label="Portfolio">Featured <em>Work</em></h2>
+                <p class="section-sub">Example automations built for businesses across different industries.</p>
+            </div>
+
+            <div class="grid-2 work-grid">
+                <div class="card media-card reveal">
+                    <div class="work-media">
+                        <!-- No poster: the source recording has a screen-recorder
+                             HUD (stop button, timer) burned into every single
+                             frame, start to end, so no frame extraction is
+                             clean. preload="none" alone keeps the byte savings —
+                             video downloads nothing until the visitor presses play. -->
+                        <video controls preload="none" playsinline>
+                            <source src="premier-properties.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="media-body">
+                        <h3>Premier Properties</h3>
+                        <p>An end-to-end AI automation built for a local estate agent. When a new enquiry comes in, the system automatically qualifies the lead, sends a personalised response, and logs the contact — removing the need for manual follow-up and ensuring no enquiry goes unanswered.</p>
+                    </div>
+                </div>
+                <div class="card media-card reveal">
+                    <div class="work-media">
+                        <video controls preload="none" playsinline>
+                            <source src="spark-pro-electrical.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="media-body">
+                        <h3>Spark Pro Electrical</h3>
+                        <p>A job intake and response automation built for a licensed electrical contractor. New job requests trigger an instant AI-generated reply, with job details automatically captured and routed to the right place — saving hours of admin per week.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Workflow Examples ============
+         Deliberately duplicated: this section also stays on the homepage.
+         Edit BOTH copies, or they drift. -->
+    <section id="workflows" class="wf-section">
+        <div class="container">
+            <div class="section-row reveal">
+                <h2 class="section-heading" data-label="Under the Hood">Workflow <em>Examples</em></h2>
+                <p class="section-sub">A look at some of the n8n automation workflows I've built.</p>
+            </div>
+
+            <div class="grid-2 wf-grid">
+                <div class="card media-card reveal">
+                    <img src="google-review-automation.png" alt="Google Review Automation workflow" loading="lazy" decoding="async" width="1872" height="890">
+                    <div class="media-body">
+                        <h3>Google Review Automation</h3>
+                        <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
+                    </div>
+                </div>
+                <div class="card media-card reveal">
+                    <img src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" loading="lazy" decoding="async" width="1867" height="886">
+                    <div class="media-body">
+                        <h3>UK B2B Lead Generator</h3>
+                        <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
+                    </div>
+                </div>
+                <div class="card media-card wide-card reveal">
+                    <img src="email-triage-demo.png" alt="Email Triage Automation workflow" loading="lazy" decoding="async" width="1867" height="923">
+                    <div class="media-body">
+                        <h3>AI Email Triage</h3>
+                        <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
+                    </div>
+                </div>
+                <div class="card media-card wide-card reveal">
+                    <img src="job-application-automation.png" alt="Job Application Automation workflow" loading="lazy" decoding="async" width="1870" height="889">
+                    <div class="media-body">
+                        <h3>Job Application Automation</h3>
+                        <p>A fully automated job hunting pipeline built in n8n. It searches Google Places and Adzuna simultaneously, merges and deduplicates results, loops through each business, scrapes their website to find a contact email, and uses Claude AI to generate a personalised cover note and CV before creating a Gmail draft — ready to send with one click. Users have seen <strong>100+ potential job application leads</strong> generated in a single run, turning a process that would take days of manual effort into something that runs in minutes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="closing">
+        <div class="container">
+            <div class="cta-band reveal">
+                <p class="small-label">Next</p>
+                <h2>Want one <em>built</em>?</h2>
+                <p>Open to opportunities, projects, collaborations and technical work.</p>
+                <p class="page-actions">
+                    <a class="button button--accent" href="contact.html">Contact Me</a>
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<footer class="footer">
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="automation.html">AI Automation</a>
+        <a href="#work">Work</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#about">About</a>
+        <a href="cv.html">CV</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2026 Shayaan Ahmed</p>
+</footer>
+
+<script src="world-scrub.js"></script>
+<script src="script.js"></script>
+<script>
+// The AI Automation walkthrough: one continuous photoreal walk, scroll-
+// scrubbed. Step copy is the real "How It Works"; the last stop
+// introduces the owner. Track lengths trimmed — the earlier pacing was
+// reported as taking too long to get through.
+mountScrollWorld(document.getElementById('world'), {
+    hint: 'scroll to walk through',
+    diveScroll: 1.45,
+    crossfade: 0.1,
+    sections: [
+        {
+            id: 'sw-discovery', label: 'Discovery',
+            still: 'world/discovery.webp',
+            clip: 'world/discovery.mp4', clipMobile: 'world/discovery-m.mp4',
+            accent: '#3f7d5c', scroll: 1.6, linger: 0.35,
+            eyebrow: 'Step 01 — Discovery', title: 'First, we talk.',
+            body: 'We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.'
+        },
+        {
+            id: 'sw-design', label: 'Design',
+            still: 'world/design.webp',
+            clip: 'world/design.mp4', clipMobile: 'world/design-m.mp4',
+            accent: '#3f7d5c', linger: 0.3,
+            eyebrow: 'Step 02 — Design', title: 'Then I map the system.',
+            body: 'I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.'
+        },
+        {
+            id: 'sw-build', label: 'Build',
+            still: 'world/build.webp',
+            clip: 'world/build.mp4', clipMobile: 'world/build-m.mp4',
+            // Was falling through to diveScroll (1.45) — the shortest leg of the
+            // four, which rushed the walk through the build lab. Longest now.
+            accent: '#3f7d5c', scroll: 1.95, linger: 0.3,
+            eyebrow: 'Step 03 — Build', title: 'Then I build it.',
+            body: 'I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.'
+        },
+        {
+            id: 'sw-handover', label: 'Handover',
+            still: 'world/handover.webp',
+            clip: 'world/handover.mp4', clipMobile: 'world/handover-m.mp4',
+            accent: '#3f7d5c', scroll: 1.7, linger: 0.4,
+            eyebrow: 'Step 04 — Handover', title: "Yours to keep. I'm Shayaan.",
+            body: 'I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.',
+            cta: { primary: { label: 'Meet me', href: 'index.html#about' }, secondary: { label: 'Get in touch', href: 'contact.html' } }
+        }
+    ],
+    connectors: []
+});
+</script>
+</body>
+</html>

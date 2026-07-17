@@ -84,6 +84,16 @@
             var q = parallax[j];
             q.centre = docTop(q.el) + q.el.offsetHeight / 2;
         }
+        for (var n = 0; n < marquees.length; n++) {
+            var mk = marquees[n];
+            // Measure the band (the clipping strip), not the track: the track
+            // is far wider than the page and its centre means nothing.
+            var band = mk.el.parentNode;
+            mk.centre = docTop(band) + band.offsetHeight / 2;
+            // Widest the scrub can swing while any part of the band is on
+            // screen — the bias that keeps the strip full at both ends.
+            mk.amp = Math.abs(mk.factor) * (vh + band.offsetHeight) / 2;
+        }
         for (var k = 0; k < spy.length; k++) {
             spy[k].top = docTop(spy[k].section);
         }
@@ -145,9 +155,14 @@
             }
             // Marquees scrub on X with scroll (both directions), rather than
             // running on a clock — that's what ties them to the page.
+            // Scrubbed around each band's OWN centre, not raw scrollY: driving
+            // them off absolute scroll meant a band low on the page opened at a
+            // huge offset and sat half-empty. The extra -amp bias keeps the
+            // track's left edge outside the band at every point in the swing.
             for (var m = 0; m < marquees.length; m++) {
                 var mq = marquees[m];
-                mq.el.style.transform = 'translate3d(' + (-y * mq.factor).toFixed(2) + 'px,0,0)';
+                var mx = -(y + vh / 2 - mq.centre) * mq.factor - mq.amp;
+                mq.el.style.transform = 'translate3d(' + mx.toFixed(2) + 'px,0,0)';
             }
         }
 
@@ -185,7 +200,7 @@
             var mqs = document.querySelectorAll('[data-marquee]');
             for (var m = 0; m < mqs.length; m++) {
                 var mf = parseFloat(mqs[m].getAttribute('data-marquee')) || 0.5;
-                marquees.push({ el: mqs[m], factor: mf });
+                marquees.push({ el: mqs[m], factor: mf, centre: 0, amp: 0 });
             }
         }
     }

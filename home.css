@@ -75,14 +75,23 @@
     background: var(--line);
 }
 
-/* ---------- Hero scroll cue ---------- */
-.hero-scroll {
-    animation: hero-nudge 2.4s var(--ease) infinite;
-}
-
+/* ---------- Hero scroll cue ----------
+   Full rule lives here now (was split across three blocks in two files —
+   see style.css's history note). Centered under the hero, bottom-center
+   being the conventional place for a scroll affordance, and deliberately
+   NOT button-chromed: it sits directly under three real .button CTAs, so
+   giving it a border/background/pill-radius made it read as a fourth
+   competing button instead of a passive cue. Typography leans on the
+   site's existing quiet eyebrow-label language (uppercase, letter-spaced,
+   muted) instead. */
+/* translateX(-50%) is baked into every step, not set as a separate static
+   transform on .hero-scroll — an infinite transform animation replaces the
+   whole transform value each frame, so a static translateX alongside it
+   would get silently clobbered and the centering would snap off the moment
+   the animation started. */
 @keyframes hero-nudge {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
 }
 
 /* ---------- Closing CTA ---------- */
@@ -101,7 +110,7 @@
     }
 
     .closing {
-        padding: 90px 0;
+        padding: 92px 0;
     }
 
     [id] {
@@ -412,40 +421,15 @@
     font-weight: 600;
 }
 
-/* Decorative parallax mark — purely ornamental, aria-hidden,
-   sits behind content and never affects layout. */
-.wf-glyph {
-    position: absolute;
-    top: 8%;
-    right: -70px;
-    width: 220px;
-    height: 220px;
-    border: 1px solid var(--line-strong);
-    border-radius: 50%;
-    opacity: 0.35;
-    pointer-events: none;
-    z-index: 0;
-    will-change: transform;
-}
-
 .wf-section > .container {
     position: relative;
     z-index: 1;
 }
 
-/* Keep the decorative circle from ever widening the page */
-.wf-section {
-    overflow-x: clip;
-}
-
-@supports not (overflow: clip) {
-    .wf-section {
-        overflow-x: hidden;
-    }
-}
-
 /* ---------- Projects ---------- */
-.proj-card {
+/* Only the last card drops .card's 24px gap — the section's own bottom
+   padding closes it out. Stacked cards keep the gap between them. */
+.proj-card:last-child {
     margin-bottom: 0;
 }
 
@@ -462,7 +446,7 @@
 }
 
 .proj-actions {
-    margin-top: 26px;
+    margin-top: 28px;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
@@ -496,10 +480,6 @@
         max-height: none;
     }
 
-    .wf-glyph {
-        display: none;
-    }
-
     .proj-actions .button {
         width: 100%;
         text-align: center;
@@ -516,10 +496,6 @@
         transition: none !important;
         transition-delay: 0s !important;
         animation: none !important;
-    }
-
-    .wf-glyph {
-        transform: none !important;
     }
 
     .wf-grid .media-card img {
@@ -631,7 +607,7 @@
     letter-spacing: 1.8px;
     text-transform: uppercase;
     color: var(--ink-muted);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .tl-role {
@@ -732,12 +708,12 @@
     }
 
     .tl-item {
-        padding-left: 30px;
+        padding-left: 32px;
         margin-bottom: 40px;
     }
 
     .tl-item ul {
-        margin-left: 18px;
+        margin-left: 20px;
     }
 
     .beyond-grid {
@@ -793,7 +769,7 @@
 .about-highlight {
     display: grid;
     grid-template-columns: 130px 1fr;
-    gap: 18px;
+    gap: 20px;
     padding: 16px 0;
     border-bottom: 1px solid var(--line);
 }
@@ -813,7 +789,7 @@
 
 .about-actions {
     display: flex;
-    gap: 14px;
+    gap: 16px;
     flex-wrap: wrap;
 }
 
@@ -831,7 +807,7 @@
 /* ---------- Scroll-scrubbed marquee bands ---------- */
 .marquee {
     overflow: hidden;
-    padding: 34px 0;
+    padding: 36px 0;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     background: var(--bg-card);
@@ -841,21 +817,17 @@
 .marquee-track {
     display: inline-flex;
     align-items: center;
-    gap: 38px;
+    gap: 40px;
     will-change: transform;
     font-family: 'Playfair Display', serif;
     font-size: clamp(26px, 3.6vw, 44px);
     font-weight: 500;
     color: var(--ink);
-    /* Long enough that scrubbing never runs off the end */
-    padding-left: 45vw;
-}
-
-.marquee--flip .marquee-track {
-    padding-left: 0;
+    /* No lead-in offset: scroll.js biases the scrub so the track's left edge
+       stays outside the band, and this pad guarantees it still covers the
+       full width at the far end of the swing. A band's direction of travel
+       comes from the sign of its data-marquee factor, nothing here. */
     padding-right: 45vw;
-    /* negative factor drags it the other way; start it offset left */
-    margin-left: -60vw;
 }
 
 .marquee-dot {
@@ -863,25 +835,26 @@
     font-size: 0.55em;
 }
 
-/* ---------- Ghost chapter numerals ---------- */
-.sec-num {
-    position: absolute;
-    top: 24px;
-    right: 4%;
-    z-index: 0;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(120px, 22vw, 300px);
-    font-weight: 700;
-    line-height: 1;
-    color: rgba(36, 82, 59, 0.07);
-    -webkit-text-stroke: 1.5px rgba(36, 82, 59, 0.34);
-    pointer-events: none;
-    user-select: none;
+/* ---------- Chapter rule ----------
+   Replaces the ghost numerals (giant outlined 01–05 top-right of each
+   section). They read as clutter rather than structure, and once the work
+   videos moved to automation.html the sequence was full of holes anyway.
+   This is the same job done quietly: a hairline across the top of each
+   chapter with a short accent lead-in. No numbers to keep in sync. */
+.work-section > .container::before,
+.wf-section > .container::before,
+.proj-section > .container::before,
+.about-section > .container::before,
+.svc > .container::before {
+    content: '';
+    display: block;
+    height: 1px;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, var(--accent) 0 72px, var(--line) 72px);
 }
 
 .work-section, .wf-section, .proj-section, .about-section, .svc {
     position: relative;
-    overflow: hidden; /* numerals parallax past section edges */
 }
 
 .work-section > .container, .wf-section > .container,
@@ -924,13 +897,11 @@
 }
 
 @media (max-width: 768px) {
-    .marquee { padding: 22px 0; }
-    .sec-num { font-size: 110px; top: 12px; }
+    .marquee { padding: 24px 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .marquee-track { transform: none !important; }
-    .marquee--flip .marquee-track { margin-left: 0; }
     .wf-section .grid-2 > .reveal,
     .work-section .media-card.reveal {
         transform: none !important;
@@ -1003,23 +974,89 @@
     margin-bottom: 0;
 }
 
-.about-photo {
-    object-fit: cover;
-    height: 100%;
+/* ---------- Owner photos ----------
+   The frame owns the border/shadow and clips; the image scales inside it on
+   hover and lifts its caption in. Caption text only ever restates the alt —
+   these are photos of the owner, not a place to add claims. */
+.photo-frame {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
 }
 
-.beyond-photo {
-    margin-top: 28px;
-    max-width: 340px;
-}
-
-.about-photo,
-.beyond-photo {
+.photo-frame img {
     width: 100%;
     height: auto;
     display: block;
-    border: 1px solid var(--line-strong);
-    box-shadow: var(--shadow);
+    transition: transform 0.8s var(--ease);
+}
+
+.photo-frame figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 56px 20px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--panel-ink);
+    background: linear-gradient(180deg, transparent, rgba(12, 24, 18, 0.88));
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+
+.photo-frame:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Hover is an enhancement — on touch the caption just stays put, and the
+   frame must never depend on a hover that will not arrive. */
+@media (hover: hover) {
+    .photo-frame:hover,
+    .photo-frame:focus-visible {
+        border-color: var(--accent);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .photo-frame:hover img,
+    .photo-frame:focus-visible img {
+        transform: scale(1.05);
+    }
+
+    .photo-frame:hover figcaption,
+    .photo-frame:focus-visible figcaption {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (hover: none) {
+    .photo-frame figcaption {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* The about photo fills its grid column beside the statement card. */
+.about-media .photo-frame {
+    height: 100%;
+}
+
+.about-media .photo-frame img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.beyond-frame {
+    margin-top: 28px;
+    max-width: 340px;
 }
 
 .beyond-media {
@@ -1065,26 +1102,20 @@
 
 .work-section .grid-2 > .media-card:nth-child(2) {
     grid-column: 7 / 13;
-    margin-top: clamp(48px, 7vw, 110px);
 }
 
-/* Float-in: rise with a slight tilt that settles */
+/* Float-in: both cards rise together, flush at the same top edge. (A
+   staggered offset + opposite tilt on the second card used to sit here —
+   it read fine buried in the homepage's scrolling narrative, but on its
+   own on automation.html it just looked like the cards were misaligned.
+   Owner flagged it 2026-07-18; flattened both to the same simple rise.) */
 .work-section .media-card.reveal {
-    transform: translateY(70px) rotate(-1.6deg) scale(0.96);
+    transform: translateY(70px) scale(0.96);
     transition: opacity 1s var(--ease), transform 1s var(--ease);
 }
 
-.work-section .grid-2 > .media-card:nth-child(2).reveal {
-    transform: translateY(90px) rotate(1.6deg) scale(0.96);
-    transition-delay: 0.12s;
-}
-
-/* Both cards settle flat. The nth-child(2) rule above ties the plain
-   .visible rule on specificity and wins on order, so the second card
-   needs its own explicit settle or it stays stuck mid-tilt. */
-.work-section .media-card.reveal.visible,
-.work-section .grid-2 > .media-card:nth-child(2).reveal.visible {
-    transform: translateY(0) rotate(0deg) scale(1);
+.work-section .media-card.reveal.visible {
+    transform: translateY(0) scale(1);
 }
 
 @media (max-width: 860px) {
@@ -1092,7 +1123,6 @@
     .work-section .grid-2 > .media-card:nth-child(2) {
         grid-column: 1 / 13;
         grid-row: auto;
-        margin-top: 0;
     }
 
     .work-section .grid-2 {
@@ -1101,30 +1131,45 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .work-section .media-card.reveal,
-    .work-section .grid-2 > .media-card:nth-child(2).reveal {
+    .work-section .media-card.reveal {
+        transform: none !important;
+    }
+
+    /* The caption still appears on hover — only the movement stops. */
+    .photo-frame img,
+    .photo-frame figcaption {
+        transition: none !important;
+    }
+
+    .photo-frame:hover img,
+    .photo-frame:focus-visible img {
+        transform: none !important;
+    }
+
+    .photo-frame figcaption {
         transform: none !important;
     }
 }
 
-/* ---------- Bigger, unmissable scroll cues (round 6) ---------- */
 .hero-scroll {
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 4px;
-    color: var(--accent);
+    position: absolute;
+    left: 50%;
+    bottom: 32px;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 26px;
-    border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
-    border-radius: 999px;
-    background: var(--bg-card);
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    animation: hero-nudge 2.4s var(--ease) infinite;
+    transition: color 0.3s;
 }
 
 .hero-scroll:hover {
-    color: var(--bg-card);
-    background: var(--accent);
+    color: var(--accent);
 }
 
 
@@ -1137,4 +1182,76 @@
 
 #automation {
     background: var(--panel);
+}
+
+/* ============================================================
+   Alvo Productivity brand lockup — automation.html only
+   ------------------------------------------------------------
+   The agency brand (alvo/brand/brand-board.html), rendered in THIS site's
+   palette. Alvo's own primary is terracotta #B5562C; it is deliberately NOT
+   imported. The owner asked for the brand to stand out "without straying
+   from the colour scheme", so the mark inherits var(--accent) — which
+   .panel-dark flips to --accent-bright (#3f7d5c), the same green the
+   walkthrough's scenes use. Same intent for type: the brand board sets
+   Georgia, this uses the site's own display face (Playfair Display).
+   If Alvo ever gets its own page, that's the place for terracotta — not here.
+
+   Proportions mirror the brand board's hero: the mark sits at ~0.86em and is
+   optically centred against the wordmark, because the mark IS the final
+   letter of "alvo" — it is not an icon sitting beside a word. Don't shrink it
+   to an x-height "o" or the lockup stops reading as the logo.
+   ============================================================ */
+.alvo-lockup {
+    margin: 0;
+    line-height: 0.85;
+}
+
+.alvo-wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.02em;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(62px, 10.5vw, 128px);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+}
+
+.alvo-mark {
+    width: 0.86em;
+    height: 0.86em;
+    flex-shrink: 0;
+}
+
+.alvo-suffix {
+    display: block;
+    margin-top: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 1.3vw, 15px);
+    font-weight: 600;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.alvo-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(21px, 2.6vw, 32px);
+    line-height: 1.2;
+    color: var(--accent);
+    margin: 28px 0 20px;
+}
+
+/* .page-header's 72px bottom margin + the strip's own 40px padding stacked
+   into a dead gap above the world. The border still separates them. */
+.alvo-header {
+    margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+    .alvo-suffix {
+        letter-spacing: 0.26em;
+    }
 }

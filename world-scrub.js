@@ -172,7 +172,13 @@ function mountScrollWorld(container, config) {
       // (unlike the full-page original, this section CAN be entered from
       // y<0 — fading scene 0 out there shows an empty sky).
       if (y < s.start) outside = (i === 0 ? 0 : s.start - y);
-      else if (y > s.end) outside = y - s.end;
+      // ...and the LAST scene stays fully visible on the way out, for exactly
+      // the same reason. The track ends where .sw-view releases, but the view
+      // still needs a further 100vh to scroll off screen. Fading the last
+      // scene over `fade` (72px at a 720px viewport) emptied the screen to
+      // bare sky ~650px before the section was gone — the walk appeared to
+      // cut to nothing at the finish. Hold it; it leaves with the section.
+      else if (y > s.end) outside = (i === NSEG - 1 ? 0 : y - s.end);
       const op = smooth(1 - outside / fade);
       s.el.style.opacity = op; s.visible = op > 0.001;
       s.el.style.zIndex = (i === ci) ? '120' : String(100 + Math.round(op * 10));
@@ -209,7 +215,18 @@ function mountScrollWorld(container, config) {
     ticking = false;
   }
 
-  function raf() {
+  let lastT = 0;
+  function raf(now) {
+    const dt = lastT ? Math.min(0.1, (now - lastT) / 1000) : 0.016;
+    lastT = now;
+    // Frame-rate-independent damping — the same fix scroll.js already applies
+    // to its pins. A flat 0.18 per frame meant the clip chased the scroll
+    // 2.4x faster on a 144Hz panel than on 60Hz: the walk felt different per
+    // display, and high-refresh screens issued far more seeks per second than
+    // the decoder wanted, which is where dropped frames come from. 6.7e-6
+    // reproduces the old 0.18/frame response at exactly 60fps, so the tuning
+    // is unchanged on a 60Hz screen and merely consistent everywhere else.
+    const k = reduce ? 1 : 1 - Math.pow(6.7e-6, dt);
     const eps = isMobile() ? 0.02 : 0.016;
     for (let i = 0; i < NSEG; i++) {
       const s = SEGMENTS[i];
@@ -220,7 +237,7 @@ function mountScrollWorld(container, config) {
       // scroll and the whole page stutters.
       if (!s.visible) { s.cur = s.target; continue; }
       if (s.video.seeking) continue;
-      s.cur += (s.target - s.cur) * (reduce ? 1 : 0.18);
+      s.cur += (s.target - s.cur) * k;
       const dur = s.video.duration || 1;
       const t = clamp(s.cur, 0, 0.999) * dur;
       if (Math.abs(s.video.currentTime - t) > eps) { try { s.video.currentTime = t; } catch (e) {} }
@@ -310,7 +327,7 @@ function injectCSS() {
   .sw-copylayer::before{content:"";position:absolute;inset:0;width:min(58vw,780px);background:linear-gradient(90deg,var(--sw-bg) 0%,color-mix(in srgb,var(--sw-bg) 82%,transparent) 34%,color-mix(in srgb,var(--sw-bg) 40%,transparent) 62%,transparent 100%);}
   .sw-copy{position:absolute;left:clamp(18px,5vw,64px);top:50%;transform:translateY(-50%);width:min(42vw,460px);opacity:0;will-change:opacity,transform;}
   .sw-copy__num{font-family:ui-monospace,Menlo,monospace;font-size:.74rem;letter-spacing:.12em;color:var(--sw-ink-soft);}
-  .sw-copy__eyebrow{display:block;margin-top:18px;font-family:var(--sw-font-body);font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sw-accent);}
+  .sw-copy__eyebrow{display:block;margin-top:18px;font-family:var(--sw-font-body);font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:color-mix(in srgb,var(--sw-accent) 75%,var(--sw-ink));}
   .sw-copy__title{font-family:var(--sw-font-display);font-weight:500;color:var(--sw-ink);font-size:clamp(2rem,4.4vw,3.5rem);line-height:1.03;margin:12px 0 0;letter-spacing:-.01em;text-shadow:0 2px 20px color-mix(in srgb,var(--sw-bg) 70%,transparent);}
   .sw-copy__title em{font-style:italic;color:var(--sw-accent);}
   .sw-copy__body{margin-top:18px;font-size:clamp(1rem,1.25vw,1.14rem);line-height:1.55;color:color-mix(in srgb,var(--sw-ink) 78%,var(--sw-ink-soft));max-width:40ch;text-shadow:0 1px 12px color-mix(in srgb,var(--sw-bg) 90%,transparent);}
