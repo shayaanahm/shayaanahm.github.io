@@ -1040,18 +1040,12 @@ html {
     scroll-snap-type: y proximity;
 }
 
-/* Only the showpieces snap — the world, the featured videos, and the
-   closing CTA. Snapping every section made the page feel grabby. */
-#world,
+/* Only the showpieces snap — each process room (its own snap-align is
+   with the .room styles), the featured videos, and the closing CTA.
+   Snapping every section made the page feel grabby. */
 #work,
 #contact {
     scroll-snap-align: start;
-}
-
-/* The world should always click flush to the viewport top — the
-   navbar-offset margin would leave a sliver of the page above it. */
-#world {
-    scroll-margin-top: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1142,4 +1136,145 @@ html {
 .hero-scroll:hover {
     color: var(--bg-card);
     background: var(--accent);
+}
+
+/* ============================================================
+   The process rooms (#world) — round 7.
+   Full-viewport checkpoints; snap does the "click", world.js plays
+   each room's clip at natural speed on arrival. No scrubbing.
+   ============================================================ */
+#world {
+    background: var(--panel);
+}
+
+.room {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    scroll-margin-top: 0;
+}
+
+.room-poster,
+.room-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+}
+
+.room-video { opacity: 0; transition: opacity 0.5s var(--ease); }
+.room--live .room-video { opacity: 1; }
+
+.room-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(10, 20, 15, 0.72) 0%, rgba(10, 20, 15, 0.35) 38%, transparent 65%),
+        linear-gradient(0deg, rgba(10, 20, 15, 0.45) 0%, transparent 30%);
+}
+
+.room-copy {
+    position: absolute;
+    left: clamp(20px, 6vw, 90px);
+    bottom: clamp(48px, 12vh, 120px);
+    max-width: 560px;
+    color: var(--panel-ink);
+    z-index: 2;
+}
+
+.room-num {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--panel-ink-soft);
+}
+
+.room-eyebrow {
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+}
+
+.room-copy h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5.4vw, 72px);
+    font-weight: 500;
+    line-height: 1.05;
+    margin: 14px 0 0;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+}
+
+.room-copy h2 em {
+    font-style: italic;
+    color: var(--accent-bright);
+}
+
+.room-body {
+    margin-top: 18px;
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--panel-ink) 88%, transparent);
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5);
+}
+
+.room-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.room-btn {
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1;
+    padding: 18px 36px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: transform 0.25s ease, background 0.25s, border-color 0.25s;
+}
+
+.room-btn--primary {
+    color: #fff;
+    background: var(--accent-bright);
+    border: 1.5px solid transparent;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.room-btn--primary:hover {
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--accent-bright) 85%, #fff);
+}
+
+.room-btn--ghost {
+    color: #fff;
+    background: rgba(10, 20, 15, 0.72);
+    border: 1.5px solid rgba(242, 239, 230, 0.5);
+    backdrop-filter: blur(8px);
+}
+
+.room-btn--ghost:hover {
+    transform: translateY(-2px);
+    border-color: rgba(242, 239, 230, 0.85);
+}
+
+@media (max-width: 700px) {
+    .room-copy {
+        left: 6%;
+        right: 6%;
+        bottom: calc(48px + env(safe-area-inset-bottom));
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .room-video { display: none; }
 }
