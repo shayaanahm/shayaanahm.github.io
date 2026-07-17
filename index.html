@@ -22,7 +22,7 @@
     </a>
     <div class="nav-links">
         <a href="#work">Work</a>
-        <a href="#world">Process</a>
+        <a href="#automation">AI Automation</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
         <a href="cv.html">CV</a>
@@ -42,7 +42,7 @@
                     workflow engineering and software development.
                 </p>
                 <div class="hero-buttons">
-                    <a class="button button--accent" href="#world">See How I Work</a>
+                    <a class="button button--accent" href="#automation">See How I Work</a>
                     <a class="button" href="#work">Featured Work</a>
                     <a class="button" href="#about">About Me</a>
                 </div>
@@ -88,63 +88,23 @@
     </div>
 </div>
 
-<!-- ===== The Process rooms (#world) =====
-     Four full-viewport checkpoints; CSS scroll-snap clicks room-to-room
-     and world.js PLAYS each room's clip at natural speed on arrival
-     (scrubbing AI video exposed its artifacts — see CLAUDE.md).
-     Step copy is the real "How It Works" text; the last room introduces
-     the owner. Posters are the clips' own first frames.
+<!-- ===== AI Automation — the walkthrough (#automation) =====
+     world-scrub.js mounts the scrub engine here: a sticky 100vh view +
+     a tall track; scroll drives the camera through one continuous
+     photoreal walk of the process (Discovery → Design → Build →
+     Handover; the last stop introduces the owner). Config lives with
+     the scripts at the end of <body>. Copy = the real How It Works.
 -->
-<section id="world" aria-label="How I work — the process, room by room">
-
-    <div class="room" data-clip="world/discovery.mp4" data-clip-m="world/discovery-m.mp4">
-        <img class="room-poster" src="world/discovery.webp" alt="" loading="lazy" decoding="async">
-        <div class="room-scrim" aria-hidden="true"></div>
-        <div class="room-copy">
-            <span class="room-num">01 / 04</span>
-            <p class="room-eyebrow">Discovery</p>
-            <h2>First, <em>we talk</em>.</h2>
-            <p class="room-body">We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.</p>
-        </div>
-    </div>
-
-    <div class="room" data-clip="world/design.mp4" data-clip-m="world/design-m.mp4">
-        <img class="room-poster" src="world/design.webp" alt="" loading="lazy" decoding="async">
-        <div class="room-scrim" aria-hidden="true"></div>
-        <div class="room-copy">
-            <span class="room-num">02 / 04</span>
-            <p class="room-eyebrow">Design</p>
-            <h2>Then I map <em>the system</em>.</h2>
-            <p class="room-body">I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.</p>
-        </div>
-    </div>
-
-    <div class="room" data-clip="world/build.mp4" data-clip-m="world/build-m.mp4">
-        <img class="room-poster" src="world/build.webp" alt="" loading="lazy" decoding="async">
-        <div class="room-scrim" aria-hidden="true"></div>
-        <div class="room-copy">
-            <span class="room-num">03 / 04</span>
-            <p class="room-eyebrow">Build</p>
-            <h2>Then I <em>build it</em>.</h2>
-            <p class="room-body">I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.</p>
-        </div>
-    </div>
-
-    <div class="room" data-clip="world/handover.mp4" data-clip-m="world/handover-m.mp4">
-        <img class="room-poster" src="world/handover.webp" alt="" loading="lazy" decoding="async">
-        <div class="room-scrim" aria-hidden="true"></div>
-        <div class="room-copy">
-            <span class="room-num">04 / 04</span>
-            <p class="room-eyebrow">Handover</p>
-            <h2>Yours to keep. <em>I'm Shayaan</em>.</h2>
-            <p class="room-body">I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.</p>
-            <div class="room-cta">
-                <a class="room-btn room-btn--primary" href="#about">Meet me</a>
-                <a class="room-btn room-btn--ghost" href="contact.html">Get in touch</a>
+<section id="automation" aria-label="AI Automation — how I work, as a walkthrough">
+    <div class="automation-intro panel-dark">
+        <div class="container automation-intro-inner">
+            <div class="section-row tight reveal">
+                <h2 class="section-heading" data-label="AI Automation">The <em>walkthrough</em></h2>
+                <p class="section-sub">How I take a business from manual to automated — scroll to walk the process.</p>
             </div>
         </div>
     </div>
-
+    <div id="world"></div>
 </section>
 
 <!-- ============================================================
@@ -452,7 +412,7 @@
 <footer class="footer">
     <div class="footer-links">
         <a href="#work">Work</a>
-        <a href="#world">Process</a>
+        <a href="#automation">AI Automation</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
         <a href="cv.html">CV</a>
@@ -463,6 +423,53 @@
 
 <script src="scroll.js"></script>
 <script src="script.js"></script>
-<script src="world.js"></script>
+<script src="world-scrub.js"></script>
+<script>
+// The AI Automation walkthrough: one continuous photoreal walk, scroll-
+// scrubbed. Step copy is the real "How It Works"; the last stop
+// introduces the owner. Track lengths trimmed — the earlier pacing was
+// reported as taking too long to get through.
+mountScrollWorld(document.getElementById('world'), {
+    hint: 'scroll to walk through',
+    diveScroll: 1.45,
+    crossfade: 0.1,
+    sections: [
+        {
+            id: 'sw-discovery', label: 'Discovery',
+            still: 'world/discovery.webp',
+            clip: 'world/discovery.mp4', clipMobile: 'world/discovery-m.mp4',
+            accent: '#3f7d5c', scroll: 1.6, linger: 0.35,
+            eyebrow: 'Step 01 — Discovery', title: 'First, we talk.',
+            body: 'We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.'
+        },
+        {
+            id: 'sw-design', label: 'Design',
+            still: 'world/design.webp',
+            clip: 'world/design.mp4', clipMobile: 'world/design-m.mp4',
+            accent: '#3f7d5c', linger: 0.3,
+            eyebrow: 'Step 02 — Design', title: 'Then I map the system.',
+            body: 'I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.'
+        },
+        {
+            id: 'sw-build', label: 'Build',
+            still: 'world/build.webp',
+            clip: 'world/build.mp4', clipMobile: 'world/build-m.mp4',
+            accent: '#3f7d5c', linger: 0.3,
+            eyebrow: 'Step 03 — Build', title: 'Then I build it.',
+            body: 'I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.'
+        },
+        {
+            id: 'sw-handover', label: 'Handover',
+            still: 'world/handover.webp',
+            clip: 'world/handover.mp4', clipMobile: 'world/handover-m.mp4',
+            accent: '#3f7d5c', scroll: 1.7, linger: 0.4,
+            eyebrow: 'Step 04 — Handover', title: "Yours to keep. I'm Shayaan.",
+            body: 'I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.',
+            cta: { primary: { label: 'Meet me', href: '#about' }, secondary: { label: 'Get in touch', href: 'contact.html' } }
+        }
+    ],
+    connectors: []
+});
+</script>
 </body>
 </html>

@@ -59,7 +59,7 @@ body {
     align-items: center;
     /* solid-ish bg instead of backdrop-filter: blur is a per-scroll-frame
        repaint and the main source of scroll jank on integrated GPUs */
-    background: color-mix(in srgb, var(--bg) 96%, transparent);
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
     position: sticky;
     top: 0;
