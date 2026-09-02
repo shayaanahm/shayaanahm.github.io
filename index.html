@@ -116,7 +116,8 @@
         </div>
 
         <div class="grid-2 svc-grid">
-            <div class="card reveal">
+            <div class="card spot reveal">
+                <i class="spot-glow" aria-hidden="true"></i>
                 <h3>Workflow Automation</h3>
                 <p>Eliminate repetitive tasks by connecting your tools and automating multi-step processes. Whether it's syncing data between platforms, triggering actions based on events, or scheduling recurring jobs — I design and build workflows that run without you.</p>
                 <div class="tag-row">
@@ -127,7 +128,8 @@
                 </div>
             </div>
 
-            <div class="card reveal">
+            <div class="card spot reveal">
+                <i class="spot-glow" aria-hidden="true"></i>
                 <h3>AI Chatbots</h3>
                 <p>Custom AI chatbots trained on your data and integrated into your website, app, or internal tools. From customer support bots to knowledge base assistants, I build chatbots that actually understand context and give useful answers.</p>
                 <div class="tag-row">
@@ -138,7 +140,8 @@
                 </div>
             </div>
 
-            <div class="card reveal">
+            <div class="card spot reveal">
+                <i class="spot-glow" aria-hidden="true"></i>
                 <h3>n8n &amp; Make Integrations</h3>
                 <p>Specialist in building and deploying complex automation flows on n8n and Make (formerly Integromat). I can self-host n8n for you, migrate existing workflows, or build from scratch — connecting CRMs, databases, communication tools, and more.</p>
                 <div class="tag-row">
@@ -149,7 +152,8 @@
                 </div>
             </div>
 
-            <div class="card reveal">
+            <div class="card spot reveal">
+                <i class="spot-glow" aria-hidden="true"></i>
                 <h3>AI-Powered Data Pipelines</h3>
                 <p>Automate the collection, processing, and routing of data using AI. Scrape, transform, classify, and summarise information — then push it wherever it needs to go, on a schedule or in real time.</p>
                 <div class="tag-row">
@@ -160,7 +164,8 @@
                 </div>
             </div>
 
-            <div class="card wide-card reveal">
+            <div class="card spot wide-card reveal">
+                <i class="spot-glow" aria-hidden="true"></i>
                 <h3>CRM Integration &amp; Database Setup</h3>
                 <p>I connect your automations to the right data layer — whether that's setting up a Supabase database from scratch, integrating with an existing CRM, or building custom pipelines that keep your records accurate and up to date automatically. No more copy-pasting between tools or manually updating spreadsheets.</p>
                 <div class="tag-row">
@@ -183,40 +188,45 @@
             <p class="section-sub">A look at some of the n8n automation workflows I've built.</p>
         </div>
 
-        <div class="grid-2 wf-grid">
-            <div class="card media-card reveal">
-                <img src="google-review-automation.png" alt="Google Review Automation workflow" loading="lazy" decoding="async" width="1872" height="890">
-                <div class="media-body">
-                    <h3>Google Review Automation</h3>
-                    <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
-                </div>
-            </div>
-            <div class="card media-card reveal">
-                <img src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" loading="lazy" decoding="async" width="1867" height="886">
-                <div class="media-body">
-                    <h3>UK B2B Lead Generator</h3>
-                    <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
-                </div>
-            </div>
-            <div class="card media-card wide-card reveal">
-                <img src="email-triage-demo.png" alt="Email Triage Automation workflow" loading="lazy" decoding="async" width="1867" height="923">
-                <div class="media-body">
-                    <h3>AI Email Triage</h3>
-                    <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
-                </div>
-            </div>
-            <div class="card media-card wide-card reveal">
-                <img src="job-application-automation.png" alt="Job Application Automation workflow" loading="lazy" decoding="async" width="1870" height="889">
+        <div class="bento">
+            <div class="card media-card spot reveal bento-feature">
+                <i class="spot-glow" aria-hidden="true"></i>
+                <img class="shot" src="job-application-automation.png" alt="Job Application Automation workflow" loading="lazy" decoding="async" width="1870" height="889" tabindex="0" role="button" data-cap="Job Application Automation">
                 <div class="media-body">
                     <h3>Job Application Automation</h3>
                     <p>A fully automated job hunting pipeline built in n8n. It searches Google Places and Adzuna simultaneously, merges and deduplicates results, loops through each business, scrapes their website to find a contact email, and uses Claude AI to generate a personalised cover note and CV before creating a Gmail draft — ready to send with one click. Users have seen <strong>100+ potential job application leads</strong> generated in a single run, turning a process that would take days of manual effort into something that runs in minutes.</p>
                 </div>
             </div>
-            <div class="card media-card wide-card reveal">
-                <img src="cv-screening-automation.png" alt="CV Screening automation workflow" loading="lazy" decoding="async" width="1773" height="846">
+            <div class="card media-card spot reveal bento-tall">
+                <i class="spot-glow" aria-hidden="true"></i>
+                <img class="shot" src="email-triage-demo.png" alt="Email Triage Automation workflow" loading="lazy" decoding="async" width="1867" height="923" tabindex="0" role="button" data-cap="AI Email Triage">
+                <div class="media-body">
+                    <h3>AI Email Triage</h3>
+                    <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
+                </div>
+            </div>
+            <div class="card media-card spot reveal bento-tall">
+                <i class="spot-glow" aria-hidden="true"></i>
+                <img class="shot" src="cv-screening-automation.png" alt="CV Screening automation workflow" loading="lazy" decoding="async" width="1773" height="846" tabindex="0" role="button" data-cap="CV Screening — Gmail + Dashboard">
                 <div class="media-body">
                     <h3>CV Screening — Gmail + Dashboard</h3>
                     <p>An AI-powered CV screening pipeline that takes CVs two ways — emailed to a dedicated inbox, or uploaded through a dashboard with its own job description — and scores each one with Claude Haiku, returning a percentage plus specific reasons for and against. A dedup check stops the same CV being scored twice, and PDF, TXT and DOCX are all parsed in-process, needing <strong>no external service or extra credentials</strong>. Every result is logged to a database so scores can be checked against real hiring decisions over time, while candidates only ever receive a fixed, AI-free reply.</p>
+                </div>
+            </div>
+            <div class="card media-card spot reveal bento-half">
+                <i class="spot-glow" aria-hidden="true"></i>
+                <img class="shot" src="google-review-automation.png" alt="Google Review Automation workflow" loading="lazy" decoding="async" width="1872" height="890" tabindex="0" role="button" data-cap="Google Review Automation">
+                <div class="media-body">
+                    <h3>Google Review Automation</h3>
+                    <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
+                </div>
+            </div>
+            <div class="card media-card spot reveal bento-half">
+                <i class="spot-glow" aria-hidden="true"></i>
+                <img class="shot" src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" loading="lazy" decoding="async" width="1867" height="886" tabindex="0" role="button" data-cap="UK B2B Lead Generator">
+                <div class="media-body">
+                    <h3>UK B2B Lead Generator</h3>
+                    <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
                 </div>
             </div>
         </div>
@@ -231,7 +241,8 @@
             <p class="section-sub">Selected technical projects focused on web development, automation, AI workflows, and practical software systems.</p>
         </div>
 
-        <div class="card proj-card reveal">
+        <div class="card spot proj-card reveal">
+            <i class="spot-glow" aria-hidden="true"></i>
             <h3>BrawlBase — Full-Stack Martial Arts Search Platform</h3>
             <p class="proj-tech"><strong>Tech:</strong> Python, Flask, SQLAlchemy, HTML/CSS</p>
             <p>
@@ -246,8 +257,9 @@
             </div>
         </div>
 
-        <div class="card proj-card reveal">
-            <h3>Fire Warden — Fire Safety Compliance SaaS</h3>
+        <div class="card spot proj-card reveal">
+            <i class="spot-glow" aria-hidden="true"></i>
+            <h3>EmberSuite Fire — Fire Safety Compliance SaaS</h3>
             <p class="proj-tech"><strong>Tech:</strong> JavaScript, Supabase, PostgreSQL, Stripe, n8n &nbsp;|&nbsp; <strong>Status:</strong> Work in progress</p>
             <p>
                 Building a web platform for fire safety engineers that replaces the
@@ -258,7 +270,7 @@
                 onto every document, and offline data capture for work on site.
             </p>
             <div class="proj-actions">
-                <a class="button" href="https://getfirewarden.com" target="_blank" rel="noopener">Visit Fire Warden</a>
+                <a class="button" href="https://embersuite.uk" target="_blank" rel="noopener">Visit EmberSuite Fire</a>
             </div>
         </div>
     </div>

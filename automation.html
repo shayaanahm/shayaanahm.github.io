@@ -91,6 +91,82 @@
                         actual workflow, and trains your team to run it without us.
                         Scroll to walk the process.
                     </p>
+
+                    <!-- Integration constellation. Ported from 21st.dev's
+                         AnimatedBeam, which measures two DOM nodes with React
+                         refs and redraws the connector on resize; this is one
+                         authored SVG on a fixed viewBox, so it scales as a unit
+                         with no JS, no refs and no ResizeObserver.
+
+                         Every beam travels INWARD to the hub, and the hub is the
+                         Alvo target mark — the animation states the tagline
+                         ("AI, aimed right") rather than decorating next to it.
+
+                         The six labels are the real tools named in the workflow
+                         copy further down this page. Don't add one that isn't in
+                         a shipped workflow. Hidden below 760px, where the label
+                         type would scale under 5px; .stack-strip carries the same
+                         names as readable text there. -->
+                    <div class="beam-wrap reveal">
+                        <svg class="beam-field" viewBox="0 0 1120 420" role="img"
+                             aria-label="Six tools — Gmail, Google Sheets, Supabase, Claude AI, Google Places and Adzuna — feeding into one automation hub.">
+                            <path class="beam-rail" d="M245,62 C 350,62 400,210 506,210"/>
+                            <path class="beam-rail" d="M245,210 L 506,210"/>
+                            <path class="beam-rail" d="M245,358 C 350,358 400,210 506,210"/>
+                            <path class="beam-rail" d="M875,62 C 770,62 720,210 614,210"/>
+                            <path class="beam-rail" d="M875,210 L 614,210"/>
+                            <path class="beam-rail" d="M875,358 C 770,358 720,210 614,210"/>
+                            <path class="beam-pulse" data-i="1" d="M245,62 C 350,62 400,210 506,210"/>
+                            <path class="beam-pulse" data-i="2" d="M245,210 L 506,210"/>
+                            <path class="beam-pulse" data-i="3" d="M245,358 C 350,358 400,210 506,210"/>
+                            <path class="beam-pulse" data-i="4" d="M875,62 C 770,62 720,210 614,210"/>
+                            <path class="beam-pulse" data-i="5" d="M875,210 L 614,210"/>
+                            <path class="beam-pulse" data-i="6" d="M875,358 C 770,358 720,210 614,210"/>
+                            <g class="beam-chip">
+                                <rect x="55" y="34" width="190" height="56" rx="28"/>
+                                <circle cx="79" cy="62" r="3.5"/>
+                                <text x="95" y="62">Gmail</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="55" y="182" width="190" height="56" rx="28"/>
+                                <circle cx="79" cy="210" r="3.5"/>
+                                <text x="95" y="210">Google Sheets</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="55" y="330" width="190" height="56" rx="28"/>
+                                <circle cx="79" cy="358" r="3.5"/>
+                                <text x="95" y="358">Supabase</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="875" y="34" width="190" height="56" rx="28"/>
+                                <circle cx="899" cy="62" r="3.5"/>
+                                <text x="915" y="62">Claude AI</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="875" y="182" width="190" height="56" rx="28"/>
+                                <circle cx="899" cy="210" r="3.5"/>
+                                <text x="915" y="210">Google Places</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="875" y="330" width="190" height="56" rx="28"/>
+                                <circle cx="899" cy="358" r="3.5"/>
+                                <text x="915" y="358">Adzuna</text>
+                            </g>
+                            <g class="beam-hub">
+                                <circle cx="560" cy="210" r="54" fill="rgba(18,33,26,0.95)" stroke="currentColor" stroke-width="1.5"/>
+                                <g transform="translate(560,210) scale(0.42) translate(-100,-100)" fill="none" stroke="currentColor" stroke-width="16">
+                                    <circle cx="100" cy="100" r="92"/>
+                                    <circle cx="100" cy="100" r="58"/>
+                                </g>
+                                <circle cx="560" cy="210" r="8.4" fill="currentColor" stroke="none"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <p class="stack-strip reveal">
+                        <span class="k">Built with</span>
+                        <span>n8n</span><span>Claude</span><span>Supabase</span><span>Gmail</span><span>Google Sheets</span><span>Google Places</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -109,30 +185,37 @@
             </div>
 
             <div class="grid-2 work-grid">
-                <div class="card media-card reveal">
-                    <div class="work-media">
-                        <!-- No poster: the source recording has a screen-recorder
-                             HUD (stop button, timer) burned into every single
-                             frame, start to end, so no frame extraction is
-                             clean. preload="none" alone keeps the byte savings —
-                             video downloads nothing until the visitor presses play. -->
-                        <video controls preload="none" playsinline>
-                            <source src="premier-properties.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+                <div class="card media-card spot reveal">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <!-- 21st.dev HeroVideoDialog, ported. The poster is a real frame,
+                         cropped (crop=1037:1080:95:0) to drop the screen-recorder HUD
+                         burned into the left gutter and the scrollbar on the right —
+                         that HUD is why this had no poster before and shipped as a
+                         black rectangle. script.js opens the clip in the shared overlay. -->
+                    <button class="vplay" type="button" data-video="premier-properties.mp4" data-title="Premier Properties"
+                            aria-label="Play the Premier Properties demo (1:33)">
+                        <img src="premier-properties-poster.webp" alt="The Premier Properties site with the AI assistant open mid-conversation." loading="lazy" decoding="async" width="1036" height="1080">
+                        <span class="vplay-btn" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg></span>
+                        <span class="vplay-dur">1:33</span>
+                    </button>
                     <div class="media-body">
                         <h3>Premier Properties</h3>
                         <p>An end-to-end AI automation built for a local estate agent. When a new enquiry comes in, the system automatically qualifies the lead, sends a personalised response, and logs the contact — removing the need for manual follow-up and ensuring no enquiry goes unanswered.</p>
                     </div>
                 </div>
-                <div class="card media-card reveal">
-                    <div class="work-media">
-                        <video controls preload="none" playsinline>
-                            <source src="spark-pro-electrical.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+                <div class="card media-card spot reveal">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <!-- 21st.dev HeroVideoDialog, ported. The poster is a real frame,
+                         cropped (crop=1037:1080:95:0) to drop the screen-recorder HUD
+                         burned into the left gutter and the scrollbar on the right —
+                         that HUD is why this had no poster before and shipped as a
+                         black rectangle. script.js opens the clip in the shared overlay. -->
+                    <button class="vplay" type="button" data-video="spark-pro-electrical.mp4" data-title="Spark Pro Electrical"
+                            aria-label="Play the Spark Pro Electrical demo (0:47)">
+                        <img src="spark-pro-poster.webp" alt="The Spark Pro Electrical site with the AI assistant open mid-conversation." loading="lazy" decoding="async" width="1036" height="1080">
+                        <span class="vplay-btn" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.3-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg></span>
+                        <span class="vplay-dur">0:47</span>
+                    </button>
                     <div class="media-body">
                         <h3>Spark Pro Electrical</h3>
                         <p>A job intake and response automation built for a licensed electrical contractor. New job requests trigger an instant AI-generated reply, with job details automatically captured and routed to the right place — saving hours of admin per week.</p>
@@ -152,40 +235,45 @@
                 <p class="section-sub">A look at some of the n8n automation workflows I've built.</p>
             </div>
 
-            <div class="grid-2 wf-grid">
-                <div class="card media-card reveal">
-                    <img src="google-review-automation.png" alt="Google Review Automation workflow" loading="lazy" decoding="async" width="1872" height="890">
-                    <div class="media-body">
-                        <h3>Google Review Automation</h3>
-                        <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
-                    </div>
-                </div>
-                <div class="card media-card reveal">
-                    <img src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" loading="lazy" decoding="async" width="1867" height="886">
-                    <div class="media-body">
-                        <h3>UK B2B Lead Generator</h3>
-                        <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
-                    </div>
-                </div>
-                <div class="card media-card wide-card reveal">
-                    <img src="email-triage-demo.png" alt="Email Triage Automation workflow" loading="lazy" decoding="async" width="1867" height="923">
-                    <div class="media-body">
-                        <h3>AI Email Triage</h3>
-                        <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
-                    </div>
-                </div>
-                <div class="card media-card wide-card reveal">
-                    <img src="job-application-automation.png" alt="Job Application Automation workflow" loading="lazy" decoding="async" width="1870" height="889">
+            <div class="bento">
+                <div class="card media-card spot reveal bento-feature">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <img class="shot" src="job-application-automation.png" alt="Job Application Automation workflow" loading="lazy" decoding="async" width="1870" height="889" tabindex="0" role="button" data-cap="Job Application Automation">
                     <div class="media-body">
                         <h3>Job Application Automation</h3>
                         <p>A fully automated job hunting pipeline built in n8n. It searches Google Places and Adzuna simultaneously, merges and deduplicates results, loops through each business, scrapes their website to find a contact email, and uses Claude AI to generate a personalised cover note and CV before creating a Gmail draft — ready to send with one click. Users have seen <strong>100+ potential job application leads</strong> generated in a single run, turning a process that would take days of manual effort into something that runs in minutes.</p>
                     </div>
                 </div>
-                <div class="card media-card wide-card reveal">
-                    <img src="cv-screening-automation.png" alt="CV Screening automation workflow" loading="lazy" decoding="async" width="1773" height="846">
+                <div class="card media-card spot reveal bento-tall">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <img class="shot" src="email-triage-demo.png" alt="Email Triage Automation workflow" loading="lazy" decoding="async" width="1867" height="923" tabindex="0" role="button" data-cap="AI Email Triage">
+                    <div class="media-body">
+                        <h3>AI Email Triage</h3>
+                        <p>An AI-powered inbox automation that reads incoming emails, classifies them by urgency and type, and routes them automatically — urgent messages get flagged immediately, routine enquiries get drafted responses, and irrelevant emails are filtered out. Eliminates hours of inbox management for busy teams.</p>
+                    </div>
+                </div>
+                <div class="card media-card spot reveal bento-tall">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <img class="shot" src="cv-screening-automation.png" alt="CV Screening automation workflow" loading="lazy" decoding="async" width="1773" height="846" tabindex="0" role="button" data-cap="CV Screening — Gmail + Dashboard">
                     <div class="media-body">
                         <h3>CV Screening — Gmail + Dashboard</h3>
                         <p>An AI-powered CV screening pipeline that takes CVs two ways — emailed to a dedicated inbox, or uploaded through a dashboard with its own job description — and scores each one with Claude Haiku, returning a percentage plus specific reasons for and against. A dedup check stops the same CV being scored twice, and PDF, TXT and DOCX are all parsed in-process, needing <strong>no external service or extra credentials</strong>. Every result is logged to a database so scores can be checked against real hiring decisions over time, while candidates only ever receive a fixed, AI-free reply.</p>
+                    </div>
+                </div>
+                <div class="card media-card spot reveal bento-half">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <img class="shot" src="google-review-automation.png" alt="Google Review Automation workflow" loading="lazy" decoding="async" width="1872" height="890" tabindex="0" role="button" data-cap="Google Review Automation">
+                    <div class="media-body">
+                        <h3>Google Review Automation</h3>
+                        <p>Triggered via webhook when a job is completed, this workflow waits one day then automatically sends a personalised review request email to the customer via Gmail. It checks whether the email sent successfully and logs the outcome — either confirmed or errored — into a tracking sheet for full visibility.</p>
+                    </div>
+                </div>
+                <div class="card media-card spot reveal bento-half">
+                    <i class="spot-glow" aria-hidden="true"></i>
+                    <img class="shot" src="uk-b2b-lead-generator.png" alt="UK B2B Lead Generator workflow" loading="lazy" decoding="async" width="1867" height="886" tabindex="0" role="button" data-cap="UK B2B Lead Generator">
+                    <div class="media-body">
+                        <h3>UK B2B Lead Generator</h3>
+                        <p>Runs on a weekly schedule (or manually) to automatically scrape business leads from Google Places using a set of search queries. It loops through each query, pulls detailed business information, maps the fields into a clean format, and inserts each lead directly into a Supabase database — ready for outreach without any manual searching.</p>
                     </div>
                 </div>
             </div>
