@@ -1,8 +1,9 @@
 _previews/
 
-# Impeccable design-detector machine state (per-session cache + suppressions).
-# Not source; regenerated on demand.
-.impeccable/
+# Impeccable design-detector per-session cache — pure machine state.
+# NOT .impeccable/ wholesale: config.json holds the suppression decisions and
+# the reasons for them, which is real project knowledge and should be shared.
+.impeccable/hook.cache.json
 
 # Throwaway single-section screenshot benches. See CLAUDE.md -> Verifying
 # design changes: these must never be committed.

@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "script.js"
+        ],
+        "createdAt": "2026-09-01T20:17:12.113Z",
+        "reason": "Lightbox template <img> built by JS; src assigned in open() on click, never shipped empty. Verified in script.js lightbox IIFE."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "testimonial.html"
+        ],
+        "createdAt": "2026-09-02T16:45:30.637Z",
+        "reason": "Claude 2026-09-02: .testimonial-frame-wrap is framed media, not a text container. It wraps a Google Forms iframe, and the site's established pattern for framed media (.photo-frame) is that the frame owns the border and the media fills it flush. An inset here would show an ivory band around the form's white ground and read as a mismatch. No text of ours is near the boundary."
+      }
+    ]
+  }
+}
