@@ -15,10 +15,17 @@
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49c367f5f02a4841b81947715812f661"}'></script>
     <!-- End Cloudflare Web Analytics -->
     <style>
+        /* The Google Form renders on white whatever we do, so the honest
+           move is to frame it as one of the site's own panels rather than
+           fight it: --bg-card ground, hairline --line border, --shadow.
+           This block previously carried the only 12px border-radius and the
+           only ad-hoc box-shadow on the site — nothing else here has a
+           radius, and every other shadow comes from the token. */
         .testimonial-frame-wrap {
-            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,.08);
         }
         .testimonial-frame-wrap iframe {
             display: block;
@@ -28,6 +35,11 @@
         }
         @media (max-width: 700px) {
             .testimonial-frame-wrap iframe { min-height: 1200px; }
+        }
+        /* Was an inline style="margin-top:24px" — the page now carries no
+           inline styles. */
+        .testimonial-fallback {
+            margin-top: 24px;
         }
     </style>
 </head>
@@ -65,7 +77,7 @@
                 title="Testimonial form">Loading…</iframe>
     </div>
 
-    <p class="section-intro" style="margin-top: 24px;">
+    <p class="section-intro testimonial-fallback">
         Form not loading? <a href="https://forms.gle/GDDzLM9XT3dnkrPUA" target="_blank" rel="noopener">Open it directly</a>,
         or just <a href="mailto:shayaanahmed070708@gmail.com">reply by email</a> instead.
     </p>
