@@ -96,7 +96,7 @@
                         Here's how that runs, step by step.
                     </p>
 
-                    <!-- Integration constellation. Ported from 21st.dev's
+                    <!-- Toolkit constellation. Ported from 21st.dev's
                          AnimatedBeam, which measures two DOM nodes with React
                          refs and redraws the connector on resize; this is one
                          authored SVG on a fixed viewBox, so it scales as a unit
@@ -106,70 +106,157 @@
                          Alvo target mark — the animation states the tagline
                          ("AI, aimed right") rather than decorating next to it.
 
-                         The six labels are the real tools named in the workflow
-                         copy further down this page. Don't add one that isn't in
-                         a shipped workflow. Hidden below 760px, where the label
-                         type would scale under 5px; .stack-strip carries the same
-                         names as readable text there. -->
+                         WHAT THIS MEANS CHANGED ON 2026-09-02. It used to carry
+                         exactly the six tools named in the workflow cards below,
+                         under a rule of "don't add a tool that isn't in a shipped
+                         workflow". It is now the wider toolkit: what these systems
+                         get built from. The rule that replaces it is narrower and
+                         stricter — every tool here must be one actually used in
+                         real work, not a logo wall. Each of these was checked
+                         against the workspace before it went in.
+
+                         Hidden below 760px, where the label type would scale
+                         under 5px; .stack-strip carries the same list as readable
+                         text there, so the two must stay in sync. -->
                     <div class="beam-wrap reveal">
-                        <svg class="beam-field" viewBox="0 0 1120 420" role="img"
-                             aria-label="Six tools feeding into one automation hub: Gmail, Google Sheets, Supabase, Claude AI, Google Places and Adzuna.">
-                            <path class="beam-rail" d="M245,62 C 350,62 400,210 506,210"/>
-                            <path class="beam-rail" d="M245,210 L 506,210"/>
-                            <path class="beam-rail" d="M245,358 C 350,358 400,210 506,210"/>
-                            <path class="beam-rail" d="M875,62 C 770,62 720,210 614,210"/>
-                            <path class="beam-rail" d="M875,210 L 614,210"/>
-                            <path class="beam-rail" d="M875,358 C 770,358 720,210 614,210"/>
-                            <path class="beam-pulse" data-i="1" d="M245,62 C 350,62 400,210 506,210"/>
-                            <path class="beam-pulse" data-i="2" d="M245,210 L 506,210"/>
-                            <path class="beam-pulse" data-i="3" d="M245,358 C 350,358 400,210 506,210"/>
-                            <path class="beam-pulse" data-i="4" d="M875,62 C 770,62 720,210 614,210"/>
-                            <path class="beam-pulse" data-i="5" d="M875,210 L 614,210"/>
-                            <path class="beam-pulse" data-i="6" d="M875,358 C 770,358 720,210 614,210"/>
+                        <svg class="beam-field" viewBox="0 0 1120 660" role="img"
+                             aria-label="The toolkit these systems are built from: n8n, Make, Zapier, Webhooks, REST APIs, Twilio, Claude, Ollama, Whisper, ElevenLabs, Supabase, PostgreSQL, Google Sheets, Gmail, Google Places, Adzuna, Python, Docker, Cloudflare and Playwright, all feeding into one automation hub.">
+                            <path class="beam-rail" d="M328,58 C 438,58 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,118 C 438,118 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,178 C 438,178 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,238 C 438,238 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,298 C 438,298 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,358 C 438,358 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,418 C 438,418 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,478 C 438,478 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,538 C 438,538 370,330 532,330"/>
+                            <path class="beam-rail" d="M328,598 C 438,598 370,330 532,330"/>
+                            <path class="beam-rail" d="M792,58 C 682,58 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,118 C 682,118 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,178 C 682,178 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,238 C 682,238 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,298 C 682,298 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,358 C 682,358 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,418 C 682,418 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,478 C 682,478 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,538 C 682,538 750,330 588,330"/>
+                            <path class="beam-rail" d="M792,598 C 682,598 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="1" d="M328,58 C 438,58 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="2" d="M328,118 C 438,118 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="3" d="M328,178 C 438,178 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="4" d="M328,238 C 438,238 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="5" d="M328,298 C 438,298 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="6" d="M328,358 C 438,358 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="1" d="M328,418 C 438,418 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="2" d="M328,478 C 438,478 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="3" d="M328,538 C 438,538 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="4" d="M328,598 C 438,598 370,330 532,330"/>
+                            <path class="beam-pulse" data-i="5" d="M792,58 C 682,58 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="6" d="M792,118 C 682,118 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="1" d="M792,178 C 682,178 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="2" d="M792,238 C 682,238 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="3" d="M792,298 C 682,298 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="4" d="M792,358 C 682,358 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="5" d="M792,418 C 682,418 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="6" d="M792,478 C 682,478 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="1" d="M792,538 C 682,538 750,330 588,330"/>
+                            <path class="beam-pulse" data-i="2" d="M792,598 C 682,598 750,330 588,330"/>
                             <g class="beam-chip">
-                                <rect x="55" y="34" width="190" height="56" rx="28"/>
-                                <circle cx="79" cy="62" r="3.5"/>
-                                <text x="95" y="62">Gmail</text>
+                                <rect x="259" y="38" width="61" height="40" rx="20"/>
+                                <text x="289" y="58" text-anchor="middle">n8n</text>
                             </g>
                             <g class="beam-chip">
-                                <rect x="55" y="182" width="190" height="56" rx="28"/>
-                                <circle cx="79" cy="210" r="3.5"/>
-                                <text x="95" y="210">Google Sheets</text>
+                                <rect x="248" y="98" width="72" height="40" rx="20"/>
+                                <text x="284" y="118" text-anchor="middle">Make</text>
                             </g>
                             <g class="beam-chip">
-                                <rect x="55" y="330" width="190" height="56" rx="28"/>
-                                <circle cx="79" cy="358" r="3.5"/>
-                                <text x="95" y="358">Supabase</text>
+                                <rect x="227" y="158" width="93" height="40" rx="20"/>
+                                <text x="274" y="178" text-anchor="middle">Zapier</text>
                             </g>
                             <g class="beam-chip">
-                                <rect x="875" y="34" width="190" height="56" rx="28"/>
-                                <circle cx="899" cy="62" r="3.5"/>
-                                <text x="915" y="62">Claude AI</text>
+                                <rect x="206" y="218" width="114" height="40" rx="20"/>
+                                <text x="263" y="238" text-anchor="middle">Webhooks</text>
                             </g>
                             <g class="beam-chip">
-                                <rect x="875" y="182" width="190" height="56" rx="28"/>
-                                <circle cx="899" cy="210" r="3.5"/>
-                                <text x="915" y="210">Google Places</text>
+                                <rect x="196" y="278" width="124" height="40" rx="20"/>
+                                <text x="258" y="298" text-anchor="middle">REST APIs</text>
                             </g>
                             <g class="beam-chip">
-                                <rect x="875" y="330" width="190" height="56" rx="28"/>
-                                <circle cx="899" cy="358" r="3.5"/>
-                                <text x="915" y="358">Adzuna</text>
+                                <rect x="227" y="338" width="93" height="40" rx="20"/>
+                                <text x="274" y="358" text-anchor="middle">Twilio</text>
                             </g>
+                            <g class="beam-chip">
+                                <rect x="227" y="398" width="93" height="40" rx="20"/>
+                                <text x="274" y="418" text-anchor="middle">Claude</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="227" y="458" width="93" height="40" rx="20"/>
+                                <text x="274" y="478" text-anchor="middle">Ollama</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="217" y="518" width="103" height="40" rx="20"/>
+                                <text x="268" y="538" text-anchor="middle">Whisper</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="185" y="578" width="135" height="40" rx="20"/>
+                                <text x="253" y="598" text-anchor="middle">ElevenLabs</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="38" width="114" height="40" rx="20"/>
+                                <text x="857" y="58" text-anchor="middle">Supabase</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="98" width="135" height="40" rx="20"/>
+                                <text x="867" y="118" text-anchor="middle">PostgreSQL</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="158" width="166" height="40" rx="20"/>
+                                <text x="883" y="178" text-anchor="middle">Google Sheets</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="218" width="82" height="40" rx="20"/>
+                                <text x="841" y="238" text-anchor="middle">Gmail</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="278" width="166" height="40" rx="20"/>
+                                <text x="883" y="298" text-anchor="middle">Google Places</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="338" width="93" height="40" rx="20"/>
+                                <text x="846" y="358" text-anchor="middle">Adzuna</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="398" width="93" height="40" rx="20"/>
+                                <text x="846" y="418" text-anchor="middle">Python</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="458" width="93" height="40" rx="20"/>
+                                <text x="846" y="478" text-anchor="middle">Docker</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="518" width="135" height="40" rx="20"/>
+                                <text x="867" y="538" text-anchor="middle">Cloudflare</text>
+                            </g>
+                            <g class="beam-chip">
+                                <rect x="800" y="578" width="135" height="40" rx="20"/>
+                                <text x="867" y="598" text-anchor="middle">Playwright</text>
+                            </g>
+                            <!-- Absolute coordinates, NOT transform="translate()".
+                                 .beam-hub is animated with `transform: scale()`,
+                                 and a CSS transform replaces the presentation
+                                 attribute outright — a translate here is silently
+                                 dropped and the mark renders at the SVG origin. -->
                             <g class="beam-hub">
-                                <circle cx="560" cy="210" r="54" fill="rgba(18,33,26,0.95)" stroke="currentColor" stroke-width="1.5"/>
-                                <g transform="translate(560,210) scale(0.42) translate(-100,-100)" fill="none" stroke="currentColor" stroke-width="16">
-                                    <circle cx="100" cy="100" r="92"/>
-                                    <circle cx="100" cy="100" r="58"/>
-                                </g>
-                                <circle cx="560" cy="210" r="8.4" fill="currentColor" stroke="none"/>
+                                <circle cx="560" cy="330" r="28" fill="none" stroke="currentColor" stroke-width="4.8"/>
+                                <circle cx="560" cy="330" r="17" fill="none" stroke="currentColor" stroke-width="4.8"/>
+                                <circle cx="560" cy="330" r="6" fill="currentColor"/>
                             </g>
                         </svg>
                     </div>
 
                     <p class="stack-strip reveal">
                         <span class="k">Built with</span>
-                        <span>n8n</span><span>Claude</span><span>Supabase</span><span>Gmail</span><span>Google Sheets</span><span>Google Places</span>
+                        <span>n8n</span><span>Make</span><span>Zapier</span><span>Webhooks</span><span>REST APIs</span><span>Twilio</span><span>Claude</span><span>Ollama</span><span>Whisper</span><span>ElevenLabs</span><span>Supabase</span><span>PostgreSQL</span><span>Google Sheets</span><span>Gmail</span><span>Google Places</span><span>Adzuna</span><span>Python</span><span>Docker</span><span>Cloudflare</span><span>Playwright</span>
                     </p>
                 </div>
 
