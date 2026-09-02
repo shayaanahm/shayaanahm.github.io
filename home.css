@@ -1313,14 +1313,29 @@
     height: 100%;
 }
 
+/* These are n8n canvases, roughly 21:10, and the whole reason to show one
+   is that you can read the node graph. So: contain, never cover.
+
+   This was `cover` with `object-position: top left` and `flex: 1 1 auto`,
+   which stretched a wide diagram to fill a tall cell and cropped away
+   everything but its top-left corner — the workflows read as random
+   zoomed fragments. The box now matches the sources' own ratio, so
+   `contain` letterboxes almost nothing, and `flex: 0 0 auto` stops the
+   grid stretching the image to fill leftover cell height. */
 .bento .media-card img {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     width: 100%;
-    object-fit: cover;
-    object-position: top left;
+    /* `height: auto` is load-bearing, not tidying. These <img> tags carry
+       real width/height attributes (1870x889 and friends), and with no CSS
+       height the presentational attribute wins, pinning the image at its
+       intrinsic pixel height. This was briefly deleted with the old
+       .wf-grid rules; the result was every workflow rendering ~890px tall
+       inside its cell. Don't remove it again. */
+    height: auto;
+    object-fit: contain;
+    object-position: center;
     min-height: 0;
-    /* Inherited from the deleted .wf-grid rule: a screenshot that
-       letterboxes should do it against the page ground, not white. */
+    /* Any letterboxing lands on the page ground, not white. */
     background: var(--bg);
 }
 
@@ -1373,7 +1388,10 @@
     .bento-feature { grid-column: span 2; grid-row: auto; }
     .bento-tall    { grid-column: span 1; }
     .bento-half    { grid-column: span 1; }
-    .bento .media-card img { max-height: 240px; }
+    /* aspect-ratio already sizes these; a max-height would only reintroduce
+       cropping on narrow screens, which is what this component just stopped
+       doing. Left as a no-op reminder rather than a height cap. */
+    .bento .media-card img { max-height: none; }
 }
 
 @media (max-width: 640px) {
