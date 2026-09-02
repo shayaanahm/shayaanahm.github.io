@@ -171,7 +171,6 @@
             </div>
         </div>
 
-        <div id="world"></div>
     </section>
 
     <!-- ============ Featured Work ============
@@ -308,56 +307,6 @@
     <p>&copy; 2026 Shayaan Ahmed</p>
 </footer>
 
-<script src="world-scrub.js"></script>
 <script src="script.js"></script>
-<script>
-// The AI Automation walkthrough: one continuous photoreal walk, scroll-
-// scrubbed. Step copy is the real "How It Works"; the last stop
-// introduces the owner. Track lengths trimmed — the earlier pacing was
-// reported as taking too long to get through.
-mountScrollWorld(document.getElementById('world'), {
-    hint: 'scroll to walk through',
-    diveScroll: 1.45,
-    crossfade: 0.1,
-    sections: [
-        {
-            id: 'sw-discovery', label: 'Discovery',
-            still: 'world/discovery.webp',
-            clip: 'world/discovery.mp4', clipMobile: 'world/discovery-m.mp4',
-            accent: '#3f7d5c', scroll: 1.6, linger: 0.35,
-            eyebrow: 'Step 01 — Discovery', title: 'First, we talk.',
-            body: 'We talk through your current processes, pain points, and goals. I identify where automation can save you the most time.'
-        },
-        {
-            id: 'sw-design', label: 'Design',
-            still: 'world/design.webp',
-            clip: 'world/design.mp4', clipMobile: 'world/design-m.mp4',
-            accent: '#3f7d5c', linger: 0.3,
-            eyebrow: 'Step 02 — Design', title: 'Then I map the system.',
-            body: 'I map out the automation architecture — tools, triggers, logic, and integrations — and walk you through the plan before building anything.'
-        },
-        {
-            id: 'sw-build', label: 'Build',
-            still: 'world/build.webp',
-            clip: 'world/build.mp4', clipMobile: 'world/build-m.mp4',
-            // Was falling through to diveScroll (1.45) — the shortest leg of the
-            // four, which rushed the walk through the build lab. Longest now.
-            accent: '#3f7d5c', scroll: 1.95, linger: 0.3,
-            eyebrow: 'Step 03 — Build', title: 'Then I build it.',
-            body: 'I build and test the workflow end-to-end, handling edge cases and making sure everything runs reliably.'
-        },
-        {
-            id: 'sw-handover', label: 'Handover',
-            still: 'world/handover.webp',
-            clip: 'world/handover.mp4', clipMobile: 'world/handover-m.mp4',
-            accent: '#3f7d5c', scroll: 1.7, linger: 0.4,
-            eyebrow: 'Step 04 — Handover', title: "Yours to keep. I'm Shayaan.",
-            body: 'I hand over the finished system with documentation so you can understand and maintain it — or I can manage it ongoing.',
-            cta: { primary: { label: 'Meet me', href: 'index.html#about' }, secondary: { label: 'Get in touch', href: 'contact.html' } }
-        }
-    ],
-    connectors: []
-});
-</script>
 </body>
 </html>
