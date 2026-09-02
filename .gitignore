@@ -1,1 +1,9 @@
 _previews/
+
+# Impeccable design-detector machine state (per-session cache + suppressions).
+# Not source; regenerated on demand.
+.impeccable/
+
+# Throwaway single-section screenshot benches. See CLAUDE.md -> Verifying
+# design changes: these must never be committed.
+_bench.html
