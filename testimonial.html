@@ -72,6 +72,23 @@
         </p>
     </div>
 
+    <!-- KNOWN ISSUE, and it is NOT fixable in this file (checked 2026-09-02).
+         THE FORM ITSELF REQUIRES A GOOGLE SIGN-IN. In a real logged-out
+         browser this iframe shows "Sign in to your Google Account — You must
+         sign in to access this content"; drop the `?embedded=true` parameter
+         and the form renders but immediately covers itself with a modal
+         reading "Sign in to continue — To fill out this form, you must be
+         signed in." Same wall, different dressing. So the parameter is a red
+         herring; don't "fix" this by removing it.
+
+         The real cause is a setting on the form in Google Forms — email
+         collection set to Verified, and/or "Limit to 1 response". Turning
+         those off (Settings → Responses: collect email = "Responder input",
+         limit to 1 response = off) is the actual fix and can only be done in
+         the owner's Google account.
+
+         Until then the fallback paragraph below is the working path, which is
+         why it is not merely decorative. -->
     <div class="testimonial-frame-wrap reveal">
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdJAEb_8Bo_5JzSPo2tBBQlWkEdJpE4J3K6zqKkYBTsMOtveA/viewform?embedded=true"
                 title="Testimonial form">Loading…</iframe>
