@@ -1128,10 +1128,12 @@
 
 
 /* ---------- AI Automation intro strip ----------
-   A slim dark header that flows straight into the dark walkthrough
-   below it — one continuous chapter. */
+   The dark chapter: brand lockup, constellation, and the .proc process
+   block, all on one panel. The 40px bottom this carried until 2026-09-02
+   was sized for a full-bleed element starting immediately below it; the
+   process now ends inside the strip, so it needs real breathing room. */
 .automation-intro .automation-intro-inner {
-    padding: 72px 0 40px;
+    padding: 72px 0 96px;
 }
 
 #automation {
@@ -1198,11 +1200,10 @@
     margin: 28px 0 20px;
 }
 
-/* .page-header's 72px bottom margin + the strip's own 40px padding stacked
-   into a dead gap above the world. The border still separates them. */
-.alvo-header {
-    margin-bottom: 0;
-}
+/* (`.alvo-header { margin-bottom: 0 }` lived here. It existed only because
+   the full-bleed world started flush under this header and the stacked
+   margins read as a dead gap. A .section-row follows now, which wants
+   .page-header's natural 72px. Removed 2026-09-02 along with the class.) */
 
 @media (max-width: 760px) {
     .alvo-suffix {
@@ -1832,3 +1833,250 @@ body {
 .bento > .reveal:nth-child(3) { transition-delay: 0.14s; }
 .bento > .reveal:nth-child(4) { transition-delay: 0.21s; }
 .bento > .reveal:nth-child(5) { transition-delay: 0.28s; }
+
+
+/* ============================================================
+   7. STICKY PROCESS — Sticky Scroll Reveal x Timeline beam
+   ------------------------------------------------------------
+   Ported hybrid of two 21st.dev components: Aceternity's Sticky
+   Scroll Reveal (a scrolling copy column read against one pinned
+   visual) and its Timeline (a numbered rail whose beam fills with
+   scroll progress). Replaced world-scrub.js on 2026-09-02: 45.8 MB
+   of clips buying 6.7 viewport-heights of scroll the owner found
+   too long. Same four steps, same copy, ~2.4vh of scroll, 264 KB
+   of stills.
+
+   NO JS DRIVES THE LAYOUT. The four <figure>s are grid items that
+   all claim the SAME grid area (column 2, rows 1/-1) and each is
+   position:sticky inside it, so they stack and pin with no absolute
+   positioning and no DOM moves. That is precisely what lets the same
+   markup collapse to interleaved stacked cards under 900px — the
+   figures already sit in source order between the steps, so the
+   mobile layout is `display: block` and nothing else.
+
+   script.js's fifth IIFE only toggles .is-active and writes --beam.
+   It lives THERE and not in scroll.js because automation.html must
+   never load scroll.js — its nav has a real #work anchor, so the
+   scrollspy would light "Work" while script.js's filename match
+   lights "AI Automation", giving two active nav links at once.
+
+   No @layer. Same reason as every block above: style.css's unlayered
+   `* { padding: 0 }` beats every layered rule.
+   ============================================================ */
+.proc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 72px;
+    position: relative;
+    margin-top: 8px;
+}
+
+/* Rows assigned explicitly. Auto-placement around four siblings that all
+   claim `grid-row: 1 / -1` is not worth reasoning about. */
+.proc-step { grid-column: 1; }
+.proc-step:nth-of-type(1) { grid-row: 1; }
+.proc-step:nth-of-type(2) { grid-row: 2; }
+.proc-step:nth-of-type(3) { grid-row: 3; }
+.proc-step:nth-of-type(4) { grid-row: 4; }
+
+.proc-step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    /* 4 x 60vh = 2.4 viewport-heights. THIS is the pacing knob — the
+       world's per-leg `scroll` keys summed to 6.7 and read as too long. */
+    min-height: 60vh;
+    /* Dimmed, not hidden. 0.68 is a contrast floor, not a taste call:
+       --ink-soft (#b9c2b8) at 0.68 over --panel (#12211a) composites to
+       ~#848f85, which is 4.97:1. Below ~0.6 it drops under 4.5:1.
+       Don't "improve" this by dimming harder. */
+    opacity: 0.68;
+    transition: opacity 0.5s var(--ease);
+}
+
+.proc-step.is-active { opacity: 1; }
+
+.proc-num {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    /* Masks the rail running behind it. Inside .panel-dark, --bg is
+       --panel, so this is the panel colour without hardcoding it. */
+    background: var(--bg);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--ink-muted);
+    transition: border-color 0.45s var(--ease), color 0.45s var(--ease),
+                box-shadow 0.45s var(--ease);
+}
+
+.proc-step.is-active .proc-num {
+    border-color: var(--accent);
+    color: var(--ink);
+    box-shadow: 0 0 0 6px var(--accent-soft);
+}
+
+.proc-copy { max-width: 420px; }
+
+.proc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3.4px;
+    text-transform: uppercase;
+    /* --ink-muted (#93a095 on dark), never --accent: accent green on the
+       panel is 3.4:1, fine for a graphic or a heading but short of the
+       4.5:1 a label at 11px needs. */
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+}
+
+.proc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.3px;
+    margin-bottom: 16px;
+}
+
+.proc-body {
+    color: var(--ink-soft);
+    font-size: 16.5px;
+}
+
+.proc-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* ---------- the rail ----------
+   Geometry comes from JS-measured dot centres, written once per resize
+   as --rail-top / --rail-len, never per frame. The .tl trick of
+   `top: 8px; bottom: 8px` cannot work here: the last dot sits ~30vh
+   above the block's bottom edge, so any guessed inset overshoots it by
+   most of a viewport. */
+.proc::before,
+.proc-beam {
+    content: "";
+    position: absolute;
+    left: 22px;                 /* 46px dot / 2, minus half the 2px rail */
+    top: var(--rail-top, 0px);
+    height: var(--rail-len, 0px);
+    width: 2px;
+}
+
+.proc::before { background: var(--line-strong); }
+
+.proc-beam {
+    background: linear-gradient(180deg,
+        var(--accent-bright),
+        rgba(63, 125, 92, 0.3));
+    /* scaleY, never height: height is layout, transform composites. And
+       no transition — the value is rewritten every rAF while scrolling,
+       so a transition would only add lag behind the scroll position. */
+    transform: scaleY(var(--beam, 0));
+    transform-origin: top;
+    will-change: transform;
+}
+
+/* ---------- the pinned pane ----------
+   top 18vh + height 64vh leaves 18vh below, so the pane sits on the
+   viewport's optical centre — which is where script.js's focus line
+   reads. Retune the two together or neither. */
+.proc-shot {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: start;
+    position: sticky;
+    top: 18vh;
+    height: 64vh;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    opacity: 0;
+    transform: scale(1.015);
+    transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+
+.proc-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.proc-shot.is-active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* With JS off nothing is ever .is-active, so show the first scene rather
+   than an empty pane — the same defensive stance as the reveal engine's
+   2.5s safety net. */
+.proc:not(.proc--live) .proc-shot:first-of-type {
+    opacity: 1;
+    transform: none;
+}
+
+.proc:not(.proc--live) .proc-step { opacity: 1; }
+
+/* ---------- stacked fallback ----------
+   One block, two triggers: the comma in a media query list is OR. Under
+   reduced motion the pane un-sticks entirely rather than hard-cutting
+   between scenes as you scroll — the same call world-scrub.js made when
+   it fell back to these very stills. */
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+    .proc { display: block; }
+
+    .proc-step {
+        display: block;
+        min-height: 0;
+        padding: 40px 0 8px;
+        opacity: 1;
+    }
+
+    .proc-step:first-of-type { padding-top: 8px; }
+
+    .proc-num {
+        position: absolute;
+        left: 0;
+        top: 40px;
+    }
+
+    .proc-step:first-of-type .proc-num { top: 8px; }
+
+    .proc-copy {
+        margin-left: 82px;
+        max-width: none;
+    }
+
+    .proc-shot {
+        position: static;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        margin: 0 0 12px 82px;
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .proc-num,
+    .proc-step { transition: none; }
+}
+
+/* The beam is a scroll-linked indicator, so it follows the precedent this
+   file already sets for #scroll-progress and stands down under reduced
+   motion. The static .proc::before rail stays, so the steps are still
+   visibly threaded together. */
+@media (prefers-reduced-motion: reduce) {
+    .proc-beam { display: none; }
+}
