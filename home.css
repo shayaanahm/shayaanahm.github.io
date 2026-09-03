@@ -916,9 +916,19 @@
     object-fit: cover;
 }
 
-.beyond-frame {
+/* The two "off the clock" photos are one pair. The wrapper owns the spacing
+   and the width cap; each frame just fills its cell. Stays two-up at every
+   width — collapsing it would read as two unrelated photos, not a pair. */
+.beyond-frames {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
     margin-top: 28px;
-    max-width: 340px;
+    max-width: 560px;
+}
+
+.beyond-frame {
+    margin-top: 0;
 }
 
 .beyond-media {
