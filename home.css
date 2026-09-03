@@ -1555,7 +1555,16 @@
 }
 
 /* The play control. A drawn triangle in one consistent weight, not a
-   glyph or an emoji standing in for an icon. */
+   glyph or an emoji standing in for an icon.
+
+   Both posters are screenshots of real sites, so the disc has to survive
+   landing on ANY of it. At 0.72 alpha it didn't: the Premier hero headline
+   read straight through the middle of it, the 0.55-alpha ivory ring was
+   invisible against navy, and — worst — Premier's chat widget has a close
+   button burned into the poster a disc-width to the right, wearing a
+   crisp gold ring. The fake control read as more real than the real one.
+   Hence near-opaque, a full-strength ring, and a shadow to lift it off
+   whatever is behind. */
 .vplay-btn {
     position: absolute;
     left: 50%;
@@ -1566,16 +1575,19 @@
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: rgba(18, 33, 26, 0.72);
-    border: 1px solid rgba(242, 239, 230, 0.55);
+    background: rgba(18, 33, 26, 0.9);
+    border: 1.5px solid rgba(242, 239, 230, 0.92);
+    box-shadow: 0 10px 30px rgba(10, 20, 15, 0.45);
     transition: background 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
 .vplay-btn svg {
-    width: 22px;
-    height: 22px;
+    /* ~38% of the disc. At 22px (30%) the triangle floated in the middle of
+       an otherwise empty circle and the whole control read as unfinished. */
+    width: 28px;
+    height: 28px;
     fill: var(--panel-ink);
-    margin-left: 3px;
+    margin-left: 4px;
 }
 
 .vplay:hover .vplay-btn,
