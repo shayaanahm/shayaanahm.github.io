@@ -1563,8 +1563,10 @@
    invisible against navy, and — worst — Premier's chat widget has a close
    button burned into the poster a disc-width to the right, wearing a
    crisp gold ring. The fake control read as more real than the real one.
-   Hence near-opaque, a full-strength ring, and a shadow to lift it off
-   whatever is behind. */
+   Hence near-opaque with a full-strength ring. A drop shadow was tried
+   here too and removed: with the disc already opaque the shadow only
+   added a halo that smeared the headline passing behind it. One or the
+   other — a defined edge, not edge plus soft elevation. */
 .vplay-btn {
     position: absolute;
     left: 50%;
@@ -1577,7 +1579,6 @@
     border-radius: 50%;
     background: rgba(18, 33, 26, 0.9);
     border: 1.5px solid rgba(242, 239, 230, 0.92);
-    box-shadow: 0 10px 30px rgba(10, 20, 15, 0.45);
     transition: background 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
